@@ -7,25 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 class Autoridad extends Model
 {
     protected $table = 'autoridad';
+
     protected $primaryKey = 'id_autoridad';
 
     protected $fillable = [
-        'nombre_apellid',
+        'nombre_apellido',
         'cargo',
         'e_mail',
         'telefono',
-        'distrito_respon',
+        'id_distrito',
         'fecha_regis',
         'tipo_autoridad',
     ];
 
+    public function distrito()
+    {
+        return $this->belongsTo(Distrito::class, 'id_distrito');
+    }
+
     public function reportes()
     {
         return $this->hasMany(Reporte::class, 'id_autoridad');
-    }
-
-    public function distrito()
-    {
-        return $this->belongsTo(Distrito::class, 'distrito_respon');
     }
 }

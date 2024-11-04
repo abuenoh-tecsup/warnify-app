@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comentario', function (Blueprint $table) {
+        Schema::create('comentarios', function (Blueprint $table) {
             $table->id('id_comentario');
-            $table->foreignId('id_usuario')->constrained('usuario', 'id_usuario')->onDelete('cascade');
-            $table->text('contenido');
-            $table->timestamp('fecha_comentario')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->foreignId('id_usuario')->constrained('usuario')->onDelete('cascade');
+            $table->text('contenido')->notNullable();
             $table->timestamps();
         });
     }

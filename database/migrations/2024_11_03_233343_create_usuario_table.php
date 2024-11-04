@@ -17,10 +17,9 @@ return new class extends Migration
             $table->string('e_mail', 100);
             $table->string('telefono', 15);
             $table->string('direccion', 100);
-            $table->string('distrito', 50);
             $table->date('fecha_registro');
             $table->boolean('notifi_acti');
-            $table->foreignId('id_distrito')->constrained('distrito', 'id_distrito')->onDelete('cascade');
+            $table->foreignId('id_distrito')->constrained('distrito')->onDelete('cascade');
             $table->timestamps();
         });
     }

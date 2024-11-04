@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reporte extends Model
 {
     protected $table = 'reporte';
+
     protected $primaryKey = 'id_reporte';
 
     protected $fillable = [
@@ -14,13 +15,11 @@ class Reporte extends Model
         'titulo',
         'descrip',
         'ubicacion',
-        'distrito',
         'estado_report',
         'fecha_report',
         'fecha_act',
         'id_autoridad',
-        'id_distrit',
-        'id_moderador',
+        'id_distrito',
     ];
 
     public function usuario()
@@ -35,11 +34,11 @@ class Reporte extends Model
 
     public function distrito()
     {
-        return $this->belongsTo(Distrito::class, 'id_distrit');
+        return $this->belongsTo(Distrito::class, 'id_distrito');
     }
 
-    public function moderador()
+    public function historialEstados()
     {
-        return $this->belongsTo(Moderador::class, 'id_moderador');
+        return $this->hasMany(HistorialEstado::class, 'id_reporte');
     }
 }

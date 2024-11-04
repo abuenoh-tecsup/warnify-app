@@ -7,15 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Moderador extends Model
 {
     protected $table = 'moderador';
-    protected $primaryKey = 'id_moder';
+
+    protected $primaryKey = 'id_moderador';
 
     protected $fillable = [
         'nom_apell',
         'e_mail',
     ];
 
-    public function reportes()
+    public function historialEstados()
     {
-        return $this->hasMany(Reporte::class, 'id_moderador');
+        return $this->hasMany(HistorialEstado::class, 'cambiado_por');
     }
 }

@@ -13,16 +13,15 @@ return new class extends Migration
     {
         Schema::create('reporte', function (Blueprint $table) {
             $table->id('id_reporte');
-            $table->foreignId('id_usuario')->constrained('usuario', 'id_usuario')->onDelete('cascade'); // FK
+            $table->foreignId('id_usuario')->constrained('usuario')->onDelete('cascade');
             $table->string('titulo', 100);
             $table->text('descrip');
             $table->string('ubicacion', 100);
-            $table->string('distrito', 50);
             $table->enum('estado_report', ['PENDIENTE', 'EN_PROCESO', 'FINALIZADO']);
             $table->date('fecha_report');
             $table->date('fecha_act');
-            $table->foreignId('id_autoridad')->constrained('autoridad', 'id_autoridad')->nullable()->onDelete('set null');
-            $table->foreignId('id_distrito')->constrained('distrito', 'id_distrito')->nullable()->onDelete('set null');
+            $table->foreignId('id_autoridad')->nullable()->constrained('autoridad')->onDelete('set null');
+            $table->foreignId('id_distrito')->constrained('distrito')->onDelete('cascade');
             $table->timestamps();
         });
     }

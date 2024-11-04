@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('cargo', 50);
             $table->string('e_mail', 100);
             $table->string('telefono', 15);
-            $table->string('distrito_respon', 50);
+            $table->foreignId('id_distrito')->constrained('distrito')->onDelete('cascade');
             $table->date('fecha_regis');
             $table->string('tipo_autoridad', 50);
             $table->timestamps();
