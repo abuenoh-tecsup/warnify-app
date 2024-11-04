@@ -13,12 +13,19 @@ return new class extends Migration
     {
         Schema::create('historial_estado', function (Blueprint $table) {
             $table->id('id_historial');
-            $table->foreignId('id_reporte')->constrained('reporte')->onDelete('cascade');
+            $table->unsignedBigInteger('id_reporte');
             $table->string('estado_anterior', 20);
             $table->string('nuevo_estado', 20);
-            $table->timestamp('fecha_cambio')->default(now());
-            $table->foreignId('cambiado_por')->constrained('moderador')->onDelete('set null');
+            $table->unsignedBigInteger('cambiado_por');
             $table->timestamps();
+            $table->foreign('id_reporte')
+                  ->references('id_reporte')
+                  ->on('reporte')
+                  ->onDelete('cascade');
+            $table->foreign('cambiado_por')
+                  ->references('id_moderador')
+                  ->on('moderador')
+                  ->onDelete('cascade');
         });
     }
 

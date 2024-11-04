@@ -12,17 +12,30 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reporte', function (Blueprint $table) {
-            $table->id('id_reporte');
-            $table->foreignId('id_usuario')->constrained('usuario')->onDelete('cascade');
+            $table->id('id_reporte'); // Clave primaria
+            $table->unsignedBigInteger('id_usuario'); // Clave foránea
             $table->string('titulo', 100);
             $table->text('descrip');
             $table->string('ubicacion', 100);
-            $table->enum('estado_report', ['PENDIENTE', 'EN_PROCESO', 'FINALIZADO']);
+            $table->string('distrito', 50);
+            $table->string('estado_report');
             $table->date('fecha_report');
             $table->date('fecha_act');
-            $table->foreignId('id_autoridad')->nullable()->constrained('autoridad')->onDelete('set null');
-            $table->foreignId('id_distrito')->constrained('distrito')->onDelete('cascade');
+            $table->unsignedBigInteger('id_autoridad')->nullable();
+            $table->unsignedBigInteger('id_distrito');
             $table->timestamps();
+            $table->foreign('id_usuario')
+                  ->references('id_usuario')
+                  ->on('usuario')
+                  ->onDelete('cascade');
+            $table->foreign('id_autoridad')
+                  ->references('id_autoridad')
+                  ->on('autoridad')
+                  ->onDelete('set null');
+            $table->foreign('id_distrito')
+                  ->references('id_distrito')
+                  ->on('distrito')
+                  ->onDelete('cascade');
         });
     }
 

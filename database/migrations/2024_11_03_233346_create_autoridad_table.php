@@ -17,10 +17,14 @@ return new class extends Migration
             $table->string('cargo', 50);
             $table->string('e_mail', 100);
             $table->string('telefono', 15);
-            $table->foreignId('id_distrito')->constrained('distrito')->onDelete('cascade');
+            $table->unsignedBigInteger('id_distrito');
             $table->date('fecha_regis');
             $table->string('tipo_autoridad', 50);
             $table->timestamps();
+            $table->foreign('id_distrito')
+                  ->references('id_distrito')
+                  ->on('distrito')
+                  ->onDelete('cascade');
         });
     }
 

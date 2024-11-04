@@ -7,13 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Moderador extends Model
 {
     protected $table = 'moderador';
-
     protected $primaryKey = 'id_moderador';
+    public $timestamps = true;
 
-    protected $fillable = [
-        'nom_apell',
-        'e_mail',
-    ];
+    protected $fillable = ['nom_apell', 'e_mail'];
 
     public function historialEstados()
     {

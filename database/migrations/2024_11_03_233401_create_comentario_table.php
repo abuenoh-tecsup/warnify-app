@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comentarios', function (Blueprint $table) {
+        Schema::create('comentario', function (Blueprint $table) {
             $table->id('id_comentario');
-            $table->foreignId('id_usuario')->constrained('usuario')->onDelete('cascade');
-            $table->text('contenido')->notNullable();
+            $table->unsignedBigInteger('id_usuario');
+            $table->text('contenido')->notNull();
             $table->timestamps();
+            $table->foreign('id_usuario')
+                  ->references('id_usuario')
+                  ->on('usuario')
+                  ->onDelete('cascade');
         });
     }
 

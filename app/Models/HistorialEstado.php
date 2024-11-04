@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class HistorialEstado extends Model
 {
     protected $table = 'historial_estado';
-
     protected $primaryKey = 'id_historial';
+    public $timestamps = true;
 
     protected $fillable = [
         'id_reporte',
