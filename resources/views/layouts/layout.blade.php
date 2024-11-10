@@ -13,14 +13,14 @@
         @include('layouts.nav')
     </header>
 
-    <main class="flex-grow container mx-auto my-4">
+    <main class="container flex-grow flex flex-col w-full mx-auto my-4">
         @yield('content')
     </main>
 
     <footer class="bg-blue-950 p-4 text-center text-white">
         <p>&copy; {{ date('Y') }} Warnify. Todos los derechos reservados.</p>
     </footer>
-    
+
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 </body>
 </html>
