@@ -1,17 +1,16 @@
 <?php
-
+use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('map');
 });
 Route::get('/inicio', function () {return view('inicio');});
 Route::get('/mis_reportes', function () {return view('mis_reportes');});
 Route::get('/nuevo_reporte', function () {return view('nuevo_reporte');});
 Route::get('/mapa', function () {return view('mapa');});
 Route::get('/cuenta', function () {return view('cuenta');});
-
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -24,3 +23,5 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/geocode', [GeoCodingController::class, 'searchAddress'])->name('geocode');
