@@ -41,8 +41,8 @@
                         </a>
                     </li>
                     <li class="py-2 lg:py-0 ">
-                        <a class="text-white hover:pb-4 hover:border-b-4 hover:border-yellow-400" href="/mis_reportes">
-                            Mis reportes
+                        <a class="text-white hover:pb-4 hover:border-b-4 hover:border-yellow-400" href="{{route('reportes.list')}}">
+                            Reportes
                         </a>
                     </li>
                     <li class="py-2 lg:py-0 ">

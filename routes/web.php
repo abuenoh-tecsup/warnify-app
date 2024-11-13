@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -6,9 +7,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('map');
 });
-Route::get('/inicio', function () {return view('inicio');});
-Route::get('/mis_reportes', function () {return view('mis_reportes');});
-Route::get('/nuevo_reporte', function () {return view('nuevo_reporte');});
+Route::get('/inicio', function () {return view('inicio');})->name('reportes.inicio');
+Route::get('/reportes/{id?}', [ReporteController::class, 'list_details_all'])->name('reportes.list');
+Route::get('/nuevo_reporte', [ReporteController::class, 'create'])->name('reportes.create');
+Route::post('/nuevo_reporte', [ReporteController::class, 'store'])->name('reportes.store');
 Route::get('/mapa', function () {return view('mapa');});
 Route::get('/cuenta', function () {return view('cuenta');});
 

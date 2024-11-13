@@ -15,16 +15,11 @@ return new class extends Migration
             $table->id('id_autoridad');
             $table->string('nombre_apellido', 100);
             $table->string('cargo', 50);
-            $table->string('e_mail', 100);
+            $table->string('email', 100);
             $table->string('telefono', 15);
-            $table->unsignedBigInteger('id_distrito');
-            $table->date('fecha_regis');
+            $table->date('fecha_registro');
             $table->string('tipo_autoridad', 50);
             $table->timestamps();
-            $table->foreign('id_distrito')
-                  ->references('id_distrito')
-                  ->on('distrito')
-                  ->onDelete('cascade');
         });
     }
 

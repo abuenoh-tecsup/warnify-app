@@ -13,14 +13,15 @@ class Reporte extends Model
     protected $fillable = [
         'id_usuario',
         'titulo',
-        'descrip',
+        'descripcion',
         'ubicacion',
-        'distrito',
-        'estado_report',
-        'fecha_report',
+        'estado_reporte',
+        'fecha_reporte',
         'fecha_act',
         'id_autoridad',
-        'id_distrito',
+        'latitud',
+        'longitud',
+        'img_incidente',
     ];
 
     public function usuario()
@@ -36,10 +37,5 @@ class Reporte extends Model
     public function historialEstados()
     {
         return $this->hasMany(HistorialEstado::class, 'id_reporte');
-    }
-
-    public function distrito()
-    {
-        return $this->belongsTo(Distrito::class, 'id_distrito');
     }
 }

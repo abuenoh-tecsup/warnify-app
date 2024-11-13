@@ -40,8 +40,8 @@
         <input type="text" id="address" name="address" placeholder="Ingresa una dirección..." required>
         <button type="button" id="search-btn">Buscar</button> <!-- Botón para buscar -->
         <ul id="results"></ul>
-        <input type="hidden" id="latitude" name="latitude">
-        <input type="hidden" id="longitude" name="longitude">
+        <input type="text" id="latitude" name="latitude" readonly>
+        <input type="text" id="longitude" name="longitude" readonly>
     </form>
 
     <div>

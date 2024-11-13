@@ -12,12 +12,11 @@ class Usuario extends Model
 
     protected $fillable = [
         'nombre_apellido',
-        'e_mail',
+        'email',
         'telefono',
         'direccion',
         'fecha_registro',
         'notifi_acti',
-        'id_distrito',
     ];
 
     public function reportes()
@@ -28,10 +27,5 @@ class Usuario extends Model
     public function comentarios()
     {
         return $this->hasMany(Comentario::class, 'id_usuario');
-    }
-
-    public function distrito()
-    {
-        return $this->belongsTo(Distrito::class, 'id_distrito');
     }
 }

@@ -12,18 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reporte', function (Blueprint $table) {
-            $table->id('id_reporte'); // Clave primaria
-            $table->unsignedBigInteger('id_usuario'); // Clave foránea
+            $table->id('id_reporte');
+            $table->unsignedBigInteger('id_usuario');
             $table->string('titulo', 100);
-            $table->text('descrip');
-            $table->string('ubicacion', 100);
-            $table->string('distrito', 50);
-            $table->string('estado_report');
-            $table->date('fecha_report');
-            $table->date('fecha_act');
+            $table->text('descripcion');
+            $table->string('ubicacion', 255);
+            $table->string('estado_reporte');
+            $table->dateTime('fecha_reporte');
+            $table->dateTime('fecha_act');
             $table->unsignedBigInteger('id_autoridad')->nullable();
-            $table->unsignedBigInteger('id_distrito');
+            $table->float('latitud', 10, 6)->nullable();
+            $table->float('longitud', 10, 6)->nullable();
+            $table->string('img_incidente')->nullable();
+
             $table->timestamps();
+
             $table->foreign('id_usuario')
                   ->references('id_usuario')
                   ->on('usuario')
@@ -32,10 +35,6 @@ return new class extends Migration
                   ->references('id_autoridad')
                   ->on('autoridad')
                   ->onDelete('set null');
-            $table->foreign('id_distrito')
-                  ->references('id_distrito')
-                  ->on('distrito')
-                  ->onDelete('cascade');
         });
     }
 

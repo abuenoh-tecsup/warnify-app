@@ -1,3 +1,3 @@
-<label for="{{ $for ?? ''}}" class="text-xl mb-1">
+<label for="{{ $for ?? ''}}" class="text-md mb-1">
     {{ $text ?? ''}}
 </label>

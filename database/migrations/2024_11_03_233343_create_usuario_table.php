@@ -14,17 +14,12 @@ return new class extends Migration
         Schema::create('usuario', function (Blueprint $table) {
             $table->id('id_usuario'); // Clave primaria
             $table->string('nombre_apellido', 100);
-            $table->string('e_mail', 100);
+            $table->string('email', 100);
             $table->string('telefono', 15);
             $table->string('direccion', 100);
             $table->date('fecha_registro');
             $table->boolean('notifi_acti');
-            $table->unsignedBigInteger('id_distrito');
             $table->timestamps();
-            $table->foreign('id_distrito')
-                  ->references('id_distrito')
-                  ->on('distrito')
-                  ->onDelete('cascade');
         });
     }
 

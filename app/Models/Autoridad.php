@@ -13,20 +13,14 @@ class Autoridad extends Model
     protected $fillable = [
         'nombre_apellido',
         'cargo',
-        'e_mail',
+        'email',
         'telefono',
-        'id_distrito',
-        'fecha_regis',
+        'fecha_registro',
         'tipo_autoridad',
     ];
 
     public function reportes()
     {
         return $this->hasMany(Reporte::class, 'id_autoridad');
-    }
-
-    public function distrito()
-    {
-        return $this->belongsTo(Distrito::class, 'id_distrito');
     }
 }

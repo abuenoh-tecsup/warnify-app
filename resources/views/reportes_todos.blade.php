@@ -3,6 +3,7 @@
 @section('title', 'Mis reportes')
 
 @section('content')
+    <h2 class="text-2xl font-bold">Reportes</h2>
     <div class="flex-grow h-full grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="col-span-1 bg-blue-500 p-4">
             <p>Columna 1 (1/3)</p>
