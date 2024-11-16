@@ -54,7 +54,7 @@ class ReporteController extends Controller
 
         if ($request->hasFile('img_incidente')) {
             $nombreArchivo = 'reporte_' . time() . '.' . $request->file('img_incidente')->getClientOriginalExtension();
-            $data['img_incidente'] = $request->file('img_incidente')->storeAs('public/reports_images', $nombreArchivo);
+            $data['img_incidente'] = $request->file('img_incidente')->storeAs('/reports_images', $nombreArchivo, 'public');
             $data['img_incidente'] = 'storage/reports_images/' . $nombreArchivo;
         }
 
@@ -73,7 +73,7 @@ class ReporteController extends Controller
 
     public function list_details_all(string $id = null)
     {
-        $reportes = Reporte::all();
+        $reportes = Reporte::latest()->get();
         $reporteSeleccionado = $id ? Reporte::find($id) : null;
 
         return view('reportes', compact('reportes', 'reporteSeleccionado'));

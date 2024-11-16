@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Reporte extends Model
 {
@@ -37,5 +38,21 @@ class Reporte extends Model
     public function historialEstados()
     {
         return $this->hasMany(HistorialEstado::class, 'id_reporte');
+    }
+
+    /**
+     * Accessor para formatear la fecha del reporte
+     */
+    public function getFechaReporteAttribute($value)
+    {
+        return Carbon::parse($value)->format('M j, Y h:i A');
+    }
+
+    /**
+     * Accessor para formatear la fecha de actualización
+     */
+    public function getFechaActAttribute($value)
+    {
+        return Carbon::parse($value)->format('M j, Y h:i A');
     }
 }

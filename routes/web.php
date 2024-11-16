@@ -5,7 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('map');
+    return view('inicio');
 });
 Route::get('/inicio', function () {return view('inicio');})->name('reportes.inicio');
 Route::get('/reportes/{id?}', [ReporteController::class, 'list_details_all'])->name('reportes.list');
