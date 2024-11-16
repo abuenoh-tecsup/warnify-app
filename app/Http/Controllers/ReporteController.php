@@ -14,7 +14,31 @@ class ReporteController extends Controller
      */
     public function index()
     {
-        //
+        // Obtener los reportes más recientes (últimos 5)
+        $reportesRecientes = Reporte::orderBy('fecha_reporte', 'desc')->limit(5)->get();
+
+        // Obtener los reportes del usuario autenticado
+        $misReportes = Reporte::where('id_usuario', 1)
+                                ->orderBy('fecha_reporte', 'desc')
+                                ->limit(5)
+                                ->get();
+
+        // Conteo total de reportes
+        $totalReportes = Reporte::count();
+
+        // Conteo de reportes por estado
+        $pendientes = Reporte::where('estado_reporte', 'Pendiente')->count();
+        $resueltos = Reporte::where('estado_reporte', 'Resuelto')->count();
+        $enProceso = Reporte::where('estado_reporte', 'En Proceso')->count();
+
+        return view('inicio', compact(
+            'reportesRecientes',
+            'misReportes',
+            'totalReportes',
+            'pendientes',
+            'resueltos',
+            'enProceso'
+        ));
     }
 
     /**

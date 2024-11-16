@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('inicio');
 });
-Route::get('/inicio', function () {return view('inicio');})->name('reportes.inicio');
+Route::get('/inicio', [ReporteController::class, 'index'])->name('reportes.inicio');
 Route::get('/reportes/{id?}', [ReporteController::class, 'list_details_all'])->name('reportes.list');
 Route::get('/nuevo_reporte', [ReporteController::class, 'create'])->name('reportes.create');
 Route::post('/nuevo_reporte', [ReporteController::class, 'store'])->name('reportes.store');
