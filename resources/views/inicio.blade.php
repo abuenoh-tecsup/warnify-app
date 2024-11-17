@@ -63,4 +63,16 @@
             <a href="{{ route('reportes.list') }}" class="bg-blue-400 text-white p-4 rounded-xl shadow-md text-center">Ver Mis Reportes</a>
         </div>
     </div>
+
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <x-button
+            class="text-black"
+            type="submit"
+            name="logout-btn"
+        >
+            Cerrar sesión
+        </x-button>
+    </form>
+
 @endsection

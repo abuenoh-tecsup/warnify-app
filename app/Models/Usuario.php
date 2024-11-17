@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Usuario extends Model
+class Usuario extends Authenticatable
 {
+    use Notifiable;
+
     protected $table = 'usuario';
     protected $primaryKey = 'id_usuario';
     public $timestamps = true;
@@ -17,6 +20,7 @@ class Usuario extends Model
         'direccion',
         'fecha_registro',
         'notifi_acti',
+        'password',
     ];
 
     public function reportes()
@@ -29,3 +33,4 @@ class Usuario extends Model
         return $this->hasMany(Comentario::class, 'id_usuario');
     }
 }
+
