@@ -40,7 +40,7 @@
                         @endforeach
                     @endif
                 </div>
-                <a href="{{ route('reportes.list') }}" class="text-blue-600 hover:underline mt-2 inline-block">Ver detalles</a>
+                <a href="{{ route('reportes.list', ['filter' => 'all']) }}"" class="text-blue-600 hover:underline mt-2 inline-block">Ver detalles</a>
             </div>
 
             <!-- Mis Reportes -->
@@ -59,7 +59,7 @@
                         @endforeach
                     @endif
                 </div>
-                <a href="{{ route('reportes.list') }}" class="text-blue-600 hover:underline mt-2 inline-block">Ver detalles</a>
+                <a href="{{ route('reportes.list', ['filter' => 'all']) }}"" class="text-blue-600 hover:underline mt-2 inline-block">Ver detalles</a>
             </div>
         </div>
 
