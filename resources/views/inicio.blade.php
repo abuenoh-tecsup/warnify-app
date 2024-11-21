@@ -40,7 +40,6 @@
                         @endforeach
                     @endif
                 </div>
-                <a href="{{ route('reportes.list', ['filter' => 'all']) }}"" class="text-blue-600 hover:underline mt-2 inline-block">Ver detalles</a>
             </div>
 
             <!-- Mis Reportes -->
@@ -59,23 +58,27 @@
                         @endforeach
                     @endif
                 </div>
-                <a href="{{ route('reportes.list', ['filter' => 'all']) }}"" class="text-blue-600 hover:underline mt-2 inline-block">Ver detalles</a>
             </div>
         </div>
 
         <!-- Accesos Rápidos -->
         <div>
             <h3 class="text-xl font-bold text-gray-800 mb-4">Accesos Rápidos</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <a href="{{ route('reportes.create') }}" 
                     class="bg-yellow-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md text-center hover:bg-yellow-600">
                     Crear Nuevo Reporte
                 </a>
                 <a href="{{ route('reportes.list', ['filter' => 'all']) }}"
                     class="bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md text-center hover:bg-blue-600">
+                    Ver Reportes
+                </a>
+                <a href="{{ route('reportes.list', ['filter' => 'own']) }}"
+                    class="bg-green-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md text-center hover:bg-green-600">
                     Ver Mis Reportes
                 </a>
             </div>
+
         </div>
 
         <form method="POST" action="{{ route('logout') }}" class="mt-8">
