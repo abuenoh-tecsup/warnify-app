@@ -25,7 +25,7 @@ class ReporteSeeder extends Seeder
             'id_autoridad' => null,
             'latitud' => -12.0913137,
             'longitud' => -77.0260209,
-            'img_incidente' => 'storage/reports_images/seed1.webp',
+            'img_incidente' => 'default_reports/seed1.webp',
         ]);
 
         Reporte::create([
@@ -39,11 +39,11 @@ class ReporteSeeder extends Seeder
             'id_autoridad' => null,
             'latitud' => -12.107287,
             'longitud' => -77.0361175,
-            'img_incidente' => 'storage/reports_images/seed2.webp',
+            'img_incidente' => 'default_reports/seed2.webp',
         ]);
 
         Reporte::create([
-            'id_usuario' => 1,
+            'id_usuario' => 2,
             'titulo' => 'Caída de motocicleta por mal estado de la vía',
             'descripcion' => 'Un motociclista perdió el control al pasar por una curva resbalosa cerca del puente, cayendo al asfalto y sufriendo lesiones leves.',
             'ubicacion' => 'Puente de los Suspiros, Barranco, Lima, Lima Metropolitana, Lima, 15042, Perú',
@@ -53,11 +53,11 @@ class ReporteSeeder extends Seeder
             'id_autoridad' => null,
             'latitud' => -12.1492232,
             'longitud' => -77.0224648,
-            'img_incidente' => 'storage/reports_images/seed3.webp',
+            'img_incidente' => 'default_reports/seed3.webp',
         ]);
 
         Reporte::create([
-            'id_usuario' => 1,
+            'id_usuario' => 2,
             'titulo' => 'Colisión entre camión de carga y automóvil',
             'descripcion' => 'Un automóvil chocó contra un camión detenido por una falla mecánica en plena avenida, causando un gran atasco vehicular.',
             'ubicacion' => 'Avenida Brasil, Jesús María, Lima, Lima Metropolitana, Lima, 15083, Perú',
@@ -67,11 +67,11 @@ class ReporteSeeder extends Seeder
             'id_autoridad' => null,
             'latitud' => -12.0653539,
             'longitud' => -77.0456361,
-            'img_incidente' => 'storage/reports_images/seed4.webp',
+            'img_incidente' => 'default_reports/seed4.webp',
         ]);
 
         Reporte::create([
-            'id_usuario' => 1,
+            'id_usuario' => 3,
             'titulo' => 'Resbalón de turista en paso peatonal empedrado',
             'descripcion' => 'Un turista se resbaló en el empedrado de la plaza, causando una fractura en su tobillo y requiriendo atención médica.',
             'ubicacion' => 'Plaza Mayor de Lima, Urbanización Cercado de Lima, Lima, Lima Metropolitana, Lima, Perú',
@@ -81,11 +81,11 @@ class ReporteSeeder extends Seeder
             'id_autoridad' => null,
             'latitud' => -12.04593345,
             'longitud' => -77.03055592743846,
-            'img_incidente' => 'storage/reports_images/seed5.webp',
+            'img_incidente' => 'default_reports/seed5.webp',
         ]);
 
         Reporte::create([
-            'id_usuario' => 1,
+            'id_usuario' => 3,
             'titulo' => 'Choque entre automóvil y bus de transporte público',
             'descripcion' => 'Un automóvil no respetó la señal de alto en la intersección y chocó con un bus, dejando varios heridos leves.',
             'ubicacion' => 'Avenida La Marina, San Miguel, Lima, Lima Metropolitana, Lima, 15087, Perú',
@@ -95,7 +95,7 @@ class ReporteSeeder extends Seeder
             'id_autoridad' => null,
             'latitud' => -12.075711150525583,
             'longitud' => -77.0961229673866,
-            'img_incidente' => 'storage/reports_images/seed6.webp',
+            'img_incidente' => 'default_reports/seed6.webp',
         ]);
     }
 }
