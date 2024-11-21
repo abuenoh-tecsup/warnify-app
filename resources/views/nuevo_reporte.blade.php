@@ -134,31 +134,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-span-1 md:col-span-2 flex flex-col">
-            <h2 class="text-xl font-semibold text-gray-700 mb-4 flex-shrink-0">Mapa</h2>
-            <div class="bg-gray-200 h-full p-4 rounded-xl flex flex-col gap-4 flex-grow">
-                <div class="flex-shrink-0">
-                    <form id="address-form">
-                        @csrf
-                        <x-input-field
-                            name="address"
-                            placeholder="Ingresar una dirección"
-                            value=""
-                            class="w-4/5"
-                        />
-                        <x-button
-                            class="text-black"
-                            type="button"
-                            name="search-btn"
-                        >
-                            Buscar
-                        </x-button>
-                        <ul id="results"></ul>
-                    </form>
-                </div>
-                <div class="flex-grow min-h-60">
-                    <div id="map" class="w-full h-full flex-shrink-0 rounded-2xl"></div>
-                </div>
                 <script>
                         $(document).ready(function () {
                         // Inicializar mapa centrado en Perú
