@@ -96,20 +96,24 @@ class ReporteController extends Controller
         //
     }
 
-    public function list_details_all(string $id = null)
+    public function list_details_all(string $filter, string $id = null)
     {
-        $reportes = Reporte::latest()->get();
+        // Filtrar los reportes según el valor del parámetro 'filter'
+        if ($filter === 'own') {
+            // Filtrar los reportes solo para el usuario autenticado
+            $reportes = Reporte::where('id_usuario', Auth::user()->id_usuario)->latest()->get();
+        } else {
+            // Mostrar todos los reportes
+            $reportes = Reporte::latest()->get();
+        }
+
+        // Si se proporciona un 'id', obtener el reporte seleccionado
         $reporteSeleccionado = $id ? Reporte::find($id) : null;
 
+        // Retornar la vista con los reportes filtrados
         return view('reportes', compact('reportes', 'reporteSeleccionado'));
     }
-    /*
-    public function list_own(string $id)
-    {
-        $reportes = Reporte::where('id_usuario', 1)->get();
-        return view
-    }
-    */
+
 
     /**
      * Show the form for editing the specified resource.

@@ -8,6 +8,17 @@
     <!-- Sección de Listado de Reportes -->
     <div class="col-span-1 flex flex-col">
         <h2 class="text-xl font-bold mb-1">Listado</h2>
+        <div class="flex justify-start space-x-4 mb-4">
+            <!-- Botón para ver todos los reportes -->
+            <a href="{{ route('reportes.list', ['filter' => 'all']) }}" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                Todos los Reportes
+            </a>
+
+            <!-- Botón para ver los reportes propios -->
+            <a href="{{ route('reportes.list', ['filter' => 'own']) }}" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+                Mis Reportes
+            </a>
+        </div>
         <div class="flex-grow bg-gray-200 p-4 rounded-xl h-40 overflow-y-scroll">
             @foreach ($reportes as $reporte)
             <x-report-card

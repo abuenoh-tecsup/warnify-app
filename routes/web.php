@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function () { // Protegemos estas rutas
     Route::get('/', [ReporteController::class, 'index']);
     Route::get('/inicio', [ReporteController::class, 'index'])->name('reportes.inicio');
-    Route::get('/reportes/{id?}', [ReporteController::class, 'list_details_all'])->name('reportes.list');
+    Route::get('/reportes/{filter?}/{id?}', [ReporteController::class, 'list_details_all'])->name('reportes.list');
     Route::get('/nuevo_reporte', [ReporteController::class, 'create'])->name('reportes.create');
     Route::post('/nuevo_reporte', [ReporteController::class, 'store'])->name('reportes.store');
     Route::get('/mapa', function () { return view('mapa'); });
