@@ -275,7 +275,7 @@
                                 if (data && data.display_name) {
                                     var displayName = data.display_name;
 
-                                    // Actualizar los campos del formulario
+                                    // Actualizar los campos del formulario-
                                     $('#latitud').val(lat);
                                     $('#longitud').val(lon);
                                     $('#ubicacion').val(displayName);
