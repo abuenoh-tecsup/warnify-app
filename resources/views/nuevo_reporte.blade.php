@@ -13,9 +13,9 @@
                         @csrf
                         <!-- Título del incidente -->
                         <div class="mb-4">
-                            <x-label 
-                                for="titulo" 
-                                text="Título del incidente" 
+                            <x-label
+                                for="titulo"
+                                text="Título del incidente"
                                 class="text-gray-600 font-medium"
                             />
                             <x-input-field
@@ -25,12 +25,12 @@
                                 class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2"
                             />
                         </div>
-                        
+
                         <!-- Descripción del incidente -->
                         <div class="mb-4">
-                            <x-label 
-                                for="descripcion" 
-                                text="Descripción del incidente" 
+                            <x-label
+                                for="descripcion"
+                                text="Descripción del incidente"
                                 class="text-gray-600 font-medium"
                             />
                             <x-textarea-field
@@ -41,12 +41,12 @@
                                 class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2"
                             />
                         </div>
-                        
+
                         <!-- Fecha y hora -->
                         <div class="mb-4">
-                            <x-label 
-                                for="fecha_reporte" 
-                                text="Fecha y hora" 
+                            <x-label
+                                for="fecha_reporte"
+                                text="Fecha y hora"
                                 class="text-gray-600 font-medium"
                             />
                             <x-datepicker
@@ -56,12 +56,12 @@
                                 class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2"
                             />
                         </div>
-                        
+
                         <!-- Ubicación del incidente -->
                         <div class="mb-4">
-                            <x-label 
-                                for="ubicacion" 
-                                text="Ubicación del incidente" 
+                            <x-label
+                                for="ubicacion"
+                                text="Ubicación del incidente"
                                 class="text-gray-600 font-medium"
                             />
                             <x-input-field
@@ -81,12 +81,12 @@
                                 value=""
                             />
                         </div>
-                        
+
                         <!-- Imagen del incidente -->
                         <div class="mb-4">
-                            <x-label 
-                                for="imagen_incidente" 
-                                text="Imagen" 
+                            <x-label
+                                for="imagen_incidente"
+                                text="Imagen"
                                 class="text-gray-600 font-medium"
                             />
                             <x-image-upload
@@ -94,9 +94,9 @@
                                 class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2"
                             />
                         </div>
-                        
+
                         <!-- Botón Guardar -->
-                        <x-button 
+                        <x-button
                             class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md"
                             type="submit"
                             name="save-btn"
@@ -105,11 +105,11 @@
                         </x-button>
                     </form>
                 </div>
-                
+
                 <!-- Columna de Mapa -->
-                <div class="col-span-1 md:col-span-2">
+                <div class="col-span-1 md:col-span-2 flex flex-col">
                     <h2 class="text-xl font-semibold text-gray-700 mb-4 flex-shrink-0">Mapa</h2>
-                    <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="bg-white p-6 rounded-lg shadow-md flex-grow flex flex-col">
                         <!-- Formulario para ingresar dirección -->
                         <form id="address-form" class="flex items-center gap-4 mb-4">
                             @csrf
@@ -129,7 +129,7 @@
                         </form>
                         <ul id="results" class="text-gray-700 mb-4 px-4"></ul>
                         <!-- Contenedor del mapa -->
-                        <div id="map" class="w-full h-[400px] rounded-lg"></div>
+                        <div id="map" class="w-full h-[400px] rounded-lg flex-grow"></div>
                     </div>
                 </div>
             </div>
