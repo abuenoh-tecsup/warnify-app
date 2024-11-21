@@ -29,7 +29,7 @@
         }
     </style>
 </head>
-<body class="flex flex-col min-h-screen bg-gray-100">
+<body class="flex flex-col min-h-screen bg-gray-100 font-sans">
     <header>
         @include('layouts.nav')
     </header>

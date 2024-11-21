@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Reporte;
@@ -18,7 +19,7 @@ class ReporteController extends Controller
         $reportesRecientes = Reporte::orderBy('fecha_reporte', 'desc')->limit(5)->get();
 
         // Obtener los reportes del usuario autenticado
-        $misReportes = Reporte::where('id_usuario', 1)
+        $misReportes = Reporte::where('id_usuario', Auth::user()->id_usuario)
                                 ->orderBy('fecha_reporte', 'desc')
                                 ->limit(5)
                                 ->get();
@@ -73,7 +74,7 @@ class ReporteController extends Controller
         $data['estado_reporte'] = 'PENDIENTE';
         $data['id_autoridad'] = null;
 
-        $data['id_usuario'] = 1;
+        $data['id_usuario'] = Auth::user()->id_usuario;
         $data['fecha_act'] = Carbon::now();
 
         if ($request->hasFile('img_incidente')) {

@@ -3,7 +3,7 @@
 @section('title', 'Página de Inicio')
 
 @section('content')
-    <h2 class="text-2xl font-bold mb-6">Bienvenido, {{ 'Alvaro' }}</h2>
+    <h2 class="text-2xl font-bold mb-6">Bienvenido, {{ Auth::user()->nombre_apellido }}</h2>
     <p class="text-gray-600 mb-8">Aquí puedes consultar y gestionar tus reportes.</p>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
