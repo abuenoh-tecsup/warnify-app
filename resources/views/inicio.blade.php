@@ -71,7 +71,7 @@
                     class="bg-yellow-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md text-center hover:bg-yellow-600">
                     Crear Nuevo Reporte
                 </a>
-                <a href="{{ route('reportes.list') }}" 
+                <a href="{{ route('reportes.list', ['filter' => 'all']) }}"
                     class="bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md text-center hover:bg-blue-600">
                     Ver Mis Reportes
                 </a>
