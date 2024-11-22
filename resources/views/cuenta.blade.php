@@ -121,8 +121,13 @@
             @method('PATCH')
 
             <div class="form-group">
-                <label for="nombre_completo">Nombre completo</label>
-                <input type="text" id="nombre_completo" name="nombre_completo" value="{{ old('nombre_completo', $user->nombre_apellido) }}">
+                <label for="nombre">Nombres</label>
+                <input type="text" id="nombres" name="nombres" value="{{ old('nombre', $user->nombre) }}">
+            </div>
+
+            <div class="form-group">
+                <label for="apellidos">Apellidos</label>
+                <input type="text" id="apellidos" name="apellidos" value="{{ old('apellidos', $user->apellidos) }}">
             </div>
 
             <div class="form-group">
@@ -142,7 +147,7 @@
 
             <div class="form-group">
                 <label for="fecha_registro">Fecha de Registro</label>
-                <input type="text" id="fecha_registro" value="{{ $user->fecha_registro }}" disabled style="background-color: #d3d3d3;">
+                <input type="text" id="fecha_registro" value="{{ $user->created_at }}" disabled style="background-color: #d3d3d3;">
             </div>
 
             <div class="form-group">
