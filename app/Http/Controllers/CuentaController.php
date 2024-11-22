@@ -46,5 +46,35 @@ class CuentaController extends Controller
             // Redirigir a la misma página si la validación pasó, con los errores si los hubo
             return redirect()->route('cuenta.index')->withInput();  // withInput() mantiene los valores ingresados en el formulario
         }
-  
+
+        public function showChangePasswordForm()
+    {
+        return view('cuenta.change-password');
+    }
+
+    // Método para actualizar la contraseña
+    public function changePassword(Request $request)
+        {
+            // Validar las contraseñas
+            $request->validate([
+                'actual' => 'required|string',
+                'nueva' => 'required|string|min:8|confirmed',  // Verifica que 'nueva' y 'nueva_confirmation' coincidan
+                'verificar' => 'required|string|same:nueva',  // Verifica que 'verificar' sea igual a 'nueva'
+            ]);
+
+            $user = Auth::user();
+
+            // Verificar si la contraseña actual es correcta
+            if (!Hash::check($request->actual, $user->password)) {
+                return back()->withErrors(['actual' => 'La contraseña actual no es correcta.']);
+            }
+
+            // Actualizar la contraseña
+            $user->password = Hash::make($request->nueva);
+            $user->save();
+
+            // Retornar un mensaje de éxito
+            return redirect()->route('cuenta.index')->with('success', 'Contraseña actualizada correctamente.');
+        }
+
 }

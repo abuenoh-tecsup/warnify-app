@@ -38,3 +38,4 @@ Route::get('/cuenta', [CuentaController::class, 'show'])->name('cuenta.index');
 // Ruta para actualizar los datos de la cuenta
 Route::patch('/cuenta', [CuentaController::class, 'update'])->name('cuenta.update');
 
+Route::patch('/cuenta/change-password', [CuentaController::class, 'changePassword'])->name('cuenta.changePassword');

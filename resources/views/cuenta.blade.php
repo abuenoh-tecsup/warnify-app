@@ -210,25 +210,30 @@
 </style>
     <!-- Cambio de contraseña -->
     <div class="section">
-      <h2>Cambio de contraseña</h2>
-      <div class="form-group">
-        <label for="actual">Contraseña actual</label>
-        <input type="password" id="actual" placeholder="Ingresar contraseña actual">
-      </div>
+    <h2>Cambio de contraseña</h2>
+    <form action="{{ route('cuenta.changePassword') }}" method="POST">
+        @csrf
+        @method('PATCH') <!-- Aquí se simula el método PATCH -->
 
-      <div class="form-group">
-        <label for="nueva">Nueva contraseña</label>
-        <input type="password" id="nueva" placeholder="Ingresar nueva contraseña">
-      </div>
+        <div class="form-group">
+            <label for="actual">Contraseña actual</label>
+            <input type="password" id="actual" name="actual" placeholder="Ingresar contraseña actual" required>
+        </div>
 
-      <div class="form-group">
-        <label for="verificar">Verificar contraseña</label>
-        <input type="password" id="verificar" placeholder="Ingresar nueva contraseña">
-      </div>
+        <div class="form-group">
+            <label for="nueva">Nueva contraseña</label>
+            <input type="password" id="nueva" name="nueva" placeholder="Ingresar nueva contraseña" required>
+        </div>
 
-      <div class="buttons">
-        <button class="btn btn-yellow">Actualizar contraseña</button>
-      </div>
+        <div class="form-group">
+            <label for="verificar">Verificar nueva contraseña</label>
+            <input type="password" id="verificar" name="verificar" placeholder="Confirmar nueva contraseña" required>
+        </div>
+
+        <div class="buttons">
+            <button class="btn btn-yellow">Actualizar contraseña</button>
+        </div>
+    </form>
     </div>
 
     <!-- Configuración -->
