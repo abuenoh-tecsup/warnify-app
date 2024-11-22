@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('autoridad', function (Blueprint $table) {
-            $table->id('id_autoridad');
+        Schema::create('ciudadano', function (Blueprint $table) {
+            $table->id('id_ciudadano');
             $table->unsignedBigInteger('id_usuario'); // Clave foránea que referencia a la tabla usuario
-            $table->string('cargo', 50);
-            $table->string('tipo_autoridad', 50);
+            $table->string('documento_identidad');
+            $table->string('ocupacion');
             $table->timestamps();
 
             // Relación con la tabla usuario
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('autoridad');
+        Schema::dropIfExists('ciudadano');
     }
 };

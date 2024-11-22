@@ -11,13 +11,13 @@
             <h2 class="text-xl font-semibold text-gray-700 mb-4">Listado</h2>
             <div class="flex space-x-4 mb-4">
                 <!-- Botón para ver todos los reportes -->
-                <a href="{{ route('reportes.list', ['filter' => 'all']) }}" 
+                <a href="{{ route('reportes.list', ['filter' => 'all']) }}"
                    class="px-4 py-2 bg-blue-500 text-white font-medium rounded hover:bg-blue-600">
                     Todos los Reportes
                 </a>
 
                 <!-- Botón para ver los reportes propios -->
-                <a href="{{ route('reportes.list', ['filter' => 'own']) }}" 
+                <a href="{{ route('reportes.list', ['filter' => 'own']) }}"
                    class="px-4 py-2 bg-green-500 text-white font-medium rounded hover:bg-green-600">
                     Mis Reportes
                 </a>
@@ -39,10 +39,17 @@
 
         <!-- Sección de Detalles del Reporte Seleccionado -->
         <div class="col-span-1 md:col-span-2">
-            <h2 class="text-xl font-semibold text-gray-700 mb-4">Detalles</h2>
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">Detalles
+            </h2>
             <div class="bg-white p-6 rounded-xl shadow-md">
                 @if ($reporteSeleccionado)
-                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Detalles del Reporte</h3>
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6 flex justify-between">
+                    Detalles del Reporte
+                    <a href="{{ route('reportes.edit', ['id' => $reporteSeleccionado->id_reporte]) }}"
+                        class="bg-green-500 text-base text-white font-semibold py-3 px-6 rounded-lg shadow-md text-center hover:bg-green-600">
+                        Editar reporte
+                    </a>
+                </h3>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Información del Reporte -->

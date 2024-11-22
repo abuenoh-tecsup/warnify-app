@@ -13,6 +13,8 @@ Route::middleware('auth')->group(function () { // Protegemos estas rutas
     Route::post('/nuevo_reporte', [ReporteController::class, 'store'])->name('reportes.store');
     Route::get('/mapa', function () { return view('mapa'); });
     Route::get('/cuenta', function () { return view('cuenta'); });
+    Route::get('/editar_reporte/{id}', [ReporteController::class, 'edit'])->name('reportes.edit');
+    Route::put('/editar_reporte/{id}', [ReporteController::class, 'update'])->name('reportes.update');
 });
 
 Route::get('/dashboard', function () {

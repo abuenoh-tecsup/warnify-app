@@ -10,10 +10,14 @@ class Moderador extends Model
     protected $primaryKey = 'id_moderador';
     public $timestamps = true;
 
-    protected $fillable = ['nom_apell', 'e_mail'];
+    protected $fillable = [
+        'area_supervision',
+        'id_usuario',  // Referencia al usuario
+    ];
 
-    public function historialEstados()
+    // Relación con el usuario (uno a uno)
+    public function usuario()
     {
-        return $this->hasMany(HistorialEstado::class, 'cambiado_por');
+        return $this->belongsTo(Usuario::class, 'id_usuario');
     }
 }

@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('moderador', function (Blueprint $table) {
             $table->id('id_moderador');
-            $table->string('nom_apell', 100);
-            $table->string('e_mail', 100);
+            $table->unsignedBigInteger('id_usuario'); // Clave foránea que referencia a la tabla usuario
+            $table->string('area_supervision', 100);
             $table->timestamps();
+
+            // Relación con la tabla usuario
+            $table->foreign('id_usuario')->references('id_usuario')->on('usuario')->onDelete('cascade');
         });
     }
 

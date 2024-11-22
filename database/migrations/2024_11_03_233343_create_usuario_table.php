@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('usuario', function (Blueprint $table) {
             $table->id('id_usuario'); // Clave primaria
-            $table->string('nombre_apellido', 100);
+            $table->string('nombre', 100);
+            $table->string('apellidos', 100);
             $table->string('email', 100)->unique();
             $table->string('telefono', 15);
             $table->string('direccion', 100);
-            $table->date('fecha_registro');
             $table->boolean('notifi_acti');
             $table->string('password');
+            $table->enum('tipo', ['ciudadano', 'autoridad', 'moderador']);
             $table->timestamps();
         });
     }
