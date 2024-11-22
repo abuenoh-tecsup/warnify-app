@@ -226,8 +226,8 @@
         </div>
 
         <div class="form-group">
-            <label for="verificar">Verificar nueva contraseña</label>
-            <input type="password" id="verificar" name="verificar" placeholder="Confirmar nueva contraseña" required>
+            <label for="nueva_confirmacion">Verificar nueva contraseña</label>
+            <input type="password" id="nueva_confirmacion" name="nueva_confirmacion" placeholder="Confirmar nueva contraseña" required>
         </div>
 
         <div class="buttons">
