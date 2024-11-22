@@ -109,11 +109,13 @@
                             Inicio
                         </a>
                     </li>
+                    @if (Auth::user()->isCiudadano())
                     <li class="py-2 lg:py-0 menu-item">
                         <a class="text-white hover:border-b-4 hover:border-yellow-400" href="/nuevo_reporte">
                             Nuevo reporte
                         </a>
                     </li>
+                    @endif
                     <li class="py-2 lg:py-0 menu-item">
                         <a class="text-white hover:border-b-4 hover:border-yellow-400"
                             href="{{ route('reportes.list', ['filter' => 'all']) }}">
@@ -125,11 +127,13 @@
                             Cuenta
                         </a>
                     </li>
+                    @if (Auth::user()->isCiudadano())
                     <li class="py-2 lg:py-0 menu-item">
                         <a class="text-white hover:border-b-4 hover:border-yellow-400" href="#">
                             Acerca de
                         </a>
                     </li>
+                    @endif
                 </ul>
             </nav>
         </div>

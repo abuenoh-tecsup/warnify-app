@@ -120,7 +120,8 @@ class ReporteController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $reporte = Reporte::findOrFail($id);
+        return view('editar_reporte', compact('reporte'));
     }
 
     /**
@@ -128,7 +129,40 @@ class ReporteController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Validar los datos del formulario
+        /*
+        $data = $request->validate([
+            'titulo' => 'required|string|max:100',
+            'descripcion' => 'required|string',
+            'fecha_reporte' => 'required|string',
+            'ubicacion' => 'required|string|max:100',
+            'latitud' => 'nullable|numeric',
+            'longitud' => 'nullable|numeric',
+            'img_incidente' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+        */
+
+        $data = $request->all();
+
+        // Formatear la fecha
+        $data['fecha_reporte'] = Carbon::createFromFormat('M j, Y h:i A', $request->fecha_reporte)->format('Y-m-d H:i:s');
+        $data['fecha_act'] = Carbon::now(); // Fecha de actualización
+
+        // Si el usuario ha subido una nueva imagen, procesarla
+        if ($request->hasFile('img_incidente')) {
+            $nombreArchivo = 'reporte_' . time() . '.' . $request->file('img_incidente')->getClientOriginalExtension();
+            $data['img_incidente'] = $request->file('img_incidente')->storeAs('/reports_images', $nombreArchivo, 'public');
+            $data['img_incidente'] = 'storage/reports_images/' . $nombreArchivo;
+        }
+
+        // Buscar el reporte a actualizar
+        $reporte = Reporte::findOrFail($id);
+
+        // Actualizar el reporte
+        $reporte->update($data);
+
+        // Redirigir al usuario con un mensaje de éxito
+        return redirect()->route('reportes.inicio');
     }
 
     /**
