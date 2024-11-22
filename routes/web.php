@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CuentaController;
 
+
 Route::middleware('auth')->group(function () { // Protegemos estas rutas
     Route::get('/', [ReporteController::class, 'index']);
     Route::get('/inicio', [ReporteController::class, 'index'])->name('reportes.inicio');
@@ -12,7 +13,6 @@ Route::middleware('auth')->group(function () { // Protegemos estas rutas
     Route::get('/nuevo_reporte', [ReporteController::class, 'create'])->name('reportes.create');
     Route::post('/nuevo_reporte', [ReporteController::class, 'store'])->name('reportes.store');
     Route::get('/mapa', function () { return view('mapa'); });
-    Route::get('/cuenta', function () { return view('cuenta'); });
     Route::get('/editar_reporte/{id}', [ReporteController::class, 'edit'])->name('reportes.edit');
     Route::put('/editar_reporte/{id}', [ReporteController::class, 'update'])->name('reportes.update');
 });

@@ -227,7 +227,7 @@
 
         <div class="form-group">
             <label for="nueva_confirmacion">Verificar nueva contraseña</label>
-            <input type="password" id="nueva_confirmacion" name="nueva_confirmacion" placeholder="Confirmar nueva contraseña" required>
+            <input type="password" id="nueva_confirmation" name="nueva_confirmation" placeholder="Confirmar nueva contraseña" required>
         </div>
 
         <div class="buttons">
@@ -248,10 +248,6 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="ubicacion">Ubicación predeterminada</label>
-        <input type="text" id="ubicacion" placeholder="Ingresar ubicación">
-      </div>
 
       <div class="buttons">
         <button class="btn btn-blue">Ver historial de actividades</button>
