@@ -14,16 +14,24 @@ class HistorialEstado extends Model
         'id_reporte',
         'estado_anterior',
         'nuevo_estado',
-        'cambiado_por',
+        'cambiado_por_usuario',
     ];
 
+    /**
+     * Relación con el reporte
+     * Un historial de estado pertenece a un reporte
+     */
     public function reporte()
     {
         return $this->belongsTo(Reporte::class, 'id_reporte');
     }
 
-    public function moderador()
+    /**
+     * Relación con el usuario que cambió el estado
+     * El cambio de estado fue realizado por un usuario (moderador o autoridad)
+     */
+    public function usuario()
     {
-        return $this->belongsTo(Moderador::class, 'cambiado_por');
+        return $this->belongsTo(Usuario::class, 'cambiado_por_usuario');
     }
 }

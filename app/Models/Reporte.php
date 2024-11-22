@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 
 class Reporte extends Model
 {
@@ -12,7 +11,7 @@ class Reporte extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'id_usuario',
+        'id_ciudadano',
         'titulo',
         'descripcion',
         'ubicacion',
@@ -25,34 +24,21 @@ class Reporte extends Model
         'img_incidente',
     ];
 
-    public function usuario()
+    /**
+     * Relación con el ciudadano (usuario)
+     * Un reporte pertenece a un ciudadano
+     */
+    public function ciudadano()
     {
-        return $this->belongsTo(Usuario::class, 'id_usuario');
+        return $this->belongsTo(Usuario::class, 'id_ciudadano');
     }
 
+    /**
+     * Relación con la autoridad (usuario)
+     * Un reporte puede tener una autoridad asociada
+     */
     public function autoridad()
     {
-        return $this->belongsTo(Autoridad::class, 'id_autoridad');
-    }
-
-    public function historialEstados()
-    {
-        return $this->hasMany(HistorialEstado::class, 'id_reporte');
-    }
-
-    /**
-     * Accessor para formatear la fecha del reporte
-     */
-    public function getFechaReporteAttribute($value)
-    {
-        return Carbon::parse($value)->format('M j, Y h:i A');
-    }
-
-    /**
-     * Accessor para formatear la fecha de actualización
-     */
-    public function getFechaActAttribute($value)
-    {
-        return Carbon::parse($value)->format('M j, Y h:i A');
+        return $this->belongsTo(Usuario::class, 'id_autoridad');
     }
 }

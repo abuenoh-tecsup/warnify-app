@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container mx-auto p-6 bg-gray-50 shadow-lg rounded-lg">
-        <h2 class="text-4xl font-extrabold text-gray-800 mb-6">Bienvenido, {{ Auth::user()->nombre_apellido }}</h2>
+        <h2 class="text-4xl font-extrabold text-gray-800 mb-6">Bienvenido, {{ Auth::user()->nombre}} {{ Auth::user()->apellidos}}</h2>
         <p class="text-gray-700 mb-8 text-lg">Aquí puedes consultar y gestionar tus reportes de manera fácil y rápida.</p>
 
         <!-- Estadísticas Rápidas -->
@@ -65,7 +65,7 @@
         <div>
             <h3 class="text-xl font-bold text-gray-800 mb-4">Accesos Rápidos</h3>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <a href="{{ route('reportes.create') }}" 
+                <a href="{{ route('reportes.create') }}"
                     class="bg-yellow-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md text-center hover:bg-yellow-600">
                     Crear Nuevo Reporte
                 </a>

@@ -11,12 +11,16 @@ class Comentario extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'id_usuario',
+        'id_ciudadano',
         'contenido',
     ];
 
-    public function usuario()
+    /**
+     * Relación con el ciudadano (usuario)
+     * Un comentario pertenece a un ciudadano
+     */
+    public function ciudadano()
     {
-        return $this->belongsTo(Usuario::class, 'id_usuario');
+        return $this->belongsTo(Usuario::class, 'id_ciudadano');
     }
 }

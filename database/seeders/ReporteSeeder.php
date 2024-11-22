@@ -3,7 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Reporte; // Asegúrate de importar el modelo Reporte
+use App\Models\Reporte;
+use App\Models\Usuario;  // Asegúrate de importar el modelo Usuario
 use Carbon\Carbon; // Asegúrate de importar Carbon
 
 class ReporteSeeder extends Seeder
@@ -13,9 +14,14 @@ class ReporteSeeder extends Seeder
      */
     public function run()
     {
+        // Recuperar los usuarios de tipo 'ciudadano' (ya que ahora se necesitan para asignar los reportes)
+        $ciudadano1 = Usuario::find(1);
+        $ciudadano2 = Usuario::find(2);
+        $ciudadano3 = Usuario::find(3);
+
         // Inserta seis reportes de prueba usando create()
         Reporte::create([
-            'id_usuario' => 1,
+            'id_ciudadano' => $ciudadano1->id_usuario,  // Asignamos al ciudadano correspondiente
             'titulo' => 'Colisión entre un automóvil y un bus de transporte público',
             'descripcion' => 'Un choque entre vehículos debido a una maniobra imprudente durante la hora punta, causando congestión y bloqueando los carriles.',
             'ubicacion' => 'Avenida Javier Prado Este, Centro financiero de San Isidro, San Isidro, Lima, Lima Metropolitana, Lima, 15046, Perú',
@@ -29,7 +35,7 @@ class ReporteSeeder extends Seeder
         ]);
 
         Reporte::create([
-            'id_usuario' => 1,
+            'id_ciudadano' => $ciudadano1->id_usuario,  // Asignamos al ciudadano correspondiente
             'titulo' => 'Atropello de peatón por motocicleta',
             'descripcion' => 'Un motociclista atropelló a un peatón que cruzaba por un paso de cebra, luego de saltarse la luz roja del semáforo.',
             'ubicacion' => 'Avenida Pardo y Aliaga, Santa Isabel, San Isidro, Lima, Lima Metropolitana, Lima, 15073, Perú',
@@ -43,7 +49,7 @@ class ReporteSeeder extends Seeder
         ]);
 
         Reporte::create([
-            'id_usuario' => 2,
+            'id_ciudadano' => $ciudadano2->id_usuario,  // Asignamos al ciudadano correspondiente
             'titulo' => 'Caída de motocicleta por mal estado de la vía',
             'descripcion' => 'Un motociclista perdió el control al pasar por una curva resbalosa cerca del puente, cayendo al asfalto y sufriendo lesiones leves.',
             'ubicacion' => 'Puente de los Suspiros, Barranco, Lima, Lima Metropolitana, Lima, 15042, Perú',
@@ -57,7 +63,7 @@ class ReporteSeeder extends Seeder
         ]);
 
         Reporte::create([
-            'id_usuario' => 2,
+            'id_ciudadano' => $ciudadano2->id_usuario,  // Asignamos al ciudadano correspondiente
             'titulo' => 'Colisión entre camión de carga y automóvil',
             'descripcion' => 'Un automóvil chocó contra un camión detenido por una falla mecánica en plena avenida, causando un gran atasco vehicular.',
             'ubicacion' => 'Avenida Brasil, Jesús María, Lima, Lima Metropolitana, Lima, 15083, Perú',
@@ -71,7 +77,7 @@ class ReporteSeeder extends Seeder
         ]);
 
         Reporte::create([
-            'id_usuario' => 3,
+            'id_ciudadano' => $ciudadano3->id_usuario,  // Asignamos al ciudadano correspondiente
             'titulo' => 'Resbalón de turista en paso peatonal empedrado',
             'descripcion' => 'Un turista se resbaló en el empedrado de la plaza, causando una fractura en su tobillo y requiriendo atención médica.',
             'ubicacion' => 'Plaza Mayor de Lima, Urbanización Cercado de Lima, Lima, Lima Metropolitana, Lima, Perú',
@@ -85,7 +91,7 @@ class ReporteSeeder extends Seeder
         ]);
 
         Reporte::create([
-            'id_usuario' => 3,
+            'id_ciudadano' => $ciudadano3->id_usuario,  // Asignamos al ciudadano correspondiente
             'titulo' => 'Choque entre automóvil y bus de transporte público',
             'descripcion' => 'Un automóvil no respetó la señal de alto en la intersección y chocó con un bus, dejando varios heridos leves.',
             'ubicacion' => 'Avenida La Marina, San Miguel, Lima, Lima Metropolitana, Lima, 15087, Perú',

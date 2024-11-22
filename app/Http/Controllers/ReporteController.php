@@ -19,7 +19,7 @@ class ReporteController extends Controller
         $reportesRecientes = Reporte::orderBy('fecha_reporte', 'desc')->limit(5)->get();
 
         // Obtener los reportes del usuario autenticado
-        $misReportes = Reporte::where('id_usuario', Auth::user()->id_usuario)
+        $misReportes = Reporte::where('id_ciudadano', Auth::user()->id_usuario)
                                 ->orderBy('fecha_reporte', 'desc')
                                 ->limit(5)
                                 ->get();
@@ -74,7 +74,7 @@ class ReporteController extends Controller
         $data['estado_reporte'] = 'PENDIENTE';
         $data['id_autoridad'] = null;
 
-        $data['id_usuario'] = Auth::user()->id_usuario;
+        $data['id_ciudadano'] = Auth::user()->id_usuario;
         $data['fecha_act'] = Carbon::now();
 
         if ($request->hasFile('img_incidente')) {
@@ -101,7 +101,7 @@ class ReporteController extends Controller
         // Filtrar los reportes según el valor del parámetro 'filter'
         if ($filter === 'own') {
             // Filtrar los reportes solo para el usuario autenticado
-            $reportes = Reporte::where('id_usuario', Auth::user()->id_usuario)->latest()->get();
+            $reportes = Reporte::where('id_ciudadano', Auth::user()->id_usuario)->latest()->get();
         } else {
             // Mostrar todos los reportes
             $reportes = Reporte::latest()->get();

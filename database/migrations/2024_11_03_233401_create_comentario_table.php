@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('comentario', function (Blueprint $table) {
             $table->id('id_comentario');
-            $table->unsignedBigInteger('id_usuario');
+            $table->unsignedBigInteger('id_ciudadano');
             $table->text('contenido')->notNull();
             $table->timestamps();
-            $table->foreign('id_usuario')
+            $table->foreign('id_ciudadano')
                   ->references('id_usuario')
                   ->on('usuario')
                   ->onDelete('cascade');

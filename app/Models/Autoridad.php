@@ -11,16 +11,14 @@ class Autoridad extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'nombre_apellido',
         'cargo',
-        'email',
-        'telefono',
-        'fecha_registro',
         'tipo_autoridad',
+        'id_usuario',  // Referencia al usuario
     ];
 
-    public function reportes()
+    // Relación con el usuario (uno a uno)
+    public function usuario()
     {
-        return $this->hasMany(Reporte::class, 'id_autoridad');
+        return $this->belongsTo(Usuario::class, 'id_usuario');
     }
 }
