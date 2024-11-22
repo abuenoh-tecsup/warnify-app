@@ -28,7 +28,7 @@ class CuentaController extends Controller
             ], [
                 'correo.unique' => 'El correo electrónico ya está registrado para otro usuario. Por favor ingrese otro correo.'
             ]);
-
+            
             // Si la validación pasa, actualizamos los datos del usuario
             $user = auth()->user();
             $user->update([
@@ -48,33 +48,36 @@ class CuentaController extends Controller
         }
 
         public function showChangePasswordForm()
-    {
-        return view('cuenta.change-password');
-    }
+        {
+            return view('cuenta.change-password');
+        }
 
-    // Método para actualizar la contraseña
-    public function changePassword(Request $request)
+        public function changePassword(Request $request)
         {
             // Validar las contraseñas
             $request->validate([
-                'actual' => 'required|string',
-                'nueva' => 'required|string|min:8|confirmed',  // Verifica que 'nueva' y 'nueva_confirmation' coincidan
-                'verificar' => 'required|string|same:nueva',  // Verifica que 'verificar' sea igual a 'nueva'
+                'actual' => 'required|string', // Contraseña actual ingresada
+                'nueva' => 'required|string|min:8|confirmed', // Asegura que 'nueva' y 'nueva_confirmation' coincidan
             ]);
+            
+            $user = Auth::user(); // Usuario autenticado
 
-            $user = Auth::user();
-
-            // Verificar si la contraseña actual es correcta
-            if (!Hash::check($request->actual, $user->password)) {
+            // Validar si la contraseña actual coincide
+            $actualIngresada = $request->actual; // Contraseña ingresada por el usuario (sin encriptar)
+            $actualAlmacenada = $user->password; // Hash de la contraseña almacenada en la base de datos
+            
+            // Comprobar la contraseña actual
+            if (!Hash::check($actualIngresada, $actualAlmacenada)) {
                 return back()->withErrors(['actual' => 'La contraseña actual no es correcta.']);
             }
 
             // Actualizar la contraseña
-            $user->password = Hash::make($request->nueva);
+            $user->password = Hash::make($request->nueva); // Encripta la nueva contraseña antes de guardarla
             $user->save();
 
             // Retornar un mensaje de éxito
             return redirect()->route('cuenta.index')->with('success', 'Contraseña actualizada correctamente.');
         }
+
 
 }
