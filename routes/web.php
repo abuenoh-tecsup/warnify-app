@@ -3,6 +3,7 @@ use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CuentaController;
 
 Route::middleware('auth')->group(function () { // Protegemos estas rutas
     Route::get('/', [ReporteController::class, 'index']);
@@ -27,3 +28,11 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('/geocode', [GeoCodingController::class, 'searchAddress'])->name('geocode');
+
+
+// Ruta para mostrar el formulario de cuenta
+Route::get('/cuenta', [CuentaController::class, 'show'])->name('cuenta.index');
+
+// Ruta para actualizar los datos de la cuenta
+Route::patch('/cuenta', [CuentaController::class, 'update'])->name('cuenta.update');
+
