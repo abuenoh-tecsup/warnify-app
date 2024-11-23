@@ -6,7 +6,7 @@
         <div class="container mx-auto px-6">
             <h2 class="text-2xl font-bold text-gray-800 mb-6">Editar Reporte</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Columna de Información -->
+                <!--Información -->
                 <div class="col-span-1">
                     <h2 class="text-xl font-semibold text-gray-700 mb-4">Información</h2>
                     <form action="{{ route('reportes.update', $reporte->id_reporte) }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md">
@@ -108,11 +108,11 @@
                     </form>
                 </div>
 
-                <!-- Columna de Mapa -->
+                <!--Mapa -->
                 <div class="col-span-1 md:col-span-2 flex flex-col">
                     <h2 class="text-xl font-semibold text-gray-700 mb-4 flex-shrink-0">Mapa</h2>
                     <div class="bg-white p-6 rounded-lg shadow-md flex-grow flex flex-col">
-                        <!-- Formulario para ingresar dirección -->
+                        <!-- Campo para ingresar dirección -->
                         <form id="address-form" class="flex items-center gap-4 mb-4">
                             @csrf
                             <x-input-field
@@ -145,19 +145,19 @@
                             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         }).addTo(map);
 
-                        var marker = L.marker([-9.189967, -75.015152]).addTo(map); // Colocar marcador inicial
+                        var marker = L.marker([-9.189967, -75.015152]).addTo(map); //Colocar marcador inicial
 
                         // Limitar el desplazamiento del mapa a los límites de Perú
                         var bounds = L.latLngBounds(
-                            [-18.34873, -81.41094], // Coordenadas suroeste (aproximación)
-                            [-0.03928, -68.65233]  // Coordenadas noreste (aproximación)
+                            [-18.34873, -81.41094], // Coordenadas suroeste
+                            [-0.03928, -68.65233]  // Coordenadas noreste
                         );
                         map.setMaxBounds(bounds);
                         map.on('drag', function () {
                             map.panInsideBounds(bounds, { animate: true });
                         });
 
-                        // Dirección predeterminada exacta
+                        // Dirección predeterminada
                         var defaultAddress = "Santa Anita, Lima, Lima Metropolitana, Lima, 15009, Perú";
 
                         // Función para buscar dirección predeterminada
@@ -171,7 +171,6 @@
                                     var lon = firstResult.lon;
                                     var displayName = firstResult.display_name;
 
-                                    // Establecer vista inicial en el mapa
                                     map.setView([lat, lon], 14);
                                     marker.setLatLng([lat, lon]);
 
@@ -186,11 +185,8 @@
                                 console.error("Error al buscar la dirección predeterminada");
                             });
                         }
-
-                        // Cargar dirección predeterminada al inicializar
                         loadDefaultAddress(defaultAddress);
 
-                        // Manejar la búsqueda al hacer clic en el botón
                         $('#search-btn').on('click', function () {
                             var query = $('#address').val();
 
@@ -241,17 +237,13 @@
                         map.on('click', function (e) {
                             var lat = e.latlng.lat;
                             var lon = e.latlng.lng;
-
-                            // Actualizar el marcador
                             marker.setLatLng([lat, lon]);
-
                             // Consultar Nominatim para obtener la dirección
                             var url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&countrycodes=PE`;
 
                             $.get(url, function (data) {
                                 if (data && data.display_name) {
                                     var displayName = data.display_name;
-
                                     // Actualizar los campos del formulario-
                                     $('#latitud').val(lat);
                                     $('#longitud').val(lon);

@@ -6,7 +6,7 @@
 <div class="container mx-auto px-4">
     <h2 class="text-3xl font-bold text-gray-800 mb-6">Reportes</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Sección de Listado de Reportes -->
+        <!-- Listado de Reportes -->
         <div class="col-span-1 flex flex-col">
             <h2 class="text-xl font-semibold text-gray-700 mb-4">Listado</h2>
             @if (Auth::user()->isCiudadano())
@@ -39,7 +39,7 @@
 
         </div>
 
-        <!-- Sección de Detalles del Reporte Seleccionado -->
+        <!--Detalles del Reporte Seleccionado -->
         <div class="col-span-1 md:col-span-2">
             <h2 class="text-xl font-semibold text-gray-700 mb-4">Detalles
             </h2>

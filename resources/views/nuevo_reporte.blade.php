@@ -6,7 +6,7 @@
         <div class="container mx-auto px-6">
             <h2 class="text-2xl font-bold text-gray-800 mb-6">Registrar Reporte</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Columna de Información -->
+                <!--Información -->
                 <div class="col-span-1">
                     <h2 class="text-xl font-semibold text-gray-700 mb-4">Información</h2>
                     <form action="{{ route('reportes.store') }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md">
@@ -106,11 +106,11 @@
                     </form>
                 </div>
 
-                <!-- Columna de Mapa -->
+                <!--Mapa -->
                 <div class="col-span-1 md:col-span-2 flex flex-col">
                     <h2 class="text-xl font-semibold text-gray-700 mb-4 flex-shrink-0">Mapa</h2>
                     <div class="bg-white p-6 rounded-lg shadow-md flex-grow flex flex-col">
-                        <!-- Formulario para ingresar dirección -->
+                        <!-- Campos para ingresar dirección -->
                         <form id="address-form" class="flex items-center gap-4 mb-4">
                             @csrf
                             <x-input-field
@@ -128,7 +128,7 @@
                             </x-button>
                         </form>
                         <ul id="results" class="text-gray-700 mb-4 px-4"></ul>
-                        <!-- Contenedor del mapa -->
+                        <!-- Mapa -->
                         <div id="map" class="w-full h-[400px] rounded-lg flex-grow"></div>
                     </div>
                 </div>
@@ -195,7 +195,6 @@
                             });
 
                             $('#results').on('mouseleave', 'li', function () {
-                                // Opcional: puedes resetear el marcador o la vista si es necesario
                             });
 
 
@@ -254,7 +253,6 @@
                             var lat = e.latlng.lat;
                             var lon = e.latlng.lng;
 
-                            // Actualizar el marcador
                             marker.setLatLng([lat, lon]);
 
                             // Consultar Nominatim para obtener la dirección
@@ -285,16 +283,15 @@
                     }
 
                     #results li:hover {
-                        background-color: #f0f4ff; /* Cambia el color según tu preferencia */
+                        background-color: #f0f4ff; 
                         border-radius: 4px;
                     }
-                    /* Estilo de los controles del mapa */
                     .leaflet-control-zoom {
-                        background-color: #ffffff; /* Fondo blanco */
-                        border-radius: 8px; /* Esquinas redondeadas */
-                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
+                        background-color: #ffffff;
+                        border-radius: 8px;
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
                         display: flex;
-                        flex-direction: column; /* Botones en columna */
+                        flex-direction: column;
                         justify-content: center;
                         align-items: center;
                         overflow: hidden;
@@ -303,8 +300,8 @@
                     }
 
                     .leaflet-control-zoom a {
-                        background-color: #007bff; /* Fondo azul */
-                        color: #ffffff; /* Texto blanco */
+                        background-color: #007bff;
+                        color: #ffffff;
                         border: none;
                         border-radius: 4px;
                         width: 32px;
@@ -321,15 +318,15 @@
                     }
 
                     .leaflet-control-zoom a:hover {
-                        background-color: #0056b3; /* Color azul más oscuro al pasar el ratón */
+                        background-color: #0056b3;
                     }
 
                     .leaflet-control-zoom-in {
-                        margin-bottom: 4px; /* Espaciado entre botones */
+                        margin-bottom: 4px;
                     }
 
                     .leaflet-control-zoom-out {
-                        margin-top: 4px; /* Espaciado entre botones */
+                        margin-top: 4px;
                     }
 
                 </style>

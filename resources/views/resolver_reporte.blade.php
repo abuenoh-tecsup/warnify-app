@@ -7,7 +7,7 @@
 <div class="container mx-auto px-6">
     <h2 class="text-2xl font-bold text-gray-800 mb-6">Moderar reporte</h2>
     <div class="mb-6">
-        <!-- Columna de Información -->
+        <!-- Información -->
         <div class="">
             <form action="{{ route('reportes.update_autoridad', $reporte->id_reporte) }}" method="POST" enctype="multipart/form-data"
                 class="bg-white p-6 rounded-lg shadow-md w-full flex justify-center">

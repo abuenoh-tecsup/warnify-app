@@ -7,7 +7,7 @@
     <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Acerca de Warnify</h2>
     
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Sección 1: Descripción de Warnify -->
+        <!-- Descripción de Warnify -->
         <div class="col-span-1 bg-gray-100 p-6 rounded-lg shadow-lg">
             <h3 class="text-xl font-semibold text-gray-700 mb-4">Por qué Warnify</h3>
             <p class="text-gray-600">
@@ -17,7 +17,7 @@
             </p>
         </div>
 
-        <!-- Sección 2: Misión de la Empresa -->
+        <!-- Misión de la Empresa -->
         <div class="col-span-1 bg-gray-100 p-6 rounded-lg shadow-lg">
             <h3 class="text-xl font-semibold text-gray-700 mb-4">Nuestra Misión</h3>
             <p class="text-gray-600">
@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <!-- Sección adicional: Valores de la Empresa -->
+    <!--Valores de nuestra Empresa -->
     <div class="mt-6 bg-white p-6 rounded-lg shadow-lg">
         <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">Nuestros Valores</h3>
         <p class="text-gray-600 text-justify">
@@ -39,24 +39,21 @@
         </p>
     </div>
 
-    <!-- Sección de Contacto -->
+    <!-- Nuestros contactos -->
     <div class="mt-6 bg-gray-100 p-6 rounded-lg shadow-lg">
         <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">Contáctanos</h3>
         <p class="text-gray-600 text-center mb-6">
             Si tienes preguntas, inquietudes o deseas comunicarte con nosotros, puedes enviarnos un correo directamente a cualquiera de las siguientes direcciones:
         </p>
         <div class="flex justify-center space-x-4">
-            <!-- Correo 1 -->
             <a href="mailto:eduardo.bullon@tecsup.edu.pe"
                class="px-4 py-2 bg-blue-500 text-white font-medium rounded-lg shadow-md hover:bg-blue-600">
                 eduardo.bullon@tecsup.edu.pe
             </a>
-            <!-- Correo 2 -->
             <a href="mailto:sonaly.sifuentes@tecsup.edu.pe"
                class="px-4 py-2 bg-blue-500 text-white font-medium rounded-lg shadow-md hover:bg-blue-600">
                 sonaly.sifuentes@tecsup.edu.pe
             </a>
-            <!-- Correo 3 -->
             <a href="mailto:alvaro.bueno@tecsup.edu.pe"
                class="px-4 py-2 bg-blue-500 text-white font-medium rounded-lg shadow-md hover:bg-blue-600">
                 alvaro.bueno@tecsup.edu.pe
