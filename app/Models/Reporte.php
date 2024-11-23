@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Reporte extends Model
 {
@@ -40,5 +41,14 @@ class Reporte extends Model
     public function autoridad()
     {
         return $this->belongsTo(Usuario::class, 'id_autoridad');
+    }
+
+    public function getFechaReporteAttribute($value)
+    {
+        return Carbon::parse($value)->format('M j, Y h:i A');
+    }
+    public function getFechaActAttribute($value)
+    {
+        return Carbon::parse($value)->format('M j, Y h:i A');
     }
 }
