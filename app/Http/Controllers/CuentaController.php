@@ -11,13 +11,13 @@ use App\Models\Reporte;
 class CuentaController extends Controller
 {
     // Método para mostrar los datos de la cuenta
-            public function show()
-            {
+    public function show()
+        {
             $user = Auth::user();
             return view('cuenta', compact('user'));
-            }
+        }
 
-    // Método para actualizar los datos 
+    // Método para actualizar los datos
     public function update(Request $request)
         {
             // Validar que el correo no exista en la base de datos
@@ -31,7 +31,7 @@ class CuentaController extends Controller
             ], [
                 'correo.unique' => 'El correo electrónico ya está registrado para otro usuario. Por favor ingrese otro correo.'
             ]);
-            
+
             // Si la validación pasa, actualizamos los datos del usuario
             $user = auth()->user();
             $user->update([
@@ -43,11 +43,11 @@ class CuentaController extends Controller
                 'notifi_acti' => $request->notificaciones,
             ]);
 
-            // Enviar un mensaje de éxito
+            // Mensaje de éxito
             session()->flash('success', 'Los cambios se han guardado correctamente.');
 
             // Redirigir a la misma página si la validación pasó, con los errores si los hubo
-            return redirect()->route('cuenta.index')->withInput();  // withInput() mantiene los valores ingresados en el formulario
+            return redirect()->route('cuenta.index')->withInput();
         }
 
     public function showChangePasswordForm()
@@ -59,16 +59,16 @@ class CuentaController extends Controller
             {
                 // Validar las contraseñas
                 $request->validate([
-                    'actual' => 'required|string', // Contraseña actual ingresada
-                    'nueva' => 'required|string|min:8|confirmed', // Asegura que 'nueva' y 'nueva_confirmation' coincidan
+                    'actual' => 'required|string',
+                    'nueva' => 'required|string|min:8|confirmed',
                 ]);
-                
+
                 $user = Auth::user(); // Usuario autenticado
 
                 // Validar si la contraseña actual coincide
-                $actualIngresada = $request->actual; // Contraseña ingresada por el usuario (sin encriptar)
-                $actualAlmacenada = $user->password; // Hash de la contraseña almacenada en la base de datos
-                
+                $actualIngresada = $request->actual;
+                $actualAlmacenada = $user->password;
+
                 // Comprobar la contraseña actual
                 if (!Hash::check($actualIngresada, $actualAlmacenada)) {
                     return back()->withErrors(['actual' => 'La contraseña actual no es correcta.']);
@@ -85,16 +85,17 @@ class CuentaController extends Controller
     public function showestados()
             {
                 $user = Auth::user(); // Obtener el usuario autenticado
+
                 // Consultar los reportes pendientes del usuario
                 $pendientes = Reporte::where('id_ciudadano', $user->id_usuario)
                           ->where('estado_reporte', 'pendiente')
                           ->count();
-    
+
                 // Contar los reportes resueltos
                 $resueltos = Reporte::where('id_ciudadano', $user->id_usuario)
                                     ->where('estado_reporte', 'resuelto')
                                     ->count();
-        
+
                 // Retornar la vista con el número de reportes pendientes
                 return view('cuenta', compact('user', 'pendientes', 'resueltos'));
             }
