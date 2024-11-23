@@ -23,6 +23,9 @@ Route::middleware('auth')->group(function () { // Protegemos estas rutas
 
     Route::get('/moderar_reporte/{id}', [ReporteController::class, 'edit_moderador'])->name('reportes.edit_moderador');
     Route::put('/moderar_reporte/{id}', [ReporteController::class, 'update_moderador'])->name('reportes.update_moderador');
+
+    Route::get('/resolver_reporte/{id}', [ReporteController::class, 'edit_autoridad'])->name('reportes.edit_autoridad');
+    Route::put('/resolver_reporte/{id}', [ReporteController::class, 'update_autoridad'])->name('reportes.update_autoridad');
 });
 
 Route::get('/dashboard', function () {

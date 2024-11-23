@@ -178,6 +178,20 @@ class ReporteController extends Controller
         return redirect()->route('reportes.list', ['filter' => 'all']);
     }
 
+
+    public function edit_autoridad(string $id)
+    {
+        $reporte = Reporte::findOrFail($id);
+        return view('resolver_reporte', compact('reporte'));
+    }
+    public function update_autoridad(Request $request, string $id)
+    {
+        $reporte = Reporte::findOrFail($id);
+        $reporte->estado_reporte = $request->input('estado_reporte');
+        $reporte->save();
+        return redirect()->route('reportes.list', ['filter' => 'all']);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
