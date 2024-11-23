@@ -64,8 +64,8 @@
                         @endif
                     @endif
                     @if (Auth::user()->isAutoridad())
-                        @if ($reporteSeleccionado->estado_reporte == 'VALIDADO')
-                        <a href="{{ route('reportes.edit', ['id' => $reporteSeleccionado->id_reporte]) }}"
+                        @if ($reporteSeleccionado->estado_reporte == 'VALIDADO' || $reporteSeleccionado->estado_reporte == 'RESOLVIENDOSE')
+                        <a href="{{ route('reportes.edit_autoridad', ['id' => $reporteSeleccionado->id_reporte]) }}"
                             class="bg-cyan-500 text-base text-white font-semibold py-3 px-6 rounded-lg shadow-md text-center hover:bg-cyan-600 hover:text-white">
                             Resolver reporte
                         </a>
