@@ -100,9 +100,14 @@ class ReporteController extends Controller
     {
         // Filtrar los reportes según el valor del parámetro 'filter'
         if ($filter === 'own') {
-            $reportes = Reporte::where('id_ciudadano', Auth::user()->id_usuario)->latest()->get();
+            $reportes = Reporte::where('id_ciudadano', Auth::user()->id_usuario)
+                                ->orderByRaw("FIELD(estado_reporte, 'PENDIENTE', 'EN PROCESO', 'RESUELTO')")
+                                ->orderBy('fecha_reporte', 'desc')
+                                ->get();
         } else {
-            $reportes = Reporte::latest()->get();
+            $reportes = Reporte::orderByRaw("FIELD(estado_reporte, 'PENDIENTE', 'EN PROCESO', 'RESUELTO')")
+                                ->orderBy('fecha_reporte', 'desc')
+                                ->get();
         }
 
         // Si se proporciona un 'id', obtener el reporte seleccionado
@@ -111,6 +116,7 @@ class ReporteController extends Controller
         // Retornar la vista con los reportes filtrados
         return view('reportes', compact('reportes', 'reporteSeleccionado'));
     }
+
 
 
     /**

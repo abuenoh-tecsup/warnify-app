@@ -25,16 +25,17 @@
             </div>
             @endif
             <div class="bg-gray-200 p-4 rounded-xl h-[600px] overflow-y-auto flex-grow">
-                @foreach ($reportes as $reporte)
-                <x-report-card
-                    fecha="{{ $reporte->fecha_reporte }}"
-                    titulo="{{ $reporte->titulo }}"
-                    descripcion="{{ $reporte->descripcion }}"
-                    estado="{{ $reporte->estado_reporte }}"
-                    reporteId="{{ $reporte->id_reporte }}"
-                />
-                @endforeach
-            </div>
+            @foreach ($reportes as $reporte)
+            <x-report-card
+                fecha="{{ $reporte->fecha_reporte }}"
+                titulo="{{ $reporte->titulo }}"
+                descripcion="{{ $reporte->descripcion }}"
+                estado="{{ $reporte->estado_reporte }}"
+                reporteId="{{ $reporte->id_reporte }}"
+            />
+            @endforeach
+        </div>
+
 
 
         </div>
@@ -119,13 +120,14 @@
 
 
 
+                <!-- Mapa e Imagen del Incidente -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <!-- Mapa -->
-                    <div class="h-full flex flex-col col-span-2 lg:col-span-1">
+                    <div class="h-full flex flex-col">
                         <h3 class="text-lg font-semibold text-gray-700 mb-4">Ubicación en el mapa:</h3>
                         <div class="relative w-full h-0 pb-[56.25%]">
                             <div id="map" class="absolute inset-0 w-full h-full rounded-lg"></div>
                         </div>
-
                         <script>
                             $(document).ready(function () {
                                 var lat = {{ $reporteSeleccionado->latitud }};
@@ -145,7 +147,7 @@
                     </div>
 
                     <!-- Imagen del Incidente -->
-                    <div class="flex justify-center items-center col-span-2 lg:col-span-1">
+                    <div class="flex justify-center items-center">
                         @if($reporteSeleccionado->img_incidente)
                         <div class="w-full">
                             <h3 class="text-lg font-semibold text-gray-700 mb-4">Imagen del incidente:</h3>
@@ -159,6 +161,7 @@
                         @endif
                     </div>
                 </div>
+
                 @else
                 <p class="text-gray-500">Selecciona un reporte para ver los detalles</p>
                 @endif
