@@ -5,7 +5,7 @@
 @section('content')
 <div class="container mx-auto px-4">
     <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Acerca de Warnify</h2>
-    
+
     <!-- Descripción de Warnify -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div class="col-span-1 bg-gray-100 p-6 rounded-lg shadow-lg">

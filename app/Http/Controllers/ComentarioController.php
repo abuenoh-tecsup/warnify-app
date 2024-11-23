@@ -35,7 +35,7 @@ class ComentarioController extends Controller
 
         // Si no se encuentra el ciudadano, retornar con un mensaje de error
         if (!$ciudadano) {
-            return redirect()->route('acerca')->with('error', 'No se encontró tu perfil como ciudadano.');
+            return redirect()->route('comentarios.index')->with('error', 'No se encontró tu perfil como ciudadano.');
         }
 
         // Crear el comentario asociado al ciudadano autenticado
@@ -45,6 +45,6 @@ class ComentarioController extends Controller
         ]);
 
         // Redirigir a la página "Acerca de" con un mensaje de éxito
-        return redirect()->route('acerca')->with('success', 'Tu comentario ha sido enviado con éxito.');
+        return redirect()->route('comentarios.index')->with('success', 'Tu comentario ha sido enviado con éxito.');
     }
 }

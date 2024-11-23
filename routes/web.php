@@ -3,13 +3,12 @@
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ComentarioController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CuentaController;
 
 // Ruta para la página "Acerca de"
-Route::get('/acerca', function () {
-    return view('acerca');
-})->middleware('auth')->name('acerca');
+
 
 Route::middleware('auth')->group(function () { // Protegemos estas rutas
     Route::get('/', [ReporteController::class, 'index']);
@@ -26,6 +25,16 @@ Route::middleware('auth')->group(function () { // Protegemos estas rutas
 
     Route::get('/resolver_reporte/{id}', [ReporteController::class, 'edit_autoridad'])->name('reportes.edit_autoridad');
     Route::put('/resolver_reporte/{id}', [ReporteController::class, 'update_autoridad'])->name('reportes.update_autoridad');
+
+    Route::get('/comentarios', [ComentarioController::class, 'index'])->name('comentarios.index');
+    Route::post('/comentarios', [ComentarioController::class, 'store'])->name('comentarios.store');
+
+    /*
+    Route::prefix('comentarios')->name('comentarios.')->group(function () {
+        Route::get('/acerca', [ComentarioController::class, 'index'])->name('index');
+        Route::post('/store', [ComentarioController::class, 'store'])->name('store');
+    });
+    */
 });
 
 Route::get('/dashboard', function () {

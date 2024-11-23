@@ -126,7 +126,7 @@
                     </li>
                     @if (Auth::user()->isCiudadano())
                     <li class="py-2 lg:py-0 menu-item">
-                        <a class="text-white hover:border-b-4 hover:border-yellow-400" href="{{ route('acerca') }}">
+                        <a class="text-white hover:border-b-4 hover:border-yellow-400" href="{{ route('comentarios.index') }}">
                             Acerca de
                         </a>
                     </li>
