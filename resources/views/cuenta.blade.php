@@ -149,14 +149,17 @@
             </form>
 
             <!-- Configuración -->
+            @if (Auth::user()->isCiudadano())
             <h2 class="text-xl font-semibold text-gray-700 mb-4">Reportes</h2>
+        
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <div class="mb-4">
                     <label for="reportes" class="text-gray-600 font-medium">Estado de Reportes</label>
                     <p class="text-gray-700">
                         Tienes {{ $pendientes }} reportes pendientes y {{ $resueltos }} reportes resueltos.
                     </p>
-                </div>
+            </div>
+            @endif
                 <!-- Fecha y hora 
                 <div class="flex gap-4">
                     <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md">
