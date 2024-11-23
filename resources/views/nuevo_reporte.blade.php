@@ -185,6 +185,20 @@
                             });
                         }
 
+                        $('#results').on('mouseenter', 'li', function () {
+                                var lat = $(this).data('lat');
+                                var lon = $(this).data('lon');
+
+                                // Crear un marcador temporal o cambiar el estilo del marcador existente
+                                marker.setLatLng([lat, lon]);
+                                map.setView([lat, lon], 14); // Acercar el mapa al marcador
+                            });
+
+                            $('#results').on('mouseleave', 'li', function () {
+                                // Opcional: puedes resetear el marcador o la vista si es necesario
+                            });
+
+
                         // Cargar dirección predeterminada al inicializar
                         loadDefaultAddress(defaultAddress);
 
@@ -263,6 +277,18 @@
                         });
                     });
                 </script>
+                <style>
+                    #results li {
+                        padding: 8px;
+                        cursor: pointer;
+                        transition: background-color 0.2s ease-in-out;
+                    }
+
+                    #results li:hover {
+                        background-color: #f0f4ff; /* Cambia el color según tu preferencia */
+                        border-radius: 4px;
+                    }
+                </style>
 
             </div>
         </div>
