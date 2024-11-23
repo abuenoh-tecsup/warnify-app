@@ -90,9 +90,6 @@
             </a>
         </div>
 
-
-
-
         <label for="menu-toggle" class="cursor-pointer lg:hidden block" aria-label="Toggle Menu">
             <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                 viewBox="0 0 20 20">
@@ -129,7 +126,7 @@
                     </li>
                     @if (Auth::user()->isCiudadano())
                     <li class="py-2 lg:py-0 menu-item">
-                        <a class="text-white hover:border-b-4 hover:border-yellow-400" href="#">
+                        <a class="text-white hover:border-b-4 hover:border-yellow-400" href="{{ route('acerca') }}">
                             Acerca de
                         </a>
                     </li>
