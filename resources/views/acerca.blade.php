@@ -35,58 +35,61 @@
         </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Comentario -->
-        <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
-            <h3 class="text-2xl font-bold text-gray-800 mb-4">Envíanos tu Comentario</h3>
-            <form action="{{ route('comentarios.store') }}" method="POST" class="space-y-4">
-                @csrf
-                <textarea name="contenido" id="contenido" rows="4" placeholder="Escribe tu comentario aquí..."
-                          class="w-full p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                <button type="submit" class="px-6 py-2 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600">
-                    Enviar Comentario
-                </button>
-            </form>
-        </div>
-
-        <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
-            <h3 class="text-2xl font-bold text-gray-800 mb-4">Comentarios Recientes</h3>
-            <div class="space-y-4 max-h-[600px] overflow-y-scroll">
-                @forelse($comentarios as $comentario)
-                    <div class="p-4 bg-white rounded-lg shadow-md flex justify-between">
-                        <div>
-                            <p class="text-gray-600">
-                                <strong>{{ $comentario->ciudadano->usuario->nombre ?? 'Usuario Anónimo' }} {{ $comentario->ciudadano->usuario->apellidos ?? '' }}</strong>
-                            </p>
-                            <p class="text-gray-800">{{ $comentario->contenido }}</p>
-                            <small class="text-gray-500">
-                                Publicado: {{ $comentario->created_at->diffForHumans() }}
-                                @if($comentario->created_at != $comentario->updated_at)
-                                    | Editado: {{ $comentario->updated_at->diffForHumans() }}
-                                @endif
-                            </small>
-                        </div>
-                        @if(auth()->id() === $comentario->ciudadano->id_usuario)
-                            <div class="relative">
-                                <!-- Botón para editar -->
-                                <button class="text-blue-500 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        onclick="toggleEditForm({{ $comentario->id_comentario }})">
-                                    Editar
-                                </button>
-                                <form action="{{ route('comentarios.update', $comentario->id_comentario) }}" method="POST" id="edit-form-{{ $comentario->id_comentario }}" class="hidden">
-                                    @csrf
-                                    @method('PUT')
-                                    <textarea name="contenido" rows="2" class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">{{ $comentario->contenido }}</textarea>
-                                    <button type="submit" class="mt-2 px-4 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600">Actualizar</button>
-                                </form>
-                            </div>
-                        @endif
-                    </div>
-                @empty
-                    <p class="text-gray-500">No hay comentarios aún.</p>
-                @endforelse
+    <div class="grid grid-cols-1 md:grid-cols-{{ Auth::user()->isCiudadano() ? '2' : '1' }} gap-6">
+        @if (Auth::user()->isCiudadano())
+            <!-- Formulario de Comentarios -->
+            <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Envíanos tu Comentario</h3>
+                <form action="{{ route('comentarios.store') }}" method="POST" class="space-y-4">
+                    @csrf
+                    <textarea name="contenido" id="contenido" rows="4" placeholder="Escribe tu comentario aquí..."
+                            class="w-full p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    <button type="submit" class="px-6 py-2 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600">
+                        Enviar Comentario
+                    </button>
+                </form>
             </div>
-        </div>
+        @endif
+
+            <!-- Comentarios Recientes -->
+            <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Comentarios Recientes</h3>
+                <div class="space-y-4 max-h-[600px] overflow-y-scroll">
+                    @forelse($comentarios as $comentario)
+                        <div class="p-4 bg-white rounded-lg shadow-md flex justify-between">
+                            <div>
+                                <p class="text-gray-600">
+                                    <strong>{{ $comentario->ciudadano->usuario->nombre ?? 'Usuario Anónimo' }} {{ $comentario->ciudadano->usuario->apellidos ?? '' }}</strong>
+                                </p>
+                                <p class="text-gray-800">{{ $comentario->contenido }}</p>
+                                <small class="text-gray-500">
+                                    Publicado: {{ $comentario->created_at->diffForHumans() }}
+                                    @if($comentario->created_at != $comentario->updated_at)
+                                        | Editado: {{ $comentario->updated_at->diffForHumans() }}
+                                    @endif
+                                </small>
+                            </div>
+                            @if(auth()->id() === $comentario->ciudadano->id_usuario)
+                                <div class="relative">
+                                    <!-- Botón para editar -->
+                                    <button class="text-blue-500 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            onclick="toggleEditForm({{ $comentario->id_comentario }})">
+                                        Editar
+                                    </button>
+                                    <form action="{{ route('comentarios.update', $comentario->id_comentario) }}" method="POST" id="edit-form-{{ $comentario->id_comentario }}" class="hidden">
+                                        @csrf
+                                        @method('PUT')
+                                        <textarea name="contenido" rows="2" class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">{{ $comentario->contenido }}</textarea>
+                                        <button type="submit" class="mt-2 px-4 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600">Actualizar</button>
+                                    </form>
+                                </div>
+                            @endif
+                        </div>
+                    @empty
+                        <p class="text-gray-500">No hay comentarios aún.</p>
+                    @endforelse
+                </div>
+            </div>
     </div>
 
     <!-- Contacto -->

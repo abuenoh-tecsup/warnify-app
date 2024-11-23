@@ -147,6 +147,7 @@
                     </p>
             </div>
             @endif
+            
                 <!-- Fecha y hora 
                 <div class="flex gap-4"
                     <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md">
@@ -158,6 +159,12 @@
                 </div>
                 -->
             </div>
+            <form method="POST" action="{{ route('logout') }}" class="mt-8">
+                @csrf
+                <button class="bg-red-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md text-center hover:bg-red-600">
+                        Cerrar sesión
+                </button>
+            </form>
         </div>
     </div>
 </div>
