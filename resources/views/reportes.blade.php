@@ -57,14 +57,14 @@
                     @endif
                     @if (Auth::user()->isModerador())
                         @if ($reporteSeleccionado->estado_reporte == 'PENDIENTE')
-                        <a href="{{ route('reportes.edit', ['id' => $reporteSeleccionado->id_reporte]) }}"
+                        <a href="{{ route('reportes.edit_moderador', ['id' => $reporteSeleccionado->id_reporte]) }}"
                             class="bg-yellow-500 text-base text-white font-semibold py-3 px-6 rounded-lg shadow-md text-center hover:bg-yellow-400 hover:text-white">
                             Moderar reporte
                         </a>
                         @endif
                     @endif
                     @if (Auth::user()->isAutoridad())
-                        @if ($reporteSeleccionado->estado_reporte == 'PENDIENTE')
+                        @if ($reporteSeleccionado->estado_reporte == 'VALIDADO')
                         <a href="{{ route('reportes.edit', ['id' => $reporteSeleccionado->id_reporte]) }}"
                             class="bg-cyan-500 text-base text-white font-semibold py-3 px-6 rounded-lg shadow-md text-center hover:bg-cyan-600 hover:text-white">
                             Resolver reporte

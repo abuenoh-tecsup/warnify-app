@@ -165,6 +165,19 @@ class ReporteController extends Controller
         return redirect()->route('reportes.inicio');
     }
 
+    public function edit_moderador(string $id)
+    {
+        $reporte = Reporte::findOrFail($id);
+        return view('moderar_reporte', compact('reporte'));
+    }
+    public function update_moderador(Request $request, string $id)
+    {
+        $reporte = Reporte::findOrFail($id);
+        $reporte->estado_reporte = $request->input('estado_reporte');
+        $reporte->save();
+        return redirect()->route('reportes.list', ['filter' => 'all']);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
