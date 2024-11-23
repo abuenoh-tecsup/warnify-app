@@ -97,25 +97,37 @@ class ReporteController extends Controller
     }
 
     public function list_details_all(string $filter, string $id = null)
-    {
-        // Filtrar los reportes según el valor del parámetro 'filter'
-        if ($filter === 'own') {
-            $reportes = Reporte::where('id_ciudadano', Auth::user()->id_usuario)
-                                ->orderByRaw("FIELD(estado_reporte, 'PENDIENTE', 'EN PROCESO', 'RESUELTO')")
-                                ->orderBy('fecha_reporte', 'desc')
-                                ->get();
-        } else {
-            $reportes = Reporte::orderByRaw("FIELD(estado_reporte, 'PENDIENTE', 'EN PROCESO', 'RESUELTO')")
-                                ->orderBy('fecha_reporte', 'desc')
-                                ->get();
+        {
+            $user = Auth::user();
+
+            // Determinar el orden de los estados según el rol
+            if ($user->isAutoridad()) {
+                // Para autoridad: de VALIDADO a RESUELTO
+                $estadoOrden = ['VALIDADO', 'EN PROCESO', 'RESUELTO'];
+            } else {
+                // Para ciudadano y moderador: de PENDIENTE a RESUELTO
+                $estadoOrden = ['PENDIENTE', 'VALIDADO', 'EN PROCESO', 'RESUELTO'];
+            }
+
+            // Filtrar los reportes según el valor del parámetro 'filter'
+            if ($filter === 'own') {
+                $reportes = Reporte::where('id_ciudadano', $user->id_usuario)
+                    ->orderByRaw("FIELD(estado_reporte, '" . implode("','", $estadoOrden) . "')")
+                    ->orderBy('fecha_reporte', 'desc')
+                    ->get();
+            } else {
+                $reportes = Reporte::orderByRaw("FIELD(estado_reporte, '" . implode("','", $estadoOrden) . "')")
+                    ->orderBy('fecha_reporte', 'desc')
+                    ->get();
+            }
+
+            // Si se proporciona un 'id', obtener el reporte seleccionado
+            $reporteSeleccionado = $id ? Reporte::find($id) : null;
+
+            // Retornar la vista con los reportes filtrados
+            return view('reportes', compact('reportes', 'reporteSeleccionado'));
         }
 
-        // Si se proporciona un 'id', obtener el reporte seleccionado
-        $reporteSeleccionado = $id ? Reporte::find($id) : null;
-
-        // Retornar la vista con los reportes filtrados
-        return view('reportes', compact('reportes', 'reporteSeleccionado'));
-    }
 
 
 

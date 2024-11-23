@@ -97,12 +97,14 @@
                                 <p class="text-gray-600 font-medium">Fecha de Actualización:</p>
                                 <p class="text-gray-800">{{ $reporteSeleccionado->fecha_act }}</p>
                             </div>
+                            <!-- Estado del Reporte -->
                             <div>
                                 <p class="text-gray-600 font-medium">Estado del Reporte:</p>
                                 <p class="
                                     @if ($reporteSeleccionado->estado_reporte == 'PENDIENTE') text-yellow-500
                                     @elseif ($reporteSeleccionado->estado_reporte == 'RESUELTO') text-green-500
                                     @elseif ($reporteSeleccionado->estado_reporte == 'EN PROCESO') text-blue-500
+                                    @elseif ($reporteSeleccionado->estado_reporte == 'VALIDADO') text-cyan-500
                                     @else text-gray-800 @endif 
                                     font-bold uppercase">
                                     {{ $reporteSeleccionado->estado_reporte }}
