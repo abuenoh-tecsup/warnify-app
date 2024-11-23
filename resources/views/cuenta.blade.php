@@ -238,21 +238,18 @@
 
     <!-- Configuración -->
     <div class="section">
-      <h2>Configuración</h2>
-      <div class="form-group">
-        <label for="notificaciones">Notificaciones</label>
-        <div class="tabs">
-          <input type="text" placeholder="Incidentes cercanos">
-          <input type="text" placeholder="Actualización de reportes">
-          <input type="text" placeholder="Nuevos reportes">
+    <h2>Configuración</h2>
+    <div class="form-group">
+        <label for="notificaciones">Estado de Reportes</label>
+        <div class="form-group">
+            <input type="text" value="Tienes {{ $pendientes }} reportes como pendientes y {{ $resueltos }} reportes resueltos" size="75" disabled style="background-color: #d3d3d3;">
         </div>
-      </div>
-
-
-      <div class="buttons">
+    </div>
+    <div class="buttons">
         <button class="btn btn-blue">Ver historial de actividades</button>
         <button class="btn btn-red">Eliminar cuenta</button>
-      </div>
+    </div>
+</div>
   </div>
 </body>
 </html>

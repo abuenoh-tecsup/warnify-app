@@ -39,3 +39,4 @@ Route::get('/cuenta', [CuentaController::class, 'show'])->name('cuenta.index');
 Route::patch('/cuenta', [CuentaController::class, 'update'])->name('cuenta.update');
 
 Route::patch('/cuenta/change-password', [CuentaController::class, 'changePassword'])->name('cuenta.changePassword');
+Route::get('/cuenta', [CuentaController::class, 'showestados'])->name('cuenta.index');
