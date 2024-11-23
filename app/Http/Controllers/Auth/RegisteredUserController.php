@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Usuario;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,23 +28,37 @@ class RegisteredUserController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+            {
+                // Validación de los campos de registro
+                $request->validate([
+                    'name' => ['required', 'string', 'max:255'],
+                    'apellido' => ['required', 'string', 'max:255'],
+                    'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Usuario::class],
+                    'telefono' => ['required', 'string', 'max:15'],  // Validación para teléfono
+                    'direccion' => ['required', 'string', 'max:100'],  // Validación para dirección
+                    'notifi_acti' => ['required', 'boolean'],  // Validación para notificaciones
+                    'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+                // Crear el usuario con tipo 'ciudadano' y otros campos
+                $user = Usuario::create([
+                    'nombre' => $request->name,
+                    'apellidos' => $request->apellido,
+                    'email' => $request->email,
+                    'telefono' => $request->telefono,  // Almacenar teléfono
+                    'direccion' => $request->direccion,  // Almacenar dirección
+                    'notifi_acti' => $request->notifi_acti,  // Almacenar el estado de notificaciones
+                    'password' => Hash::make($request->password),
+                    'tipo' => 'ciudadano',  // Asignar el tipo 'ciudadano'
+                ]);
 
-        event(new Registered($user));
+                // Registrar el evento de registro
+                event(new Registered($user));
 
-        Auth::login($user);
+                // Iniciar sesión automáticamente
+                Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
-    }
+                // Redirigir al dashboard
+                return redirect(route('reportes.inicio', absolute: false));
+            }
 }
