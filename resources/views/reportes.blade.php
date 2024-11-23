@@ -7,8 +7,9 @@
     <h2 class="text-3xl font-bold text-gray-800 mb-6">Reportes</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Sección de Listado de Reportes -->
-        <div class="col-span-1">
+        <div class="col-span-1 flex flex-col">
             <h2 class="text-xl font-semibold text-gray-700 mb-4">Listado</h2>
+            @if (Auth::user()->isCiudadano())
             <div class="flex space-x-4 mb-4">
                 <!-- Botón para ver todos los reportes -->
                 <a href="{{ route('reportes.list', ['filter' => 'all']) }}"
@@ -22,7 +23,8 @@
                     Mis Reportes
                 </a>
             </div>
-            <div class="bg-gray-200 p-4 rounded-xl h-[600px] overflow-y-auto">
+            @endif
+            <div class="bg-gray-200 p-4 rounded-xl h-[600px] overflow-y-auto flex-grow">
                 @foreach ($reportes as $reporte)
                 <x-report-card
                     fecha="{{ $reporte->fecha_reporte }}"
@@ -45,10 +47,30 @@
                 @if ($reporteSeleccionado)
                 <h3 class="text-2xl font-semibold text-gray-800 mb-6 flex justify-between">
                     Detalles del Reporte
-                    <a href="{{ route('reportes.edit', ['id' => $reporteSeleccionado->id_reporte]) }}"
-                        class="bg-green-500 text-base text-white font-semibold py-3 px-6 rounded-lg shadow-md text-center hover:bg-green-600">
-                        Editar reporte
-                    </a>
+                    @if (Auth::user()->isCiudadano())
+                        @if (Auth::user()->id_usuario == $reporteSeleccionado->id_ciudadano && $reporteSeleccionado->estado_reporte == 'PENDIENTE')
+                        <a href="{{ route('reportes.edit', ['id' => $reporteSeleccionado->id_reporte]) }}"
+                            class="bg-green-500 text-base text-white font-semibold py-3 px-6 rounded-lg shadow-md text-center hover:bg-green-600">
+                            Editar reporte
+                        </a>
+                        @endif
+                    @endif
+                    @if (Auth::user()->isModerador())
+                        @if ($reporteSeleccionado->estado_reporte == 'PENDIENTE')
+                        <a href="{{ route('reportes.edit', ['id' => $reporteSeleccionado->id_reporte]) }}"
+                            class="bg-yellow-500 text-base text-white font-semibold py-3 px-6 rounded-lg shadow-md text-center hover:bg-yellow-400 hover:text-white">
+                            Moderar reporte
+                        </a>
+                        @endif
+                    @endif
+                    @if (Auth::user()->isAutoridad())
+                        @if ($reporteSeleccionado->estado_reporte == 'PENDIENTE')
+                        <a href="{{ route('reportes.edit', ['id' => $reporteSeleccionado->id_reporte]) }}"
+                            class="bg-cyan-500 text-base text-white font-semibold py-3 px-6 rounded-lg shadow-md text-center hover:bg-cyan-600 hover:text-white">
+                            Resolver reporte
+                        </a>
+                        @endif
+                    @endif
                 </h3>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

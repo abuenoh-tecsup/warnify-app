@@ -4,7 +4,7 @@
 
 @section('content')
         <div class="container mx-auto px-6">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">Registrar Reporte</h2>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Editar Reporte</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Columna de Información -->
                 <div class="col-span-1">
@@ -103,7 +103,7 @@
                             type="submit"
                             name="save-btn"
                         >
-                            Guardar reporte
+                            Actualizar reporte
                         </x-button>
                     </form>
                 </div>
