@@ -138,124 +138,136 @@
         </div>
                 <script>
                         $(document).ready(function () {
-                        // Inicializar mapa centrado en Perú
-                        var map = L.map('map').setView([-9.189967, -75.015152], 6); // Coordenadas de Perú, zoom inicial 6
+                            // Inicializar mapa centrado en Perú
+                            var map = L.map('map').setView([-9.189967, -75.015152], 6); // Coordenadas de Perú, zoom inicial 6
 
-                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        }).addTo(map);
+                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            }).addTo(map);
 
-                        var marker = L.marker([-9.189967, -75.015152]).addTo(map); //Colocar marcador inicial
+                            var marker = L.marker([-9.189967, -75.015152]).addTo(map); // Colocar marcador inicial
 
-                        // Limitar el desplazamiento del mapa a los límites de Perú
-                        var bounds = L.latLngBounds(
-                            [-18.34873, -81.41094], // Coordenadas suroeste
-                            [-0.03928, -68.65233]  // Coordenadas noreste
-                        );
-                        map.setMaxBounds(bounds);
-                        map.on('drag', function () {
-                            map.panInsideBounds(bounds, { animate: true });
-                        });
-
-                        // Dirección predeterminada
-                        var defaultAddress = "Santa Anita, Lima, Lima Metropolitana, Lima, 15009, Perú";
-
-                        // Función para buscar dirección predeterminada
-                        function loadDefaultAddress(address) {
-                            var url = `https://nominatim.openstreetmap.org/search?format=json&q=${address}&countrycodes=PE`;
-
-                            $.get(url, function (data) {
-                                if (data.length > 0) {
-                                    var firstResult = data[0];
-                                    var lat = firstResult.lat;
-                                    var lon = firstResult.lon;
-                                    var displayName = firstResult.display_name;
-
-                                    map.setView([lat, lon], 14);
-                                    marker.setLatLng([lat, lon]);
-
-                                    // Actualizar los campos del formulario
-                                    $('#latitud').val(lat);
-                                    $('#longitud').val(lon);
-                                    $('#ubicacion').val(displayName);
-                                } else {
-                                    console.error("No se encontró la dirección predeterminada");
-                                }
-                            }).fail(function () {
-                                console.error("Error al buscar la dirección predeterminada");
+                            // Limitar el desplazamiento del mapa a los límites de Perú
+                            var bounds = L.latLngBounds(
+                                [-18.34873, -81.41094], // Coordenadas suroeste
+                                [-0.03928, -68.65233]  // Coordenadas noreste
+                            );
+                            map.setMaxBounds(bounds);
+                            map.on('drag', function () {
+                                map.panInsideBounds(bounds, { animate: true });
                             });
-                        }
-                        loadDefaultAddress(defaultAddress);
 
-                        $('#search-btn').on('click', function () {
-                            var query = $('#address').val();
+                            // Obtener coordenadas iniciales del reporte
+                            var initialLat = $('#latitud').val();
+                            var initialLon = $('#longitud').val();
+                            var initialAddress = $('#ubicacion').val();
 
-                            if (query.length > 2) {
-                                searchAddress(query);
+                            if (initialLat && initialLon) {
+                                // Si ya hay coordenadas definidas, centrar el mapa en ellas
+                                map.setView([initialLat, initialLon], 14);
+                                marker.setLatLng([initialLat, initialLon]);
                             } else {
-                                $('#results').empty();
-                                alert('Por favor ingresa al menos 3 caracteres para realizar la búsqueda.');
+                                // Si no hay coordenadas, usar dirección predeterminada
+                                var defaultAddress = "Santa Anita, Lima, Lima Metropolitana, Lima, 15009, Perú";
+                                loadDefaultAddress(defaultAddress);
                             }
-                        });
 
-                        // Buscar dirección ingresada centrada en Perú
-                        function searchAddress(query) {
-                            var url = `https://nominatim.openstreetmap.org/search?format=json&q=${query}&countrycodes=PE&viewbox=-81.41094,-0.03928,-68.65233,-18.34873&bounded=1`;
+                            // Función para buscar dirección predeterminada
+                            function loadDefaultAddress(address) {
+                                var url = `https://nominatim.openstreetmap.org/search?format=json&q=${address}&countrycodes=PE`;
 
-                            $.get(url, function (data) {
+                                $.get(url, function (data) {
+                                    if (data.length > 0) {
+                                        var firstResult = data[0];
+                                        var lat = firstResult.lat;
+                                        var lon = firstResult.lon;
+                                        var displayName = firstResult.display_name;
+
+                                        map.setView([lat, lon], 14);
+                                        marker.setLatLng([lat, lon]);
+
+                                        // Actualizar los campos del formulario solo si están vacíos
+                                        if (!$('#latitud').val()) $('#latitud').val(lat);
+                                        if (!$('#longitud').val()) $('#longitud').val(lon);
+                                        if (!$('#ubicacion').val()) $('#ubicacion').val(displayName);
+                                    } else {
+                                        console.error("No se encontró la dirección predeterminada");
+                                    }
+                                }).fail(function () {
+                                    console.error("Error al buscar la dirección predeterminada");
+                                });
+                            }
+
+                            $('#search-btn').on('click', function () {
+                                var query = $('#address').val();
+
+                                if (query.length > 2) {
+                                    searchAddress(query);
+                                } else {
+                                    $('#results').empty();
+                                    alert('Por favor ingresa al menos 3 caracteres para realizar la búsqueda.');
+                                }
+                            });
+
+                            // Buscar dirección ingresada centrada en Perú
+                            function searchAddress(query) {
+                                var url = `https://nominatim.openstreetmap.org/search?format=json&q=${query}&countrycodes=PE&viewbox=-81.41094,-0.03928,-68.65233,-18.34873&bounded=1`;
+
+                                $.get(url, function (data) {
+                                    $('#results').empty();
+
+                                    if (data.length > 0) {
+                                        data.forEach(function (item) {
+                                            $('#results').append(`
+                                                <li data-lat="${item.lat}" data-lon="${item.lon}">${item.display_name}</li>
+                                            `);
+                                        });
+                                    } else {
+                                        $('#results').append('<li>No se encontraron resultados</li>');
+                                    }
+                                });
+                            }
+
+                            // Manejar selección de un resultado
+                            $('#results').on('click', 'li', function () {
+                                var lat = $(this).data('lat');
+                                var lon = $(this).data('lon');
+                                var address = $(this).text();
+
+                                $('#latitud').val(lat);
+                                $('#longitud').val(lon);
+                                $('#ubicacion').val(address);
+
                                 $('#results').empty();
 
-                                if (data.length > 0) {
-                                    data.forEach(function (item) {
-                                        $('#results').append(`
-                                            <li data-lat="${item.lat}" data-lon="${item.lon}">${item.display_name}</li>
-                                        `);
-                                    });
-                                } else {
-                                    $('#results').append('<li>No se encontraron resultados</li>');
-                                }
+                                map.setView([lat, lon], 14);
+                                marker.setLatLng([lat, lon]);
                             });
-                        }
 
-                        // Manejar selección de un resultado
-                        $('#results').on('click', 'li', function () {
-                            var lat = $(this).data('lat');
-                            var lon = $(this).data('lon');
-                            var address = $(this).text();
+                            // Evento click en el mapa
+                            map.on('click', function (e) {
+                                var lat = e.latlng.lat;
+                                var lon = e.latlng.lng;
+                                marker.setLatLng([lat, lon]);
+                                // Consultar Nominatim para obtener la dirección
+                                var url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&countrycodes=PE`;
 
-                            $('#latitud').val(lat);
-                            $('#longitud').val(lon);
-                            $('#ubicacion').val(address);
-
-                            $('#results').empty();
-
-                            map.setView([lat, lon], 14);
-                            marker.setLatLng([lat, lon]);
-                        });
-
-                        // Evento click en el mapa
-                        map.on('click', function (e) {
-                            var lat = e.latlng.lat;
-                            var lon = e.latlng.lng;
-                            marker.setLatLng([lat, lon]);
-                            // Consultar Nominatim para obtener la dirección
-                            var url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&countrycodes=PE`;
-
-                            $.get(url, function (data) {
-                                if (data && data.display_name) {
-                                    var displayName = data.display_name;
-                                    // Actualizar los campos del formulario-
-                                    $('#latitud').val(lat);
-                                    $('#longitud').val(lon);
-                                    $('#ubicacion').val(displayName);
-                                } else {
+                                $.get(url, function (data) {
+                                    if (data && data.display_name) {
+                                        var displayName = data.display_name;
+                                        // Actualizar los campos del formulario
+                                        $('#latitud').val(lat);
+                                        $('#longitud').val(lon);
+                                        $('#ubicacion').val(displayName);
+                                    } else {
+                                        $('#ubicacion').val('Coordenadas seleccionadas: ' + lat + ', ' + lon);
+                                    }
+                                }).fail(function () {
                                     $('#ubicacion').val('Coordenadas seleccionadas: ' + lat + ', ' + lon);
-                                }
-                            }).fail(function () {
-                                $('#ubicacion').val('Coordenadas seleccionadas: ' + lat + ', ' + lon);
+                                });
                             });
                         });
-                    });
+
                 </script>
 
             </div>
