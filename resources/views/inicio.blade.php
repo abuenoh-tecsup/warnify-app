@@ -7,7 +7,6 @@
         <h2 class="text-4xl font-extrabold text-gray-800 mb-6">Bienvenido, {{ Auth::user()->nombre }} {{ Auth::user()->apellidos }}</h2>
         <p class="text-gray-700 mb-8 text-lg">Aquí puedes consultar y gestionar tus reportes de manera fácil y rápida.</p>
 
-        <!-- Estadísticas -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         <!-- Tarjeta: Total de Reportes -->
         <div class="bg-blue-100 p-4 rounded-lg shadow-md text-blue-800">
@@ -30,7 +29,6 @@
 
 
         <div class="grid grid-cols-1 lg:grid-cols-{{ Auth::user()->isCiudadano() ? '2' : '1' }} gap-8 mb-8">
-            <!-- Reportes Recientes -->
             <div class="{{ Auth::user()->isCiudadano() ? '' : 'lg:col-span-2' }}">
                 <h3 class="text-xl font-bold text-gray-800 mb-4">Reportes Recientes</h3>
                 <div class="bg-white p-4 rounded-lg shadow-md h-60 overflow-y-auto border border-gray-200">
@@ -48,7 +46,6 @@
                 </div>
             </div>
 
-            <!-- Mis Reportes -->
             @if (Auth::user()->isCiudadano())
                 <div>
                     <h3 class="text-xl font-bold text-gray-800 mb-4">Mis Reportes</h3>

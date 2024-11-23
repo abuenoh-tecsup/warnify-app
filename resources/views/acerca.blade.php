@@ -6,7 +6,6 @@
 <div class="container mx-auto px-4">
     <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Acerca de Warnify</h2>
 
-    <!-- Descripción de Warnify -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div class="col-span-1 bg-gray-100 p-6 rounded-lg shadow-lg">
             <h3 class="text-xl font-semibold text-gray-700 mb-4">Por qué Warnify</h3>
@@ -19,7 +18,7 @@
         <div class="col-span-1 bg-gray-100 p-6 rounded-lg shadow-lg">
             <h3 class="text-xl font-semibold text-gray-700 mb-4">Nuestra Misión</h3>
             <p class="text-gray-600">
-                Nuestra misión como empresa, liderada por <strong>EVADEVS</strong>, es transformar la manera en que las personas y empresas
+                Nuestra misión como empresa, llamada <strong>EVADEVS</strong>, es transformar la manera en que las personas y empresas
                 interactúan con la tecnología. A través del desarrollo de soluciones de software innovadoras, optimizamos procesos empresariales
                 y mejoramos la vida cotidiana. En EVADEVS, nos dedicamos a crear aplicaciones y plataformas personalizadas que resuelvan los
                 desafíos únicos de nuestros clientes, impulsando su éxito con herramientas tecnológicas avanzadas, seguras y escalables.
@@ -27,7 +26,6 @@
         </div>
     </div>
 
-    <!-- Valores de la Empresa -->
     <div class="mb-6 bg-white p-6 rounded-lg shadow-lg">
         <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">Nuestros Valores</h3>
         <p class="text-gray-600 text-justify">
@@ -37,7 +35,6 @@
         </p>
     </div>
 
-    <!-- Opinión y Comentarios -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Comentario -->
         <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
@@ -52,18 +49,38 @@
             </form>
         </div>
 
-        <!-- Mostrar Comentarios -->
         <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
             <h3 class="text-2xl font-bold text-gray-800 mb-4">Comentarios Recientes</h3>
-            <!-- Contenedor con barra de desplazamiento -->
-            <div class="space-y-4 max-h-48 overflow-y-scroll">
+            <div class="space-y-4 max-h-[600px] overflow-y-scroll">
                 @forelse($comentarios as $comentario)
-                    <div class="p-4 bg-white rounded-lg shadow-md">
-                        <p class="text-gray-600">
-                            <strong>{{ $comentario->ciudadano->usuario->nombre ?? 'Usuario Anónimo' }} {{ $comentario->ciudadano->usuario->apellidos ?? '' }}</strong>
-                        </p>
-                        <p class="text-gray-800">{{ $comentario->contenido }}</p>
-                        <small class="text-gray-500">{{ $comentario->created_at->diffForHumans() }}</small>
+                    <div class="p-4 bg-white rounded-lg shadow-md flex justify-between">
+                        <div>
+                            <p class="text-gray-600">
+                                <strong>{{ $comentario->ciudadano->usuario->nombre ?? 'Usuario Anónimo' }} {{ $comentario->ciudadano->usuario->apellidos ?? '' }}</strong>
+                            </p>
+                            <p class="text-gray-800">{{ $comentario->contenido }}</p>
+                            <small class="text-gray-500">
+                                Publicado: {{ $comentario->created_at->diffForHumans() }}
+                                @if($comentario->created_at != $comentario->updated_at)
+                                    | Editado: {{ $comentario->updated_at->diffForHumans() }}
+                                @endif
+                            </small>
+                        </div>
+                        @if(auth()->id() === $comentario->ciudadano->id_usuario)
+                            <div class="relative">
+                                <!-- Botón para editar -->
+                                <button class="text-blue-500 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        onclick="toggleEditForm({{ $comentario->id_comentario }})">
+                                    Editar
+                                </button>
+                                <form action="{{ route('comentarios.update', $comentario->id_comentario) }}" method="POST" id="edit-form-{{ $comentario->id_comentario }}" class="hidden">
+                                    @csrf
+                                    @method('PUT')
+                                    <textarea name="contenido" rows="2" class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">{{ $comentario->contenido }}</textarea>
+                                    <button type="submit" class="mt-2 px-4 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600">Actualizar</button>
+                                </form>
+                            </div>
+                        @endif
                     </div>
                 @empty
                     <p class="text-gray-500">No hay comentarios aún.</p>
@@ -94,4 +111,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    function toggleEditForm(id) {
+        const form = document.getElementById(`edit-form-${id}`);
+        form.classList.toggle('hidden');
+    }
+</script>
 @endsection
