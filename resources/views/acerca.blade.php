@@ -6,7 +6,6 @@
 <div class="container mx-auto px-4">
     <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Acerca de Warnify</h2>
 
-    <!-- Descripción de Warnify -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div class="col-span-1 bg-gray-100 p-6 rounded-lg shadow-lg">
             <h3 class="text-xl font-semibold text-gray-700 mb-4">Por qué Warnify</h3>
@@ -27,7 +26,6 @@
         </div>
     </div>
 
-    <!-- Valores de la Empresa -->
     <div class="mb-6 bg-white p-6 rounded-lg shadow-lg">
         <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">Nuestros Valores</h3>
         <p class="text-gray-600 text-justify">
@@ -37,7 +35,6 @@
         </p>
     </div>
 
-    <!-- Opinión y Comentarios -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Comentario -->
         <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
@@ -52,10 +49,8 @@
             </form>
         </div>
 
-        <!-- Mostrar Comentarios -->
         <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
             <h3 class="text-2xl font-bold text-gray-800 mb-4">Comentarios Recientes</h3>
-            <!-- Contenedor con barra de desplazamiento -->
             <div class="space-y-4 max-h-[600px] overflow-y-scroll">
                 @forelse($comentarios as $comentario)
                     <div class="p-4 bg-white rounded-lg shadow-md flex justify-between">
@@ -78,7 +73,6 @@
                                         onclick="toggleEditForm({{ $comentario->id_comentario }})">
                                     Editar
                                 </button>
-                                <!-- Formulario de edición (oculto por defecto) -->
                                 <form action="{{ route('comentarios.update', $comentario->id_comentario) }}" method="POST" id="edit-form-{{ $comentario->id_comentario }}" class="hidden">
                                     @csrf
                                     @method('PUT')
