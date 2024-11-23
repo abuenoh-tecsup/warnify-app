@@ -1,10 +1,15 @@
 <?php
+
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CuentaController;
 
+// Ruta para la página "Acerca de"
+Route::get('/acerca', function () {
+    return view('acerca');
+})->middleware('auth')->name('acerca');
 
 Route::middleware('auth')->group(function () { // Protegemos estas rutas
     Route::get('/', [ReporteController::class, 'index']);
@@ -31,11 +36,11 @@ require __DIR__.'/auth.php';
 
 Route::get('/geocode', [GeoCodingController::class, 'searchAddress'])->name('geocode');
 
-
 // Ruta para mostrar el formulario de cuenta
 Route::get('/cuenta', [CuentaController::class, 'show'])->name('cuenta.index');
 
 // Ruta para actualizar los datos de la cuenta
 Route::patch('/cuenta', [CuentaController::class, 'update'])->name('cuenta.update');
 
+// Ruta para cambiar la contraseña de la cuenta
 Route::patch('/cuenta/change-password', [CuentaController::class, 'changePassword'])->name('cuenta.changePassword');
