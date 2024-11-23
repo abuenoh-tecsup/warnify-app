@@ -55,12 +55,13 @@
                 </div>
 
                 <!-- Botón Validar -->
-                <x-button class="bg-blue-500 hover:bg-blue-600 text-black text-lg font-semibold py-2 px-4 mx-4 rounded-lg shadow-md "
+                <x-button class="bg-green-500 hover:bg-green-600 text-white text-lg font-semibold py-2 px-4 mx-4 rounded-lg shadow-md"
                     type="submit" name="estado_reporte" value="VALIDADO">
                     Validar reporte
                 </x-button>
+
                 <!-- Botón Rechazar -->
-                <x-button class="bg-blue-500 hover:bg-blue-600 text-black text-lg font-semibold py-2 px-4 mx-4 rounded-lg shadow-md "
+                <x-button class="bg-red-500 hover:bg-red-600 text-white text-lg font-semibold py-2 px-4 mx-4 rounded-lg shadow-md"
                     type="submit" name="estado_reporte" value="RECHAZADO">
                     Rechazar reporte
                 </x-button>

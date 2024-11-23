@@ -54,16 +54,20 @@
                         value="{{ old('img_incidente', $reporte->img_incidente ? asset($reporte->img_incidente) : '') }}" />
                 </div>
 
-                <!-- Botón Validar -->
-                <x-button class="bg-blue-500 hover:bg-blue-600 text-black text-lg font-semibold py-2 px-4 mx-4 rounded-lg shadow-md "
+                <!-- Botón "En proceso de resolución" -->
+                <x-button 
+                    class="bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white text-lg font-semibold py-2 px-4 mx-4 rounded-lg shadow-md transform transition-transform duration-200 hover:scale-105"
                     type="submit" name="estado_reporte" value="RESOLVIENDOSE">
                     En proceso de resolución
                 </x-button>
-                <!-- Botón Rechazar -->
-                <x-button class="bg-blue-500 hover:bg-blue-600 text-black text-lg font-semibold py-2 px-4 mx-4 rounded-lg shadow-md "
+
+                <!-- Botón "Resuelto" -->
+                <x-button 
+                    class="bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white text-lg font-semibold py-2 px-4 mx-4 rounded-lg shadow-md transform transition-transform duration-200 hover:scale-105"
                     type="submit" name="estado_reporte" value="RESUELTO">
                     Resuelto
                 </x-button>
+
             </form>
         </div>
     </div>
