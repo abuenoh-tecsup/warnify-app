@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Reporte;
 
 
 class CuentaController extends Controller
@@ -49,37 +50,54 @@ class CuentaController extends Controller
             return redirect()->route('cuenta.index')->withInput();  // withInput() mantiene los valores ingresados en el formulario
         }
 
-        public function showChangePasswordForm()
-        {
-            return view('cuenta.change-password');
-        }
-
-        public function changePassword(Request $request)
-        {
-            // Validar las contraseñas
-            $request->validate([
-                'actual' => 'required|string', // Contraseña actual ingresada
-                'nueva' => 'required|string|min:8|confirmed', // Asegura que 'nueva' y 'nueva_confirmation' coincidan
-            ]);
-            
-            $user = Auth::user(); // Usuario autenticado
-
-            // Validar si la contraseña actual coincide
-            $actualIngresada = $request->actual; // Contraseña ingresada por el usuario (sin encriptar)
-            $actualAlmacenada = $user->password; // Hash de la contraseña almacenada en la base de datos
-            
-            // Comprobar la contraseña actual
-            if (!Hash::check($actualIngresada, $actualAlmacenada)) {
-                return back()->withErrors(['actual' => 'La contraseña actual no es correcta.']);
+    public function showChangePasswordForm()
+            {
+                return view('cuenta.change-password');
             }
 
-            // Actualizar la contraseña
-            $user->password = Hash::make($request->nueva); // Encripta la nueva contraseña antes de guardarla
-            $user->save();
+        public function changePassword(Request $request)
+            {
+                // Validar las contraseñas
+                $request->validate([
+                    'actual' => 'required|string', // Contraseña actual ingresada
+                    'nueva' => 'required|string|min:8|confirmed', // Asegura que 'nueva' y 'nueva_confirmation' coincidan
+                ]);
+                
+                $user = Auth::user(); // Usuario autenticado
 
-            // Retornar un mensaje de éxito
-            return redirect()->route('cuenta.index')->with('success', 'Contraseña actualizada correctamente.');
-        }
+                // Validar si la contraseña actual coincide
+                $actualIngresada = $request->actual; // Contraseña ingresada por el usuario (sin encriptar)
+                $actualAlmacenada = $user->password; // Hash de la contraseña almacenada en la base de datos
+                
+                // Comprobar la contraseña actual
+                if (!Hash::check($actualIngresada, $actualAlmacenada)) {
+                    return back()->withErrors(['actual' => 'La contraseña actual no es correcta.']);
+                }
+
+                // Actualizar la contraseña
+                $user->password = Hash::make($request->nueva); // Encripta la nueva contraseña antes de guardarla
+                $user->save();
+
+                // Retornar un mensaje de éxito
+                return redirect()->route('cuenta.index')->with('success', 'Contraseña actualizada correctamente.');
+            }
+
+    public function showestados()
+            {
+                $user = Auth::user(); // Obtener el usuario autenticado
+                // Consultar los reportes pendientes del usuario
+                $pendientes = Reporte::where('id_ciudadano', $user->id_usuario)
+                          ->where('estado_reporte', 'pendiente')
+                          ->count();
+    
+                // Contar los reportes resueltos
+                $resueltos = Reporte::where('id_ciudadano', $user->id_usuario)
+                                    ->where('estado_reporte', 'resuelto')
+                                    ->count();
+        
+                // Retornar la vista con el número de reportes pendientes
+                return view('cuenta', compact('user', 'pendientes', 'resueltos'));
+            }
 
 
 }
