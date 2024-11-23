@@ -9,7 +9,6 @@ use App\Http\Controllers\CuentaController;
 
 // Ruta para la página "Acerca de"
 
-
 Route::middleware('auth')->group(function () { // Protegemos estas rutas
     Route::get('/', [ReporteController::class, 'index']);
     Route::get('/inicio', [ReporteController::class, 'index'])->name('reportes.inicio');
@@ -28,13 +27,10 @@ Route::middleware('auth')->group(function () { // Protegemos estas rutas
 
     Route::get('/comentarios', [ComentarioController::class, 'index'])->name('comentarios.index');
     Route::post('/comentarios', [ComentarioController::class, 'store'])->name('comentarios.store');
-
-    /*
-    Route::prefix('comentarios')->name('comentarios.')->group(function () {
-        Route::get('/acerca', [ComentarioController::class, 'index'])->name('index');
-        Route::post('/store', [ComentarioController::class, 'store'])->name('store');
-    });
-    */
+    
+    // Nuevas rutas para editar y actualizar comentarios
+    Route::get('/comentarios/editar/{id}', [ComentarioController::class, 'edit'])->name('comentarios.edit');
+    Route::put('/comentarios/actualizar/{id}', [ComentarioController::class, 'update'])->name('comentarios.update');
 });
 
 Route::get('/dashboard', function () {
