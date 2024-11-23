@@ -28,9 +28,9 @@ class ReporteController extends Controller
         $totalReportes = Reporte::count();
 
         // Conteo de reportes por estado
-        $pendientes = Reporte::where('estado_reporte', 'Pendiente')->count();
-        $resueltos = Reporte::where('estado_reporte', 'Resuelto')->count();
-        $enProceso = Reporte::where('estado_reporte', 'En Proceso')->count();
+        $pendientes = Reporte::where('estado_reporte', 'PENDIENTE')->count();
+        $resueltos = Reporte::where('estado_reporte', 'RESUELTO')->count();
+        $enProceso = Reporte::where('estado_reporte', 'EN PROCESO')->count();
 
         return view('inicio', compact(
             'reportesRecientes',

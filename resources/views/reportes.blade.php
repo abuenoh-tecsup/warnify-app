@@ -73,41 +73,51 @@
                     @endif
                 </h3>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Información del Reporte -->
-                    <div class="col-span-2">
-                        <div class="grid gap-4">
-                            <div>
-                                <p class="text-gray-600 font-medium">Título:</p>
-                                <p class="text-gray-800">{{ $reporteSeleccionado->titulo }}</p>
-                            </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Información del Reporte -->
+                <div class="col-span-2">
+                    <div class="grid gap-4">
+                        <div>
+                            <p class="text-gray-600 font-medium">Título:</p>
+                            <p class="text-gray-800">{{ $reporteSeleccionado->titulo }}</p>
+                        </div>
 
-                            <div>
-                                <p class="text-gray-600 font-medium">Descripción:</p>
-                                <p class="text-gray-800">{{ $reporteSeleccionado->descripcion }}</p>
-                            </div>
+                        <div>
+                            <p class="text-gray-600 font-medium">Descripción:</p>
+                            <p class="text-gray-800">{{ $reporteSeleccionado->descripcion }}</p>
+                        </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div>
-                                    <p class="text-gray-600 font-medium">Fecha del Reporte:</p>
-                                    <p class="text-gray-800">{{ $reporteSeleccionado->fecha_reporte }}</p>
-                                </div>
-                                <div>
-                                    <p class="text-gray-600 font-medium">Fecha de Actualización:</p>
-                                    <p class="text-gray-800">{{ $reporteSeleccionado->fecha_act }}</p>
-                                </div>
-                                <div>
-                                    <p class="text-gray-600 font-medium">Estado del Reporte:</p>
-                                    <p class="text-gray-800">{{ $reporteSeleccionado->estado_reporte }}</p>
-                                </div>
-                            </div>
-
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
-                                <p class="text-gray-600 font-medium">Ubicación:</p>
-                                <p class="text-gray-800">{{ $reporteSeleccionado->ubicacion }}</p>
+                                <p class="text-gray-600 font-medium">Fecha del Reporte:</p>
+                                <p class="text-gray-800">{{ $reporteSeleccionado->fecha_reporte }}</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-600 font-medium">Fecha de Actualización:</p>
+                                <p class="text-gray-800">{{ $reporteSeleccionado->fecha_act }}</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-600 font-medium">Estado del Reporte:</p>
+                                <p class="
+                                    @if ($reporteSeleccionado->estado_reporte == 'PENDIENTE') text-yellow-500
+                                    @elseif ($reporteSeleccionado->estado_reporte == 'RESUELTO') text-green-500
+                                    @elseif ($reporteSeleccionado->estado_reporte == 'EN PROCESO') text-blue-500
+                                    @else text-gray-800 @endif 
+                                    font-bold uppercase">
+                                    {{ $reporteSeleccionado->estado_reporte }}
+                                </p>
                             </div>
                         </div>
+
+                        <div>
+                            <p class="text-gray-600 font-medium">Ubicación:</p>
+                            <p class="text-gray-800">{{ $reporteSeleccionado->ubicacion }}</p>
+                        </div>
                     </div>
+                </div>
+            </div>
+
+
 
                     <!-- Mapa -->
                     <div class="h-full flex flex-col col-span-2 lg:col-span-1">

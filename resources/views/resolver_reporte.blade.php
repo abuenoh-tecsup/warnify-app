@@ -57,8 +57,8 @@
                 <!-- Botón "En proceso de resolución" -->
                 <x-button 
                     class="bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white text-lg font-semibold py-2 px-4 mx-4 rounded-lg shadow-md transform transition-transform duration-200 hover:scale-105"
-                    type="submit" name="estado_reporte" value="RESOLVIENDOSE">
-                    En proceso de resolución
+                    type="submit" name="estado_reporte" value="EN PROCESO">
+                    En proceso
                 </x-button>
 
                 <!-- Botón "Resuelto" -->

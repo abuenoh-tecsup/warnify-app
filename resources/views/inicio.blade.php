@@ -9,19 +9,25 @@
 
         <!-- Estadísticas -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-            <div class="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
-                <h4 class="text-base font-semibold text-gray-700 mb-1">Total de Reportes</h4>
-                <p class="text-2xl font-bold text-gray-900">{{ $totalReportes }}</p>
-            </div>
-            <div class="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
-                <h4 class="text-base font-semibold text-gray-700 mb-1">Pendientes</h4>
-                <p class="text-2xl font-bold text-yellow-500">{{ $pendientes }}</p>
-            </div>
-            <div class="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
-                <h4 class="text-base font-semibold text-gray-700 mb-1">Resueltos</h4>
-                <p class="text-2xl font-bold text-green-500">{{ $resueltos }}</p>
-            </div>
+        <!-- Tarjeta: Total de Reportes -->
+        <div class="bg-blue-100 p-4 rounded-lg shadow-md text-blue-800">
+            <h4 class="text-base font-semibold mb-1">Total de Reportes</h4>
+            <p class="text-3xl font-bold">{{ $totalReportes }}</p>
         </div>
+
+        <!-- Tarjeta: Pendientes -->
+        <div class="bg-yellow-100 p-4 rounded-lg shadow-md text-yellow-700">
+            <h4 class="text-base font-semibold mb-1">Pendientes</h4>
+            <p class="text-3xl font-bold">{{ $pendientes }}</p>
+        </div>
+
+        <!-- Tarjeta: Resueltos -->
+        <div class="bg-green-100 p-4 rounded-lg shadow-md text-green-700">
+            <h4 class="text-base font-semibold mb-1">Resueltos</h4>
+            <p class="text-3xl font-bold">{{ $resueltos }}</p>
+        </div>
+    </div>
+
 
         <div class="grid grid-cols-1 lg:grid-cols-{{ Auth::user()->isCiudadano() ? '2' : '1' }} gap-8 mb-8">
             <!-- Reportes Recientes -->
