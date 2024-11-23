@@ -22,7 +22,7 @@ class CuentaController extends Controller
         {
             // Validar que el correo no exista en la base de datos
             $validatedData = $request->validate([
-                'nombres' => 'required|string|max:255',
+                'nombre' => 'required|string|max:255',
                 'apellidos' => 'required|string|max:255',
                 'correo' => 'required|email|unique:users,email,' . auth()->id(),  // Verificar si el correo ya está en uso
                 'telefono' => 'required|string|max:20',
@@ -35,7 +35,7 @@ class CuentaController extends Controller
             // Si la validación pasa, actualizamos los datos del usuario
             $user = auth()->user();
             $user->update([
-                'nombres' => $request->nombres,
+                'nombre' => $request->nombre,
                 'apellidos' => $request->apellidos,
                 'email' => $request->correo,
                 'telefono' => $request->telefono,

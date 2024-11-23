@@ -14,10 +14,10 @@
                 @method('PATCH')
 
                 <div class="mb-4">
-                    <label for="nombres" class="text-gray-600 font-medium">Nombres</label>
+                    <label for="nombre" class="text-gray-600 font-medium">Nombres</label>
                     <input 
                         type="text" 
-                        name="nombres" 
+                        name="nombre" 
                         value="{{ old('nombre', $user->nombre) }}" 
                         class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2 w-full"
                     >
