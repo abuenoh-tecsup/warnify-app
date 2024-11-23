@@ -288,6 +288,50 @@
                         background-color: #f0f4ff; /* Cambia el color según tu preferencia */
                         border-radius: 4px;
                     }
+                    /* Estilo de los controles del mapa */
+                    .leaflet-control-zoom {
+                        background-color: #ffffff; /* Fondo blanco */
+                        border-radius: 8px; /* Esquinas redondeadas */
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
+                        display: flex;
+                        flex-direction: column; /* Botones en columna */
+                        justify-content: center;
+                        align-items: center;
+                        overflow: hidden;
+                        padding: 4px;
+                        width: 40px;
+                    }
+
+                    .leaflet-control-zoom a {
+                        background-color: #007bff; /* Fondo azul */
+                        color: #ffffff; /* Texto blanco */
+                        border: none;
+                        border-radius: 4px;
+                        width: 32px;
+                        height: 32px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        text-align: center;
+                        font-size: 18px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        margin: 4px 0;
+                        transition: background-color 0.3s;
+                    }
+
+                    .leaflet-control-zoom a:hover {
+                        background-color: #0056b3; /* Color azul más oscuro al pasar el ratón */
+                    }
+
+                    .leaflet-control-zoom-in {
+                        margin-bottom: 4px; /* Espaciado entre botones */
+                    }
+
+                    .leaflet-control-zoom-out {
+                        margin-top: 4px; /* Espaciado entre botones */
+                    }
+
                 </style>
 
             </div>
