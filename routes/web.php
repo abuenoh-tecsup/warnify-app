@@ -20,6 +20,9 @@ Route::middleware('auth')->group(function () { // Protegemos estas rutas
     Route::get('/mapa', function () { return view('mapa'); });
     Route::get('/editar_reporte/{id}', [ReporteController::class, 'edit'])->name('reportes.edit');
     Route::put('/editar_reporte/{id}', [ReporteController::class, 'update'])->name('reportes.update');
+
+    Route::get('/moderar_reporte/{id}', [ReporteController::class, 'edit_moderador'])->name('reportes.edit_moderador');
+    Route::put('/moderar_reporte/{id}', [ReporteController::class, 'update_moderador'])->name('reportes.update_moderador');
 });
 
 Route::get('/dashboard', function () {
