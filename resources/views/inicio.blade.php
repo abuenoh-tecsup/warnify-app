@@ -28,43 +28,45 @@
     </div>
 
 
-        <div class="grid grid-cols-1 lg:grid-cols-{{ Auth::user()->isCiudadano() ? '2' : '1' }} gap-8 mb-8">
-            <div class="{{ Auth::user()->isCiudadano() ? '' : 'lg:col-span-2' }}">
-                <h3 class="text-xl font-bold text-gray-800 mb-4">Reportes Recientes</h3>
-                <div class="bg-white p-4 rounded-lg shadow-md h-60 overflow-y-auto border border-gray-200">
-                    @if ($reportesRecientes->isEmpty())
-                        <p class="text-gray-500">No hay reportes recientes.</p>
+    <div class="grid grid-cols-1 lg:grid-cols-{{ Auth::user()->isCiudadano() ? '2' : '1' }} gap-8 mb-8">
+        <div class="{{ Auth::user()->isCiudadano() ? '' : 'lg:col-span-2' }}">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Reportes Recientes</h3>
+            <div class="bg-[#ebf5fb] p-4 rounded-lg shadow-md h-60 overflow-y-auto border border-[#d6eaf8]">
+                @if ($reportesRecientes->isEmpty())
+                    <p class="text-gray-500">No hay reportes recientes.</p>
+                @else
+                    @foreach ($reportesRecientes as $reporte)
+                        <div class="mb-3">
+                            <p class="font-bold text-gray-700">{{ $reporte->titulo }}</p>
+                            <p class="text-sm text-gray-500">{{ $reporte->fecha_reporte }}</p>
+                            <p class="text-xs text-gray-400">{{ $reporte->estado_reporte }}</p>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+        </div>
+
+        @if (Auth::user()->isCiudadano())
+            <div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Mis Reportes</h3>
+                <div class="bg-[#e9f7ef] p-4 rounded-lg shadow-md h-60 overflow-y-auto border border-[#d1f2eb]">
+                    @if ($misReportes->isEmpty())
+                        <p class="text-gray-500">No tienes reportes asignados.</p>
                     @else
-                        @foreach ($reportesRecientes as $reporte)
+                        @foreach ($misReportes as $reporte)
                             <div class="mb-3">
                                 <p class="font-bold text-gray-700">{{ $reporte->titulo }}</p>
-                                <p class="text-sm text-gray-500">{{ $reporte->fecha_reporte }}</p>
-                                <p class="text-xs text-gray-400">{{ $reporte->estado_reporte }}</p>
+                                <p class="text-sm text-gray-500">{{ $reporte->estado_reporte }}</p>
+                                <p class="text-xs text-gray-400">{{ $reporte->fecha_reporte }}</p>
                             </div>
                         @endforeach
                     @endif
                 </div>
             </div>
+        @endif
+    </div>
 
-            @if (Auth::user()->isCiudadano())
-                <div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">Mis Reportes</h3>
-                    <div class="bg-white p-4 rounded-lg shadow-md h-60 overflow-y-auto border border-gray-200">
-                        @if ($misReportes->isEmpty())
-                            <p class="text-gray-500">No tienes reportes asignados.</p>
-                        @else
-                            @foreach ($misReportes as $reporte)
-                                <div class="mb-3">
-                                    <p class="font-bold text-gray-700">{{ $reporte->titulo }}</p>
-                                    <p class="text-sm text-gray-500">{{ $reporte->estado_reporte }}</p>
-                                    <p class="text-xs text-gray-400">{{ $reporte->fecha_reporte }}</p>
-                                </div>
-                            @endforeach
-                        @endif
-                    </div>
-                </div>
-            @endif
-        </div>
+
 
         <!-- Accesos Rápidos -->
         <div>
