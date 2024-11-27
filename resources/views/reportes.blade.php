@@ -23,6 +23,7 @@
                     Mis Reportes
                 </a>
             </div>
+            
             @endif
             <div class="bg-gray-200 p-4 rounded-xl h-[600px] overflow-y-auto flex-grow">
             @foreach ($reportes as $reporte)
@@ -35,9 +36,6 @@
             />
             @endforeach
         </div>
-
-
-
         </div>
 
         <!--Detalles del Reporte Seleccionado -->
@@ -143,9 +141,66 @@
 
                                 L.marker([lat, lon]).addTo(map)
                                     .bindPopup("<b>{{ $reporteSeleccionado->ubicacion }}</b>")
-                                    .openPopup();
+                                    .openPopup(); 
+                                map.zoomControl.setPosition('topright');
                             });
                         </script>
+
+                        <style>
+                            #map .leaflet-control-zoom {
+                                position: absolute !important;
+                                top: 15px !important;
+                                right: 15px !important;
+                                z-index: 1000 !important;
+                                background: rgba(255, 255, 255, 1) !important;
+                                border-radius: 10px !important;
+                                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+                                overflow: hidden;
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                justify-content: center;}
+                            /* Botones individuales */
+                            #map .leaflet-control-zoom-in,
+                            #map .leaflet-control-zoom-out {
+                                width: 45px !important; /* Botón cuadrado */
+                                height: 45px !important; 
+                                background-color: #007bff !important;
+                                color: white !important;
+                                font-size: 20px !important;
+                                text-align: center !important;
+                                display: flex; /* Asegura que el texto dentro esté centrado */
+                                align-items: center; /* Centrado vertical */
+                                justify-content: center; /* Centrado horizontal */
+                                border: none !important;
+                                cursor: pointer !important;
+                                transition: background-color 0.2s ease, transform 0.2s ease !important;
+                            }
+
+                            /* Separación entre los botones */
+                            #map .leaflet-control-zoom-in {
+                                border-bottom: 1px solid white !important;
+                            }
+                            /* Efecto hover */
+                            #map .leaflet-control-zoom-in:hover,
+                            #map .leaflet-control-zoom-out:hover {
+                                background-color: #0056b3 !important;
+                                transform: scale(1.1) !important;
+                            }
+                            @media screen and (max-width: 600px) {
+                                #map .leaflet-control-zoom {
+                                    top: 20px;
+                                    right: 20px;
+                                }
+
+                                #map .leaflet-control-zoom-in,
+                                #map .leaflet-control-zoom-out {
+                                    width: 40px !important;
+                                    height: 40px !important;
+                                    font-size: 18px !important;
+                                }
+                            }
+                        </style>
                     </div>
 
                     <!-- Imagen del Incidente -->
