@@ -5,50 +5,87 @@
 @section('content')
 <div class="container mx-auto px-4">
     <h2 class="text-3xl font-bold text-gray-800 mb-6">Reportes</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Listado de Reportes -->
-        <div class="col-span-1 flex flex-col">
-            <h2 class="text-xl font-semibold text-gray-700 mb-4">Listado</h2>
+    <div class="flex space-x-4 mb-4">
+        <!-- Menú de selección para filtros de reportes -->
+    <div class="flex flex-col gap-2 w-1/2">
+        <label for="filtroReportes" class="text-sm text-gray-700 font-medium">Filtrar por:</label>
+        <select id="filtroReportes" onchange="window.location.href=this.value" class="px-4 py-2 bg-[#ebf5fb] text-black font-medium rounded focus:ring-2 focus:ring-[#ebf5fb]">
+            <option value="{{ route('reportes.list', ['filter' => 'all']) }}" 
+                    {{ request('filter') == 'all' ? 'selected' : '' }}>
+                Todos los Reportes
+            </option>
+            <option value="{{ route('reportes.list', ['filter' => 'own']) }}" 
+                    {{ request('filter') == 'own' ? 'selected' : '' }}>
+                Mis Reportes
+            </option>
+        </select>
+    </div>
 
-            @if (Auth::user()->isCiudadano())
-            <div class="flex space-x-4 mb-4">
-                <!-- Menú desplegable para filtro de reportes -->
-                <div class="relative">
-                    <button class="px-4 py-2 bg-blue-500 text-white font-medium rounded hover:bg-blue-600 focus:outline-none peer">
-                        Filtro de Reportes
-                    </button>
-                    <div class="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-10 hidden peer-focus:block peer:hover:block">
-                        <a href="{{ route('reportes.list', ['filter' => 'all']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                            Ver todos los Reportes
+    <!-- Menú de selección para ordenar por fecha y estado -->
+    <div class="flex flex-col gap-2 w-1/2">
+        <label for="ordenFecha" class="text-sm text-gray-700 font-medium">Ordenar por:</label>
+        <select id="ordenFecha" onchange="window.location.href=this.value" class="px-4 py-2 bg-[#ebf5fb] text-black font-medium rounded focus:ring-2 focus:ring-[#ebf5fb]">
+            <!-- Opción de ordenamiento de fecha -->
+            <option value="#" disabled selected>Fecha</option> <!-- Texto solo visual -->
+            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'order' => 'desc', 'state' => request('state')]) }}" 
+                    {{ request('order') == 'desc' ? 'selected' : '' }}>
+                Fecha Descendente
+            </option>
+            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'order' => 'asc', 'state' => request('state')]) }}" 
+                    {{ request('order') == 'asc' ? 'selected' : '' }}>
+                Fecha Ascendente
+            </option>
+        </select>
+    </div>
+
+    <!-- Menú de selección para filtrar por estado -->
+    <div class="flex flex-col gap-2 w-1/2">
+        <label for="estadoReporte" class="text-sm text-gray-700 font-medium">Filtrar por Estado:</label>
+        <select id="estadoReporte" onchange="window.location.href=this.value" class="px-4 py-2 bg-[#ebf5fb] text-black font-medium rounded focus:ring-2 focus:ring-[#ebf5fb]">
+            <option value="#" disabled selected>Estado</option> <!-- Texto solo visual -->
+            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'state' => 'PENDIENTE']) }}" 
+                    {{ request('state') == 'PENDIENTE' ? 'selected' : '' }}>
+                PENDIENTE
+            </option>
+            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'state' => 'VALIDADO']) }}" 
+                    {{ request('state') == 'VALIDADO' ? 'selected' : '' }}>
+                VALIDADO
+            </option>
+            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'state' => 'RECHAZADO']) }}" 
+                    {{ request('state') == 'RECHAZADO' ? 'selected' : '' }}>
+                RECHAZADO
+            </option>
+            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'state' => 'RESUELTO']) }}" 
+                    {{ request('state') == 'RESUELTO' ? 'selected' : '' }}>RESUELTO</option>
+            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'state' => 'EN PROCESO']) }}" 
+                    {{ request('state') == 'EN PROCESO' ? 'selected' : '' }}>
+                EN PROCESO
+            </option>
+        </select>
+    </div>
+    </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Listado de Reportes -->
+                <div class="col-span-1 flex flex-col">
+                    <h2 class="text-xl font-semibold text-gray-700 mb-4">Listado</h2>
+                    @if (Auth::user()->isCiudadano())
+                    <div class="flex space-x-4 mb-4">
+                        <!-- Botón para ver todos los reportes -->
+                        <a href="{{ route('reportes.list', ['filter' => 'all']) }}"
+                        class="px-4 py-2 bg-blue-500 text-white font-medium rounded hover:bg-blue-600">
+                            Todos los Reportes
                         </a>
-                        <a href="{{ route('reportes.list', ['filter' => 'own']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+
+                        <!-- Botón para ver los reportes propios -->
+                        <a href="{{ route('reportes.list', ['filter' => 'own']) }}"
+                        class="px-4 py-2 bg-green-500 text-white font-medium rounded hover:bg-green-600">
                             Mis Reportes
                         </a>
                     </div>
-                </div>
-
-                <!-- Menú desplegable para ordenar los reportes -->
-                <div class="relative">
-                    <button class="px-4 py-2 bg-green-500 text-white font-medium rounded hover:bg-green-600 focus:outline-none peer">
-                        Ordenar Reportes
-                    </button>
-                    <div class="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-10 hidden peer-focus:block peer:hover:block">
-                        <a href="{{ route('reportes.list', ['filter' => 'all', 'order' => 'fecha_asc']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                            Por Fecha (Ascendente)
-                        </a>
-                        <a href="{{ route('reportes.list', ['filter' => 'all', 'order' => 'fecha_desc']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                            Por Fecha (Descendente)
-                        </a>
-                        <a href="{{ route('reportes.list', ['filter' => 'all', 'order' => 'estado']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                            Por Estado
-                        </a>
-                    </div>
-                </div>
-            </div>
-            @endif
-
-            <div class="bg-gray-200 p-4 rounded-xl h-[600px] overflow-y-auto flex-grow">
-                @foreach ($reportes as $reporte)
+                    
+                    @endif
+                    <div class="bg-gray-200 p-4 rounded-xl h-[600px] overflow-y-auto flex-grow">
+                    @foreach ($reportes as $reporte)
                     <x-report-card
                         fecha="{{ $reporte->fecha_reporte }}"
                         titulo="{{ $reporte->titulo }}"
@@ -56,8 +93,7 @@
                         estado="{{ $reporte->estado_reporte }}"
                         reporteId="{{ $reporte->id_reporte }}"
                     />
-                @endforeach
-            </div>
+                    @endforeach
         </div>
         </div>
 
