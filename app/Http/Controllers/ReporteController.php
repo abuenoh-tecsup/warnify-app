@@ -11,33 +11,37 @@ use Carbon\Carbon;
 class ReporteController extends Controller
 {
     public function index()
-        {
-            // Obtener los reportes más recientes (últimos 5)
-            $reportesRecientes = Reporte::orderBy('fecha_reporte', 'desc')->limit(5)->get();
-
-            // Obtener los reportes del usuario autenticado
-            $misReportes = Reporte::where('id_ciudadano', Auth::user()->id_usuario)
-                                    ->orderBy('fecha_reporte', 'desc')
-                                    ->limit(5)
-                                    ->get();
-
-            // Conteo total de reportes
-            $totalReportes = Reporte::count();
-
-            // Conteo de reportes por estado
-            $pendientes = Reporte::where('estado_reporte', 'PENDIENTE')->count();
-            $resueltos = Reporte::where('estado_reporte', 'RESUELTO')->count();
-            $enProceso = Reporte::where('estado_reporte', 'EN PROCESO')->count();
-
-            return view('inicio', compact(
-                'reportesRecientes',
-                'misReportes',
-                'totalReportes',
-                'pendientes',
-                'resueltos',
-                'enProceso'
-            ));
-        }
+    {
+        // Obtener los reportes más recientes (últimos 5) y formatear las fechas
+        $reportesRecientes = Reporte::orderBy('fecha_reporte', 'desc')
+            ->limit(5)
+            ->get()
+            ->map(function ($reporte) {
+                $reporte->fecha_reporte = \Carbon\Carbon::parse($reporte->fecha_reporte)->format('M j, Y h:i A');
+                return $reporte;
+            });
+        $misReportes = Reporte::where('id_ciudadano', Auth::user()->id_usuario)
+            ->orderBy('fecha_reporte', 'desc')
+            ->limit(5)
+            ->get()
+            ->map(function ($reporte) {
+                $reporte->fecha_reporte = \Carbon\Carbon::parse($reporte->fecha_reporte)->format('M j, Y h:i A');
+                return $reporte;
+            });
+        $totalReportes = Reporte::count();
+        $pendientes = Reporte::where('estado_reporte', 'PENDIENTE')->count();
+        $resueltos = Reporte::where('estado_reporte', 'RESUELTO')->count();
+        $enProceso = Reporte::where('estado_reporte', 'EN PROCESO')->count();
+        
+        return view('inicio', compact(
+            'reportesRecientes',
+            'misReportes',
+            'totalReportes',
+            'pendientes',
+            'resueltos',
+            'enProceso'
+        ));
+    }
 
     
     public function create()
@@ -46,7 +50,7 @@ class ReporteController extends Controller
         }
 
     
-    public function store(Request $request)
+        public function store(Request $request)
         {
             $data = $request->validate([
                 'titulo' => 'required|string|max:100',
@@ -58,21 +62,17 @@ class ReporteController extends Controller
                 'img_incidente' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
             ]);
             $data['fecha_reporte'] = Carbon::createFromFormat('M j, Y h:i A', $request->fecha_reporte)->format('Y-m-d H:i:s');
-
             $data['estado_reporte'] = 'PENDIENTE';
             $data['id_autoridad'] = null;
             $data['fecha_act'] = Carbon::now();
             $data['id_ciudadano'] = Auth::user()->id_usuario;
-
             if ($request->hasFile('img_incidente')) {
                 $nombreArchivo = 'reporte_' . time() . '.' . $request->file('img_incidente')->getClientOriginalExtension();
                 $data['img_incidente'] = $request->file('img_incidente')->storeAs('/reports_images', $nombreArchivo, 'public');
                 $data['img_incidente'] = 'storage/reports_images/' . $nombreArchivo;
             }
-
             Reporte::create($data);
-
-            return redirect()->route('reportes.inicio');
+            return redirect()->route('reportes.inicio')->with('success', 'Reporte guardado con éxito');
         }
 
 
@@ -81,35 +81,31 @@ class ReporteController extends Controller
     }
 
     public function list_details_all(string $filter, string $id = null)
-        {
-            $user = Auth::user();
-
-            if ($user->isAutoridad()) {
-                $estadoOrden = ['VALIDADO', 'EN PROCESO', 'RESUELTO'];
-            } else {
-                $estadoOrden = ['PENDIENTE', 'VALIDADO', 'EN PROCESO', 'RESUELTO'];
-            }
-
-            if ($filter === 'own') {
-                $reportes = Reporte::where('id_ciudadano', $user->id_usuario)
-                    ->orderByRaw("FIELD(estado_reporte, '" . implode("','", $estadoOrden) . "')")
-                    ->orderBy('fecha_reporte', 'desc')
-                    ->get();
-            } else {
-                $reportes = Reporte::orderByRaw("FIELD(estado_reporte, '" . implode("','", $estadoOrden) . "')")
-                    ->orderBy('fecha_reporte', 'desc')
-                    ->get();
-            }
-
-            $reporteSeleccionado = $id ? Reporte::find($id) : null;
-
-            return view('reportes', compact('reportes', 'reporteSeleccionado'));
+    {
+        $user = Auth::user();
+        $estado = request('state');
+        $order = request('order', 'desc');
+        $query = Reporte::query();
+        if ($estado) {
+            $query->where('estado_reporte', $estado);
         }
+        if ($filter === 'own') {
+            $query->where('id_ciudadano', $user->id_usuario);
+        }
+        if ($order === 'asc') {
+            $query->orderBy('fecha_reporte', 'asc');
+        } else {
+            $query->orderBy('fecha_reporte', 'desc');
+        }
+        $reportes = $query->get();
+        $reporteSeleccionado = $id ? Reporte::find($id) : null;
+        return view('reportes', compact('reportes', 'reporteSeleccionado', 'filter', 'estado', 'order'));
+    }
 
 
 
 
-    
+
     public function edit(string $id)
         {
             $reporte = Reporte::findOrFail($id);

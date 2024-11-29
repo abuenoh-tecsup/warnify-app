@@ -9,32 +9,55 @@
         <!-- Listado de Reportes -->
         <div class="col-span-1 flex flex-col">
             <h2 class="text-xl font-semibold text-gray-700 mb-4">Listado</h2>
+
             @if (Auth::user()->isCiudadano())
             <div class="flex space-x-4 mb-4">
-                <!-- Botón para ver todos los reportes -->
-                <a href="{{ route('reportes.list', ['filter' => 'all']) }}"
-                   class="px-4 py-2 bg-blue-500 text-white font-medium rounded hover:bg-blue-600">
-                    Todos los Reportes
-                </a>
+                <!-- Menú desplegable para filtro de reportes -->
+                <div class="relative">
+                    <button class="px-4 py-2 bg-blue-500 text-white font-medium rounded hover:bg-blue-600 focus:outline-none peer">
+                        Filtro de Reportes
+                    </button>
+                    <div class="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-10 hidden peer-focus:block peer:hover:block">
+                        <a href="{{ route('reportes.list', ['filter' => 'all']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                            Ver todos los Reportes
+                        </a>
+                        <a href="{{ route('reportes.list', ['filter' => 'own']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                            Mis Reportes
+                        </a>
+                    </div>
+                </div>
 
-                <!-- Botón para ver los reportes propios -->
-                <a href="{{ route('reportes.list', ['filter' => 'own']) }}"
-                   class="px-4 py-2 bg-green-500 text-white font-medium rounded hover:bg-green-600">
-                    Mis Reportes
-                </a>
+                <!-- Menú desplegable para ordenar los reportes -->
+                <div class="relative">
+                    <button class="px-4 py-2 bg-green-500 text-white font-medium rounded hover:bg-green-600 focus:outline-none peer">
+                        Ordenar Reportes
+                    </button>
+                    <div class="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-10 hidden peer-focus:block peer:hover:block">
+                        <a href="{{ route('reportes.list', ['filter' => 'all', 'order' => 'fecha_asc']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                            Por Fecha (Ascendente)
+                        </a>
+                        <a href="{{ route('reportes.list', ['filter' => 'all', 'order' => 'fecha_desc']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                            Por Fecha (Descendente)
+                        </a>
+                        <a href="{{ route('reportes.list', ['filter' => 'all', 'order' => 'estado']) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                            Por Estado
+                        </a>
+                    </div>
+                </div>
             </div>
-            
             @endif
+
             <div class="bg-gray-200 p-4 rounded-xl h-[600px] overflow-y-auto flex-grow">
-            @foreach ($reportes as $reporte)
-            <x-report-card
-                fecha="{{ $reporte->fecha_reporte }}"
-                titulo="{{ $reporte->titulo }}"
-                descripcion="{{ $reporte->descripcion }}"
-                estado="{{ $reporte->estado_reporte }}"
-                reporteId="{{ $reporte->id_reporte }}"
-            />
-            @endforeach
+                @foreach ($reportes as $reporte)
+                    <x-report-card
+                        fecha="{{ $reporte->fecha_reporte }}"
+                        titulo="{{ $reporte->titulo }}"
+                        descripcion="{{ $reporte->descripcion }}"
+                        estado="{{ $reporte->estado_reporte }}"
+                        reporteId="{{ $reporte->id_reporte }}"
+                    />
+                @endforeach
+            </div>
         </div>
         </div>
 
