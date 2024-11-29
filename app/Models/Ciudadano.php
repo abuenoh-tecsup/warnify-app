@@ -8,19 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Ciudadano extends Model
 {
     use HasFactory;
-
-    // Tabla asociada al modelo
     protected $table = 'ciudadano';
-
-    // Clave primaria
     protected $primaryKey = 'id_ciudadano';
-
-    // Si no usas timestamps, puedes desactivar la propiedad
     public $timestamps = true;
-
-    // Campos asignables masivamente
     protected $fillable = [
-        'id_usuario',  // ID del usuario, clave foránea que hace referencia a la tabla `usuario`
+        'id_usuario',
         'documento_identidad',
         'ocupacion',
     ];

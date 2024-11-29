@@ -15,7 +15,21 @@
             <x-text-input id="apellido" class="block mt-1 w-full" type="text" name="apellido" :value="old('apellido')" required autocomplete="apellido" />
             <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
         </div>
-
+        <!-- Documento de Identidad -->
+        <div class="mt-4">
+            <x-input-label for="documento_identidad" :value="__('Documento de Identidad')" />
+            <x-text-input id="documento_identidad" class="block mt-1 w-full" 
+                        type="text" name="documento_identidad" 
+                        :value="old('documento_identidad')" required 
+                        autocomplete="documento_identidad" maxlength="8" />
+            <x-input-error :messages="$errors->get('documento_identidad')" class="mt-2" />
+        </div>
+        <!-- Ocupación -->
+        <div class="mt-4">
+            <x-input-label for="ocupacion" :value="__('Ocupación')" />
+            <x-text-input id="ocupacion" class="block mt-1 w-full" type="text" name="ocupacion" :value="old('ocupacion')" required autocomplete="ocupacion" />
+            <x-input-error :messages="$errors->get('ocupacion')" class="mt-2" />
+        </div>
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
