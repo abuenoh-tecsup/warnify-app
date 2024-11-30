@@ -3,6 +3,38 @@
 @section('title', 'Mi cuenta')
 
 @section('content')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<div class="container mx-auto px-6">
+    @if (session('success'))
+        <script>
+            window.onload = function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito!',
+                    text: "{{ session('success') }}",
+                    background: '#d4edda',
+                    confirmButtonColor: '#28a745',
+                    iconColor: '#155724', 
+                });
+            }
+        </script>
+    @endif
+    @if ($errors->any())
+        <script>
+            window.onload = function() {
+                let errors = @json($errors->all());
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Error!',
+                    html: "Errores encontrados: <br>" + errors.join("<br>"),
+                    background: '#f8d7da',
+                    confirmButtonColor: '#dc3545',
+                    iconColor: '#721c24',
+                });
+            }
+        </script>
+    @endif
+</div>
 <div class="container mx-auto px-6">
     <h2 class="text-2xl font-bold text-gray-800 mb-6">Configuración de Perfil</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -40,15 +72,33 @@
                         class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2 w-full"
                     >
                 </div>
-                <div class="mb-4">
-                    <label for="telefono" class="text-gray-600 font-medium">Número de teléfono</label>
-                    <input 
-                        type="text" 
-                        name="telefono" 
-                        value="{{ old('telefono', $user->telefono) }}" 
-                        class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2 w-full"
-                    >
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="mb-4">
+                            <label for="telefono" class="text-gray-600 font-medium">Número de teléfono</label>
+                            <input 
+                                type="text" 
+                                name="telefono" 
+                                value="{{ old('telefono', $user->telefono) }}" 
+                                class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2 w-full">
+                    </div>
+                    <div class="mb-4">
+                            <label for="documento_identidad" class="text-gray-600 font-medium">DNI</label>
+                            <input 
+                                type="text" 
+                                name="documento_identidad" 
+                                value="{{ old('documento_identidad', $user->ciudadano->documento_identidad) }}" 
+                                class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2 w-full">
+                    </div>
+                    <div class="mb-4">
+                            <label for="ocupacion" class="text-gray-600 font-medium">Ocupación</label>
+                            <input 
+                                type="text" 
+                                name="ocupacion" 
+                                value="{{ old('ocupacion', $user->ciudadano->ocupacion) }}" 
+                                class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2 w-full">
+                    </div>
                 </div>
+                
                 <div class="mb-4">
                     <label for="direccion" class="text-gray-600 font-medium">Dirección</label>
                     <input 
@@ -142,9 +192,15 @@
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <div class="mb-4">
                     <label for="reportes" class="text-gray-600 font-medium">Estado de Reportes</label>
-                    <p class="text-gray-700">
-                        Tienes {{ $pendientes }} reportes pendientes y {{ $resueltos }} reportes resueltos.
-                    </p>
+                    @if ($pendientes === 0 && $resueltos===0)
+                        <p class="text-gray-700">
+                            Usted no realizó reportes aún.
+                        </p>
+                    @else
+                        <p class="text-gray-700">
+                            Tienes {{ $pendientes }} reportes pendientes y {{ $resueltos }} reportes resueltos.
+                        </p>
+                    @endif                    
             </div>
             @endif
             

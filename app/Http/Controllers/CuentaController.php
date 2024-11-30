@@ -17,88 +17,92 @@ class CuentaController extends Controller
             return view('cuenta', compact('user'));
         }
 
-    // Método para actualizar los datos
-    public function update(Request $request)
+        // Método para actualizar los datos
+        public function update(Request $request)
         {
-            // Validar que el correo no exista en la base de datos
-            $validatedData = $request->validate([
+            $request->validate([
                 'nombre' => 'required|string|max:255',
                 'apellidos' => 'required|string|max:255',
-                'correo' => 'required|email|unique:users,email,' . auth()->id(),  // Verificar si el correo ya está en uso
+                'correo' => 'required|email|unique:users,email,' . auth()->id(), 
                 'telefono' => 'required|string|max:20',
                 'direccion' => 'required|string|max:255',
                 'notificaciones' => 'required|boolean',
+                'ocupacion' => 'required|string|max:255',
+                'documento_identidad' => 'required|string|max:255',
             ], [
                 'correo.unique' => 'El correo electrónico ya está registrado para otro usuario. Por favor ingrese otro correo.'
             ]);
 
-            // Si la validación pasa, actualizamos los datos del usuario
-            $user = auth()->user();
-            $user->update([
-                'nombre' => $request->nombre,
-                'apellidos' => $request->apellidos,
-                'email' => $request->correo,
-                'telefono' => $request->telefono,
-                'direccion' => $request->direccion,
-                'notifi_acti' => $request->notificaciones,
-            ]);
-
-            // Mensaje de éxito
-            session()->flash('success', 'Los cambios se han guardado correctamente.');
-
-            // Redirigir a la misma página si la validación pasó, con los errores si los hubo
-            return redirect()->route('cuenta.index')->withInput();
-        }
-
-    public function showChangePasswordForm()
-            {
-                return view('cuenta.change-password');
-            }
-
-        public function changePassword(Request $request)
-            {
-                // Validar las contraseñas
-                $request->validate([
-                    'actual' => 'required|string',
-                    'nueva' => 'required|string|min:8|confirmed',
+            try {
+                $user = auth()->user();
+                $user->update([
+                    'nombre' => $request->nombre,
+                    'apellidos' => $request->apellidos,
+                    'email' => $request->correo,
+                    'telefono' => $request->telefono,
+                    'direccion' => $request->direccion,
+                    'notifi_acti' => $request->notificaciones,
                 ]);
 
-                $user = Auth::user(); // Usuario autenticado
+                $ciudadano = Auth::user()->ciudadano;
 
-                // Validar si la contraseña actual coincide
-                $actualIngresada = $request->actual;
-                $actualAlmacenada = $user->password;
-
-                // Comprobar la contraseña actual
-                if (!Hash::check($actualIngresada, $actualAlmacenada)) {
-                    return back()->withErrors(['actual' => 'La contraseña actual no es correcta.']);
+                if ($ciudadano) {
+                    $ciudadano->update([
+                        'ocupacion' => $request->ocupacion,
+                        'documento_identidad' => $request->documento_identidad,
+                    ]);
+                } else {
+                    // Error si no se encuentra el ciudadano
+                    return back()->withErrors(['message' => 'Ciudadano no encontrado para este usuario.']);
                 }
 
-                // Actualizar la contraseña
-                $user->password = Hash::make($request->nueva); // Encripta la nueva contraseña antes de guardarla
-                $user->save();
+                // Mensaje de éxito
+                session()->flash('success', 'Los cambios se han guardado correctamente.');
+                return redirect()->route('cuenta.index')->withInput();
 
-                // Retornar un mensaje de éxito
-                return redirect()->route('cuenta.index')->with('success', 'Contraseña actualizada correctamente.');
+            } catch (\Exception $e) {
+                // Si ocurre algún error inesperado
+                return back()->withErrors(['message' => 'Ocurrió un error al actualizar los datos. Intenta de nuevo.']);
             }
+        }
 
-    public function showestados()
-            {
-                $user = Auth::user(); // Obtener el usuario autenticado
+        public function changePassword(Request $request)
+        {
+            // Validar las contraseñas
+            $request->validate([
+                'actual' => 'required|string',
+                'nueva' => 'required|string|min:8|confirmed',  
+            ], [
+                'nueva.min' => 'La nueva contraseña debe tener al menos 8 caracteres.',
+                'nueva.confirmed' => 'La confirmación de la nueva contraseña no coincide.',
+            ]);
+            $user = Auth::user();
+            $actualIngresada = $request->actual;
+            $actualAlmacenada = $user->password;
 
-                // Consultar los reportes pendientes del usuario
-                $pendientes = Reporte::where('id_ciudadano', $user->id_usuario)
-                          ->where('estado_reporte', 'pendiente')
-                          ->count();
-
-                // Contar los reportes resueltos
-                $resueltos = Reporte::where('id_ciudadano', $user->id_usuario)
-                                    ->where('estado_reporte', 'resuelto')
-                                    ->count();
-
-                // Retornar la vista con el número de reportes pendientes
-                return view('cuenta', compact('user', 'pendientes', 'resueltos'));
+            if (!Hash::check($actualIngresada, $actualAlmacenada)) {
+                return back()->withErrors(['actual' => 'La contraseña actual no es correcta.']);
             }
+            $user->password = Hash::make($request->nueva);
+            $user->save();
+
+            return redirect()->route('cuenta.index')->with('success', 'Contraseña actualizada correctamente.');
+        }
+
+
+              
+
+        public function showestados()
+                {
+                    $user = Auth::user();
+                    $pendientes = Reporte::where('id_ciudadano', $user->id_usuario)
+                            ->where('estado_reporte', 'pendiente')
+                            ->count();
+                    $resueltos = Reporte::where('id_ciudadano', $user->id_usuario)
+                                        ->where('estado_reporte', 'resuelto')
+                                        ->count();
+                    return view('cuenta', compact('user', 'pendientes', 'resueltos'));
+                }
 
 
 }
