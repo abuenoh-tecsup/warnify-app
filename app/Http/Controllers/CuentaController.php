@@ -23,18 +23,23 @@ class CuentaController extends Controller
             $request->validate([
                 'nombre' => 'required|string|max:255',
                 'apellidos' => 'required|string|max:255',
-                'correo' => 'required|email|unique:users,email,' . auth()->id(), 
+                'correo' => 'required|email|unique:users,email,' . auth()->id(),
                 'telefono' => 'required|string|max:20',
                 'direccion' => 'required|string|max:255',
                 'notificaciones' => 'required|boolean',
-                'ocupacion' => 'required|string|max:255',
-                'documento_identidad' => 'required|string|max:255',
+                'ocupacion' => 'nullable|string|max:255',
+                'documento_identidad' => 'nullable|string|max:255',
+                'cargo' => 'nullable|string|max:50',
+                'tipo_autoridad' => 'nullable|string|max:50',
+                'area_supervision' => 'nullable|string|max:100',
             ], [
-                'correo.unique' => 'El correo electrónico ya está registrado para otro usuario. Por favor ingrese otro correo.'
+                'correo.unique' => 'El correo electrónico ya está registrado para otro usuario. Por favor ingrese otro correo.',
+                'required' => 'Campo vacío, por favor revisar los campos antes de envíar el formulario.',
             ]);
-
+        
             try {
                 $user = auth()->user();
+
                 $user->update([
                     'nombre' => $request->nombre,
                     'apellidos' => $request->apellidos,
@@ -43,28 +48,39 @@ class CuentaController extends Controller
                     'direccion' => $request->direccion,
                     'notifi_acti' => $request->notificaciones,
                 ]);
-
-                $ciudadano = Auth::user()->ciudadano;
-
-                if ($ciudadano) {
+        
+                // Verificar y actualizar datos dependiendo del tipo de usuario
+                if ($user->ciudadano) {
+                    $ciudadano = $user->ciudadano;
                     $ciudadano->update([
                         'ocupacion' => $request->ocupacion,
                         'documento_identidad' => $request->documento_identidad,
                     ]);
-                } else {
-                    // Error si no se encuentra el ciudadano
-                    return back()->withErrors(['message' => 'Ciudadano no encontrado para este usuario.']);
                 }
-
+        
+                if ($user->moderador) {
+                    $moderador = $user->moderador;
+                    $moderador->update([
+                        'area_supervision' => $request->area_supervision,
+                    ]);
+                } elseif ($user->autoridad) {
+                    $autoridad = $user->autoridad;
+                    $autoridad->update([
+                        'cargo' => $request->cargo,
+                        'tipo_autoridad' => $request->tipo_autoridad,
+                    ]);
+                }
+        
                 // Mensaje de éxito
                 session()->flash('success', 'Los cambios se han guardado correctamente.');
                 return redirect()->route('cuenta.index')->withInput();
-
+        
             } catch (\Exception $e) {
-                // Si ocurre algún error inesperado
+                // Manejo de errores
                 return back()->withErrors(['message' => 'Ocurrió un error al actualizar los datos. Intenta de nuevo.']);
             }
-        }
+        }        
+
 
         public function changePassword(Request $request)
         {
