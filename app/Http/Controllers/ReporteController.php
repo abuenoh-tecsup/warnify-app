@@ -32,7 +32,7 @@ class ReporteController extends Controller
         $pendientes = Reporte::where('estado_reporte', 'PENDIENTE')->count();
         $resueltos = Reporte::where('estado_reporte', 'RESUELTO')->count();
         $enProceso = Reporte::where('estado_reporte', 'EN PROCESO')->count();
-        
+
         return view('inicio', compact(
             'reportesRecientes',
             'misReportes',
@@ -43,13 +43,13 @@ class ReporteController extends Controller
         ));
     }
 
-    
+
     public function create()
         {
             return view('nuevo_reporte');
         }
 
-    
+
         public function store(Request $request)
         {
             $data = $request->validate([
@@ -80,27 +80,32 @@ class ReporteController extends Controller
 
     }
 
-    public function list_details_all(string $filter, string $id = null)
+    public function list_details_all(string $filter = 'all', string $state = null, string $order = 'desc', string $id = null)
     {
         $user = Auth::user();
-        $estado = request('state');
-        $order = request('order', 'desc');
+
         $query = Reporte::query();
-        if ($estado) {
-            $query->where('estado_reporte', $estado);
-        }
+
+        // Filtrar por usuario
         if ($filter === 'own') {
             $query->where('id_ciudadano', $user->id_usuario);
         }
-        if ($order === 'asc') {
-            $query->orderBy('fecha_reporte', 'asc');
-        } else {
-            $query->orderBy('fecha_reporte', 'desc');
+
+        // Filtrar por estado
+        if ($state) {
+            $query->where('estado_reporte', $state);
         }
+
+        // Ordenar por fecha
+        $query->orderBy('fecha_reporte', $order);
+
+        // Obtener los reportes y reporte seleccionado
         $reportes = $query->get();
         $reporteSeleccionado = $id ? Reporte::find($id) : null;
-        return view('reportes', compact('reportes', 'reporteSeleccionado', 'filter', 'estado', 'order'));
+
+        return view('reportes', compact('reportes', 'reporteSeleccionado', 'filter', 'state', 'order'));
     }
+
 
 
 
@@ -174,7 +179,7 @@ class ReporteController extends Controller
             return redirect()->route('reportes.list', ['filter' => 'all']);
         }
 
-    
+
     public function destroy(string $id)
         {
             //

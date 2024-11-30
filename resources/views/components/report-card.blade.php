@@ -6,7 +6,7 @@
         <p class="mt-2 text-gray-500 truncate">{{ $descripcion }}</p>
         <p class="mt-2 text-gray-500 font-bold">{{ $estado }}</p>
     </div>
-    <a class="w-1/6 bg-yellow-300 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 flex items-center justify-center" href="{{ route('reportes.list', ['filter' => request('filter', 'all'), 'id' => $reporteId]) }}">
+    <a class="w-1/6 bg-yellow-300 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 flex items-center justify-center" href="{{ route('reportes.list', ['filter' => request('filter', 'all'), 'state' => request('state'), 'order' => request('order', 'desc'), 'id' => $reporteId]) }}">
         <span class="font-bold text-2xl">+</span>
     </a>
 </div>

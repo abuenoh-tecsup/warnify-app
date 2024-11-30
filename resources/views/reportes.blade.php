@@ -10,14 +10,14 @@
     <div class="flex flex-col gap-2 w-1/2">
         <label for="filtroReportes" class="text-sm text-gray-700 font-medium">Filtrar por:</label>
         <select id="filtroReportes" onchange="window.location.href=this.value" class="px-4 py-2 bg-[#ebf5fb] text-black font-medium rounded focus:ring-2 focus:ring-[#ebf5fb]">
-            <option value="{{ route('reportes.list', ['filter' => 'all']) }}" 
-                    {{ request('filter') == 'all' ? 'selected' : '' }}>
-                Todos los Reportes
-            </option>
-            <option value="{{ route('reportes.list', ['filter' => 'own']) }}" 
-                    {{ request('filter') == 'own' ? 'selected' : '' }}>
-                Mis Reportes
-            </option>
+            <option value="{{ route('reportes.list', ['filter' => 'all', 'state' => request('state'), 'order' => request('order')]) }}"
+                {{ request('filter') == 'all' ? 'selected' : '' }}>
+            Todos los Reportes
+        </option>
+        <option value="{{ route('reportes.list', ['filter' => 'own', 'state' => request('state'), 'order' => request('order')]) }}"
+                {{ request('filter') == 'own' ? 'selected' : '' }}>
+            Mis Reportes
+        </option>
         </select>
     </div>
 
@@ -27,11 +27,11 @@
         <select id="ordenFecha" onchange="window.location.href=this.value" class="px-4 py-2 bg-[#ebf5fb] text-black font-medium rounded focus:ring-2 focus:ring-[#ebf5fb]">
             <!-- Opción de ordenamiento de fecha -->
             <option value="#" disabled selected>Fecha</option> <!-- Texto solo visual -->
-            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'order' => 'desc', 'state' => request('state')]) }}" 
+            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'order' => 'desc', 'state' => request('state')]) }}"
                     {{ request('order') == 'desc' ? 'selected' : '' }}>
                 Fecha Descendente
             </option>
-            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'order' => 'asc', 'state' => request('state')]) }}" 
+            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'order' => 'asc', 'state' => request('state')]) }}"
                     {{ request('order') == 'asc' ? 'selected' : '' }}>
                 Fecha Ascendente
             </option>
@@ -43,21 +43,21 @@
         <label for="estadoReporte" class="text-sm text-gray-700 font-medium">Filtrar por Estado:</label>
         <select id="estadoReporte" onchange="window.location.href=this.value" class="px-4 py-2 bg-[#ebf5fb] text-black font-medium rounded focus:ring-2 focus:ring-[#ebf5fb]">
             <option value="#" disabled selected>Estado</option> <!-- Texto solo visual -->
-            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'state' => 'PENDIENTE']) }}" 
+            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'state' => 'PENDIENTE', 'order' => request('order')]) }}"
                     {{ request('state') == 'PENDIENTE' ? 'selected' : '' }}>
                 PENDIENTE
             </option>
-            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'state' => 'VALIDADO']) }}" 
+            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'state' => 'VALIDADO', 'order' => request('order')]) }}"
                     {{ request('state') == 'VALIDADO' ? 'selected' : '' }}>
                 VALIDADO
             </option>
-            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'state' => 'RECHAZADO']) }}" 
+            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'state' => 'RECHAZADO', 'order' => request('order')]) }}"
                     {{ request('state') == 'RECHAZADO' ? 'selected' : '' }}>
                 RECHAZADO
             </option>
-            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'state' => 'RESUELTO']) }}" 
+            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'state' => 'RESUELTO', 'order' => request('order')]) }}"
                     {{ request('state') == 'RESUELTO' ? 'selected' : '' }}>RESUELTO</option>
-            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'state' => 'EN PROCESO']) }}" 
+            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'state' => 'EN PROCESO', 'order' => request('order')]) }}"
                     {{ request('state') == 'EN PROCESO' ? 'selected' : '' }}>
                 EN PROCESO
             </option>
@@ -82,7 +82,7 @@
                             Mis Reportes
                         </a>
                     </div>
-                    
+
                     @endif
                     <div class="bg-gray-200 p-4 rounded-xl h-[600px] overflow-y-auto flex-grow">
                     @foreach ($reportes as $reporte)
@@ -162,7 +162,7 @@
                                     @elseif ($reporteSeleccionado->estado_reporte == 'RESUELTO') text-green-500
                                     @elseif ($reporteSeleccionado->estado_reporte == 'EN PROCESO') text-blue-500
                                     @elseif ($reporteSeleccionado->estado_reporte == 'VALIDADO') text-cyan-500
-                                    @else text-gray-800 @endif 
+                                    @else text-gray-800 @endif
                                     font-bold uppercase">
                                     {{ $reporteSeleccionado->estado_reporte }}
                                 </p>
@@ -200,7 +200,7 @@
 
                                 L.marker([lat, lon]).addTo(map)
                                     .bindPopup("<b>{{ $reporteSeleccionado->ubicacion }}</b>")
-                                    .openPopup(); 
+                                    .openPopup();
                                 map.zoomControl.setPosition('topright');
                             });
                         </script>
@@ -223,7 +223,7 @@
                             #map .leaflet-control-zoom-in,
                             #map .leaflet-control-zoom-out {
                                 width: 45px !important; /* Botón cuadrado */
-                                height: 45px !important; 
+                                height: 45px !important;
                                 background-color: #007bff !important;
                                 color: white !important;
                                 font-size: 20px !important;

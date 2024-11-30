@@ -132,8 +132,12 @@
                     </li>
                     @endif
                     <li class="py-2 lg:py-0 menu-item">
-                        <a class="text-white hover:border-b-4 hover:border-yellow-400" href="{{ route('reportes.list', ['filter' => 'all']) }}">Reportes</a>
+                        <a class="text-white hover:border-b-4 hover:border-yellow-400"
+                           href="{{ route('reportes.list', ['filter' => 'all', 'state' => 'PENDIENTE', 'order' => 'desc']) }}">
+                            Reportes
+                        </a>
                     </li>
+
                     <li class="py-2 lg:py-0 menu-item">
                         <a class="text-white hover:border-b-4 hover:border-yellow-400" href="/cuenta">Cuenta</a>
                     </li>
