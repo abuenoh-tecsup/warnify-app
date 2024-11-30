@@ -1,5 +1,10 @@
 <div x-data
-    x-init="flatpickr($refs.datetimewidget, {wrap: true, enableTime: true, dateFormat: 'M j, Y h:i K'});"
+    x-init="flatpickr($refs.datetimewidget, {
+        wrap: true, 
+        enableTime: true, 
+        dateFormat: 'M j, Y h:i K', 
+        maxDate: new Date()  // Restringir a fechas anteriores o iguales a la actual
+    });"
     x-ref="datetimewidget" class="flatpickr container mx-auto col-span-6 sm:col-span-6">
     <input
         x-ref="datetime"
@@ -10,7 +15,12 @@
         class="w-full px-4 py-2 mt-1 rounded-xl"
         data-input
         value="{{ $value ?? '' }}"
-        @focus="flatpickrInstance = flatpickr($refs.datetime, { wrap: true, enableTime: true, dateFormat: 'M j, Y h:i K' })"
+        @focus="flatpickrInstance = flatpickr($refs.datetime, { 
+            wrap: true, 
+            enableTime: true, 
+            dateFormat: 'M j, Y h:i K',
+            maxDate: new Date()  // Restringir a fechas anteriores o iguales a la actual
+        })"
     >
 </div>
 
