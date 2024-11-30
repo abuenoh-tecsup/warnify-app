@@ -1,4 +1,5 @@
 <!-- resources/views/components/report-card.blade.php -->
+<a name="{{$reporteId}}">
 <div class="max-w mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl flex mb-3">
     <div class="p-3 bg-white w-5/6">
         <div class="uppercase tracking-wide text-sm text-gray-500 font-semibold">{{ $fecha }}</div>
@@ -10,3 +11,4 @@
         <span class="font-bold text-2xl">+</span>
     </a>
 </div>
+</a>

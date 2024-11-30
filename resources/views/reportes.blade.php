@@ -43,6 +43,11 @@
         <label for="estadoReporte" class="text-sm text-gray-700 font-medium">Filtrar por Estado:</label>
         <select id="estadoReporte" onchange="window.location.href=this.value" class="px-4 py-2 bg-[#ebf5fb] text-black font-medium rounded focus:ring-2 focus:ring-[#ebf5fb]">
             <option value="#" disabled selected>Estado</option> <!-- Texto solo visual -->
+            
+            <option value="{{ route('reportes.list', ['filter' => request('filter'), 'state' => 'TODOS', 'order' => request('order')]) }}"
+                    {{ request('state') == 'TODOS' ? 'selected' : '' }}>
+                TODOS
+            </option>
             <option value="{{ route('reportes.list', ['filter' => request('filter'), 'state' => 'PENDIENTE', 'order' => request('order')]) }}"
                     {{ request('state') == 'PENDIENTE' ? 'selected' : '' }}>
                 PENDIENTE
@@ -71,13 +76,13 @@
                     @if (Auth::user()->isCiudadano())
                     <div class="flex space-x-4 mb-4">
                         <!-- Botón para ver todos los reportes -->
-                        <a href="{{ route('reportes.list', ['filter' => 'all']) }}"
+                        <a href="{{ route('reportes.list', ['filter' => 'all', 'state' => 'TODOS', 'order' => 'desc']) }}"
                         class="px-4 py-2 bg-blue-500 text-white font-medium rounded hover:bg-blue-600">
                             Todos los Reportes
                         </a>
 
                         <!-- Botón para ver los reportes propios -->
-                        <a href="{{ route('reportes.list', ['filter' => 'own']) }}"
+                        <a href="{{ route('reportes.list', ['filter' => 'own', 'state' => 'TODOS', 'order' => 'desc']) }}"
                         class="px-4 py-2 bg-green-500 text-white font-medium rounded hover:bg-green-600">
                             Mis Reportes
                         </a>

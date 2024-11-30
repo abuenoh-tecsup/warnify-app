@@ -92,7 +92,7 @@ class ReporteController extends Controller
         }
 
         // Filtrar por estado
-        if ($state) {
+        if ($state !== 'TODOS') {
             $query->where('estado_reporte', $state);
         }
 

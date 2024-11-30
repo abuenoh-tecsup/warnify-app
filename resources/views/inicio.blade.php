@@ -79,13 +79,13 @@
                     </a>
                 @endif
 
-                <a href="{{ route('reportes.list', ['filter' => 'all']) }}"
+                <a href="{{ route('reportes.list', ['filter' => 'all', 'state' => 'TODOS', 'order' => 'desc']) }}"
                     class="bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md text-center hover:bg-blue-600">
                     Ver Reportes
                 </a>
 
                 @if (Auth::user()->isCiudadano())
-                    <a href="{{ route('reportes.list', ['filter' => 'own']) }}"
+                    <a href="{{ route('reportes.list', ['filter' => 'own', 'state' => 'TODOS', 'order' => 'desc']) }}"
                         class="bg-green-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md text-center hover:bg-green-600">
                         Ver Mis Reportes
                     </a>
