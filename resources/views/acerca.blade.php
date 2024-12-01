@@ -13,7 +13,7 @@
     <!-- Sección de Información -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12 px-4">
         <!-- Tarjeta 1: Por qué Warnify -->
-        <div class="bg-gradient-to-r from-blue-100 via-blue-200 to-blue-300 p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105">
+        <div class="bg-gradient-to-r from-blue-100 via-blue-200 to-blue-100 p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105">
             <div class="flex items-center space-x-4 mb-6">
                 <i class="fas fa-bullhorn text-3xl text-blue-600"></i>
                 <h3 class="text-3xl font-semibold text-gray-800">Por qué Warnify</h3>
@@ -26,7 +26,7 @@
         </div>
         
         <!-- Tarjeta 2: Nuestra Misión -->
-        <div class="bg-gradient-to-r from-green-100 via-green-200 to-green-300 p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105">
+        <div class="bg-gradient-to-r from-green-100 via-green-200 to-green-100 p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105">
             <div class="flex items-center space-x-4 mb-6">
                 <i class="fas fa-bullseye text-3xl text-green-600"></i>
                 <h3 class="text-3xl font-semibold text-gray-800">Nuestra Misión</h3>
@@ -41,7 +41,7 @@
     </div>
 
     <!-- Sección de Valores -->
-    <div class="bg-gradient-to-r from-yellow-100 via-orange-200 to-orange-300 p-6 rounded-xl shadow-xl mb-12 hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105">
+    <div class="bg-gradient-to-r from-yellow-100 via-orange-200 to-orange-100 p-6 rounded-xl shadow-xl mb-12 hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105">
         <div class="flex items-center space-x-4 mb-8">
             <i class="fas fa-handshake text-3xl text-orange-600"></i>
             <h3 class="text-3xl font-extrabold text-gray-800">Nuestros Valores</h3>
@@ -96,7 +96,7 @@
     </div>
 
     <!-- Sección de Contacto -->
-    <div class="bg-gradient-to-r from-sky-300 via-sky-200 to-sky-300 p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 ease-in-out">
+    <div class="bg-gradient-to-r from-sky-100 via-sky-200 to-sky-100 p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 ease-in-out">
         <div class="flex items-center space-x-4 mb-6">
             <i class="fas fa-envelope text-3xl text-gray-600"></i>
             <h3 class="text-3xl font-extrabold text-gray-800">Contacto</h3>
