@@ -106,11 +106,6 @@ class ReporteController extends Controller
         return view('reportes', compact('reportes', 'reporteSeleccionado', 'filter', 'state', 'order'));
     }
 
-
-
-
-
-
     public function edit(string $id)
         {
             $reporte = Reporte::findOrFail($id);
