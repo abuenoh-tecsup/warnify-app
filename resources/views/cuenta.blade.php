@@ -3,7 +3,9 @@
 @section('title', 'Mi cuenta')
 
 @section('content')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
 <div class="container mx-auto px-6">
     @if (session('success'))
         <script>
@@ -40,10 +42,14 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!--Información de Perfil -->
         <div>
-            <h2 class="text-xl font-semibold text-gray-700 mb-4">Información de Perfil</h2>
-            <form action="{{ route('cuenta.update') }}" method="POST" class="bg-white p-6 rounded-lg shadow-md">
+        <form action="{{ route('cuenta.update') }}" method="POST" class="bg-gradient-to-r from-blue-100 via-blue-150 to-blue-100 p-6 rounded-lg shadow-lg mb-6 border-2 border-cyan-300 hover:shadow-xl transition-shadow duration-300">
                 @csrf
                 @method('PATCH')
+                <div class="mb-4 flex items-center space-x-4">
+                    <!-- Ícono de usuario con color teal más oscuro -->
+                    <i class="fas fa-user text-teal-700 text-3xl"></i>
+                    <h2 class="text-xl font-semibold text-teal-700">Información de Perfil</h2> <!-- Título color teal más oscuro -->
+                </div>
 
                 <!-- Campos comunes -->
                 <div class="mb-4">
@@ -144,7 +150,7 @@
                     </div>
                 </div>
 
-                <button class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md">
+                <button class="bg-sky-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md">
                     Guardar Cambios
                 </button>
             </form>
@@ -152,10 +158,14 @@
 
         <!-- Cambio de Contraseña -->
         <div>
-            <h2 class="text-xl font-semibold text-gray-700 mb-4">Cambio de Contraseña</h2>
-            <form action="{{ route('cuenta.changePassword') }}" method="POST" class="bg-white p-6 rounded-lg shadow-md mb-6">
+        <form action="{{ route('cuenta.changePassword') }}" method="POST" class="bg-gradient-to-r from-yellow-50 via-yellow-100 to-yellow-50 p-6 rounded-lg shadow-lg mb-6 border-2 border-yellow-300 hover:shadow-xl transition-shadow duration-300">
                 @csrf
                 @method('PATCH')
+                <div class="mb-4 flex items-center space-x-4">
+                    <!-- Ícono de llave con color amarillo más oscuro -->
+                    <i class="fas fa-key text-yellow-700 text-3xl"></i>
+                    <h2 class="text-xl font-semibold text-yellow-700">Cambio de Contraseña</h2> <!-- Título color amarillo más oscuro -->
+                </div>
 
                 <div class="mb-4">
                     <label for="actual" class="text-gray-600 font-medium">Contraseña Actual</label>
@@ -194,41 +204,35 @@
                     Actualizar Contraseña
                 </button>
             </form>
-
             <!-- Reportes -->
             @if (Auth::user()->isCiudadano())
-            <h2 class="text-xl font-semibold text-gray-700 mb-4">Reportes</h2>
-        
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <div class="mb-4">
-                    <label for="reportes" class="text-gray-600 font-medium">Estado de Reportes</label>
-                    @if ($pendientes === 0 && $resueltos===0)
-                        <p class="text-gray-700">
-                            Usted no realizó reportes aún.
-                        </p>
-                    @else
-                        <p class="text-gray-700">
-                            Tienes {{ $pendientes }} reportes pendientes y {{ $resueltos }} reportes resueltos.
-                        </p>
-                    @endif                    
-            </div>
+            <div class="bg-gradient-to-r from-green-50 via-green-100 to-green-50 p-6 rounded-lg shadow-lg mb-6 border-2 border-green-300 hover:shadow-xl transition-shadow duration-300">
+                    <div class="mb-4 flex items-center space-x-4">
+                        <!-- Ícono de reportes con color verde más oscuro -->
+                        <i class="fas fa-clipboard-list text-green-700 text-3xl"></i>
+                        <h2 class="text-xl font-semibold text-green-700">Estado de Reportes</h2> <!-- Título color verde más oscuro -->
+                    </div>
+                    <div class="mb-4">
+                        <label for="reportes" class="text-gray-600 font-medium">Estado de Reportes</label>
+                        @if ($pendientes === 0 && $resueltos === 0)
+                            <p class="text-gray-700">Usted no realizó reportes aún.</p>
+                        @else
+                            <p class="text-gray-700">
+                                Tienes {{ $pendientes }} reportes pendientes y {{ $resueltos }} reportes resueltos.
+                            </p>
+                        @endif                    
+                    </div>
+                </div>
             @endif
-            <form method="POST" action="{{ route('logout') }}" class="mt-8 flex justify-end space-x-4">
+
+            <!-- Botón de Cerrar Sesión -->
+            <div class="container mx-auto p-4 mt-8">
+                <form method="POST" action="{{ route('logout') }}" class="flex justify-end space-x-4">
                     @csrf
                     <button class="bg-red-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-red-600">
                         Cerrar sesión
                     </button>
-            </form>
-                <!-- Fecha y hora 
-                <div class="flex gap-4"
-                    <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md">
-                        Ver Historial
-                    </button>
-                    <button class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md">
-                        Eliminar Cuenta
-                    </button>
-                </div>
-                -->
+                </form>
             </div>
         </div>
     </div>

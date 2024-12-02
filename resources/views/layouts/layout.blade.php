@@ -157,10 +157,29 @@
         @yield('content')
     </main>
 
-    <footer class="bg-blue-950 p-4 text-center text-white">
-        <p>&copy; {{ date('Y') }} Warnify. Todos los derechos reservados.</p>
+    <footer class="bg-blue-900 p-6 text-center text-white">
+        <p class="text-sm mb-2">&copy; {{ date('Y') }} Warnify. Todos los derechos reservados.</p>
+        <p class="text-gray-400 text-xs mb-4">
+            Si tienes preguntas, inquietudes o sugerencias, contáctanos a través de los siguientes correos:
+        </p>
+        <div class="flex justify-center space-x-6 mb-4">
+            <!-- Correo 1 -->
+            <a href="mailto:eduardo.bullon@tecsup.edu.pe"
+                class="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
+                eduardo.bullon@tecsup.edu.pe
+            </a>
+            <!-- Correo 2 -->
+            <a href="mailto:sonaly.sifuentes@tecsup.edu.pe"
+                class="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
+                sonaly.sifuentes@tecsup.edu.pe
+            </a>
+            <!-- Correo 3 -->
+            <a href="mailto:alvaro.bueno@tecsup.edu.pe"
+                class="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
+                alvaro.bueno@tecsup.edu.pe
+            </a>
+        </div>
     </footer>
-
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 </body>
 

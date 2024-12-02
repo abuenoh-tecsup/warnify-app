@@ -14,8 +14,8 @@
         <button class="absolute top-6 right-6 px-4 py-2 bg-gradient-to-r from-blue-400 via-blue-300 to-sky-400 rounded-lg shadow-md 
                     hover:from-blue-400 hover:to-sky-400 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center space-x-2"
                     onclick="openCommentModal()">
-            <i class="fas fa-star text-yellow-400"></i> <!-- Icono de estrella -->
-            <span>Califica nuestra página</span>
+            <i class="fas fa-star text-yellow-400"></i>
+            <span>Envíanos tus comentarios</span>
         </button>
 
         <!-- Código de manejo de errores o éxito -->

@@ -13,7 +13,7 @@
     <!-- Sección de Información -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12 px-4">
         <!-- Tarjeta 1: Por qué Warnify -->
-        <div class="bg-gradient-to-r from-blue-100 via-blue-200 to-blue-100 p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105">
+        <div class="bg-gradient-to-r from-blue-100 via-blue-200 to-blue-100 p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105 border-4 border-blue-300 hover:border-blue-500">
             <div class="flex items-center space-x-4 mb-6">
                 <i class="fas fa-bullhorn text-3xl text-blue-600"></i>
                 <h3 class="text-3xl font-semibold text-gray-800">Por qué Warnify</h3>
@@ -26,7 +26,7 @@
         </div>
         
         <!-- Tarjeta 2: Nuestra Misión -->
-        <div class="bg-gradient-to-r from-green-100 via-green-200 to-green-100 p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105">
+        <div class="bg-gradient-to-r from-green-100 via-green-200 to-green-100 p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105 border-4 border-green-300 hover:border-green-500">
             <div class="flex items-center space-x-4 mb-6">
                 <i class="fas fa-bullseye text-3xl text-green-600"></i>
                 <h3 class="text-3xl font-semibold text-gray-800">Nuestra Misión</h3>
@@ -53,8 +53,8 @@
         </p>
     </div>
 
-    <!-- Comentarios Recientes -->
-    <div class="bg-gradient-to-r from-blue-100 via-blue-200 to-blue-300 p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 ease-in-out mb-12">
+    <!-- Sección de Comentarios Recientes -->
+    <div class="bg-gradient-to-r from-sky-100 via-sky-200 to-sky-100 p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 ease-in-out border-4 border-sky-300 hover:border-sky-500 mb-8">
         <div class="flex items-center space-x-4 mb-6">
             <i class="fas fa-comments text-3xl text-gray-600"></i>
             <h3 class="text-2xl font-extrabold text-gray-800">Comentarios Recientes</h3>
@@ -95,30 +95,6 @@
         </div>
     </div>
 
-    <!-- Sección de Contacto -->
-    <div class="bg-gradient-to-r from-sky-100 via-sky-200 to-sky-100 p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 ease-in-out">
-        <div class="flex items-center space-x-4 mb-6">
-            <i class="fas fa-envelope text-3xl text-gray-600"></i>
-            <h3 class="text-3xl font-extrabold text-gray-800">Contacto</h3>
-        </div>
-        <p class="text-gray-600 text-center mb-8">
-            Si tienes preguntas, inquietudes o sugerencias, no dudes en contactarnos a través de los siguientes correos:
-        </p>
-        <div class="flex justify-center space-x-8">
-            <a href="mailto:eduardo.bullon@tecsup.edu.pe"
-                class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
-                eduardo.bullon@tecsup.edu.pe
-            </a>
-            <a href="mailto:sonaly.sifuentes@tecsup.edu.pe"
-                class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
-                sonaly.sifuentes@tecsup.edu.pe
-            </a>
-            <a href="mailto:alvaro.bueno@tecsup.edu.pe"
-                class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
-                alvaro.bueno@tecsup.edu.pe
-            </a>
-        </div>
-    </div>
 </div>
 
 <script>
