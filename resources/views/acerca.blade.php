@@ -41,7 +41,7 @@
     </div>
 
     <!-- Sección de Valores -->
-    <div class="bg-gradient-to-r from-yellow-100 via-orange-200 to-orange-100 p-6 rounded-xl shadow-xl mb-12 hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105">
+    <div class="bg-gradient-to-r from-yellow-100 via-orange-200 to-orange-100 p-6 rounded-xl shadow-xl mb-12 hover:shadow-2xl transition duration-300 ease-in-out border-4 border-red-300 hover:border-red-500 mb-8">
         <div class="flex items-center space-x-4 mb-8">
             <i class="fas fa-handshake text-3xl text-orange-600"></i>
             <h3 class="text-3xl font-extrabold text-gray-800">Nuestros Valores</h3>
