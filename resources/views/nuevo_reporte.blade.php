@@ -4,13 +4,13 @@
 
 @section('content')
         <div class="container mx-auto px-6">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">Registrar Reporte</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <h2 class="text-2xl font-bold text-blue-800 mb-6">Registrar Incidente</h2>
+            <div class=" grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!--Información -->
                 <div class="col-span-1">
-                    <h2 class="text-xl font-semibold text-gray-700 mb-4">Información</h2>
-                    <form action="{{ route('reportes.store') }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md">
-                        @csrf
+                    <form action="{{ route('reportes.store') }}" method="POST" enctype="multipart/form-data" class="bg-sky-100 border-2 border-blue-500 hover:border-blue-500 p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-semibold text-blue-700 mb-4">Información</h2>    
+                    @csrf
                         <!-- Título del incidente -->
                         <div class="mb-4">
                             <x-label
@@ -108,9 +108,9 @@
 
                 <!--Mapa -->
                 <div class="col-span-1 md:col-span-2 flex flex-col">
-                    <h2 class="text-xl font-semibold text-gray-700 mb-4 flex-shrink-0">Mapa</h2>
-                    <div class="bg-white p-6 rounded-lg shadow-md flex-grow flex flex-col">
-                        <!-- Campos para ingresar dirección -->
+                    <div class="bg-sky-100 border-2 border-blue-500 hover:border-blue-500 mb-8 p-6 rounded-lg shadow-md flex-grow flex flex-col">
+                    <h2 class="text-xl font-semibold text-blue-700 mb-4 flex-shrink-0">Mapa</h2>
+                    <!-- Campos para ingresar dirección -->
                         <form id="address-form" class="flex items-center gap-4 mb-4">
                             @csrf
                             <x-input-field

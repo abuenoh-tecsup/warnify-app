@@ -119,18 +119,18 @@
         <!-- Tarjetas de reporte -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
             <!-- Tarjeta: Total de Reportes -->
-            <div class="bg-blue-100 p-4 rounded-lg shadow-md text-blue-800">
-                <div class="flex items-center justify-between mb-4">
+            <div class="bg-blue-100 p-4 rounded-lg shadow-md text-blue-800 border-2 border-blue-800 hover:border-blue-800">
+                <div class="flex items-center justify-between mb-4 ">
                     <div class="flex items-center">
                         <img src="https://img.icons8.com/ios/452/graph.png" alt="Total de Reportes" class="w-12 h-12 mr-4">
                         <h4 class="text-base font-semibold">Total de Reportes</h4>
                     </div>
-                    <p class="text-3xl font-bold">{{ $totalReportes }}</p>
+                    <p class="text-3xl font-bold ">{{ $totalReportes }}</p>
                 </div>
             </div>
 
             <!-- Tarjeta: Pendientes -->
-            <div class="bg-yellow-100 p-4 rounded-lg shadow-md text-yellow-700">
+            <div class="bg-yellow-100 p-4 rounded-lg shadow-md text-yellow-700 border-2 border-yellow-800 hover:border-yellow-800">
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center">
                         <img src="https://img.icons8.com/ios/452/time.png" alt="Pendientes" class="w-12 h-12 mr-4">
@@ -141,8 +141,8 @@
             </div>
 
             <!-- Tarjeta: Resueltos -->
-            <div class="bg-green-100 p-4 rounded-lg shadow-md text-green-700">
-                <div class="flex items-center justify-between mb-4">
+            <div class="bg-green-100 p-4 rounded-lg shadow-md text-green-700 border-2 border-green-800 hover:border-green-800">
+                <div class="flex items-center justify-between mb-4 ">
                     <div class="flex items-center">
                         <img src="https://img.icons8.com/ios/452/ok.png" alt="Resueltos" class="w-12 h-12 mr-4">
                         <h4 class="text-base font-semibold">Resueltos</h4>
@@ -156,7 +156,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-{{ Auth::user()->isCiudadano() ? '2' : '1' }} gap-8 mb-8">
             <div class="{{ Auth::user()->isCiudadano() ? '' : 'lg:col-span-2' }}">
                 <h3 class="text-xl font-bold text-gray-800 mb-4">Reportes Recientes</h3>
-                <div class="bg-[#ebf5fb] p-4 rounded-lg shadow-md h-60 overflow-y-auto border border-[#d6eaf8]">
+                <div class="bg-[#ebf5fb] p-4 rounded-lg shadow-md h-60 overflow-y-auto border border-[#d6eaf8] border-2 border-blue-800 hover:border-blue-800">
                     @if ($reportesRecientes->isEmpty())
                         <p class="text-gray-500">No hay reportes recientes.</p>
                     @else
@@ -174,7 +174,7 @@
             @if (Auth::user()->isCiudadano())
                 <div>
                     <h3 class="text-xl font-bold text-gray-800 mb-4">Mis Reportes</h3>
-                    <div class="bg-[#e9f7ef] p-4 rounded-lg shadow-md h-60 overflow-y-auto border border-[#d1f2eb]">
+                    <div class="bg-[#e9f7ef] p-4 rounded-lg shadow-md h-60 overflow-y-auto border border-[#d1f2eb] border-2 border-green-800 hover:border-green-800">
                         @if ($misReportes->isEmpty())
                             <p class="text-gray-500">No tienes reportes asignados.</p>
                         @else

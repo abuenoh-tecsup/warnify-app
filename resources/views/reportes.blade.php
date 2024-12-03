@@ -4,13 +4,13 @@
 
 @section('content')
 <div class="container mx-auto px-4">
-    <h2 class="text-3xl font-bold text-gray-800 mb-6">Reportes</h2>
+    <h2 class="text-3xl font-bold text-blue-800 mb-6">Reportes</h2>
     <div class="flex space-x-4 mb-4">
         <!-- Menú de selección para filtros de reportes -->
         <div class="flex flex-col gap-2 w-1/2">
-            <label for="filtroReportes" class="text-sm text-gray-700 font-medium">Filtrar por:</label>
+            <label for="filtroReportes" class="text-sm text-blue-700 font-medium">Filtrar por:</label>
             <select id="filtroReportes" onchange="window.location.href=this.value"
-                class="px-4 py-2 bg-[#ebf5fb] text-black font-medium rounded focus:ring-2 focus:ring-[#ebf5fb]">
+                class="px-4 py-2 bg-blue-50 text-black font-medium rounded focus:ring-2 focus:ring-[#ebf5fb] border-2 border-blue-800 hover:border-blue-800">
                 <option
                     value="{{ route('reportes.list', ['filter' => 'all', 'state' => request('state'), 'order' => request('order')]) }}"
                     {{ request('filter')=='all' ? 'selected' : '' }}>
@@ -26,9 +26,9 @@
 
         <!-- Menú de selección para ordenar por fecha y estado -->
         <div class="flex flex-col gap-2 w-1/2">
-            <label for="ordenFecha" class="text-sm text-gray-700 font-medium">Ordenar por:</label>
+            <label for="ordenFecha" class="text-sm text-blue-700 font-medium">Ordenar por:</label>
             <select id="ordenFecha" onchange="window.location.href=this.value"
-                class="px-4 py-2 bg-[#ebf5fb] text-black font-medium rounded focus:ring-2 focus:ring-[#ebf5fb]">
+                class="px-4 py-2 bg-blue-50  text-black font-medium rounded focus:ring-2 focus:ring-[#ebf5fb] border-2 border-blue-800 hover:border-blue-800">
                 <!-- Opción de ordenamiento de fecha -->
                 <option value="#" disabled selected>Fecha</option> <!-- Texto solo visual -->
                 <option
@@ -46,9 +46,9 @@
 
         <!-- Menú de selección para filtrar por estado -->
         <div class="flex flex-col gap-2 w-1/2">
-            <label for="estadoReporte" class="text-sm text-gray-700 font-medium">Filtrar por Estado:</label>
+            <label for="estadoReporte" class="text-sm text-blue-700 font-medium">Filtrar por Estado:</label>
             <select id="estadoReporte" onchange="window.location.href=this.value"
-                class="px-4 py-2 bg-[#ebf5fb] text-black font-medium rounded focus:ring-2 focus:ring-[#ebf5fb]">
+                class="px-4 py-2 bg-blue-50 text-black font-medium rounded focus:ring-2 focus:ring-[#ebf5fb] border-2 border-blue-800 hover:border-blue-800">
                 <option value="#" disabled selected>Estado</option> <!-- Texto solo visual -->
 
                 <option
@@ -85,24 +85,8 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Listado de Reportes -->
         <div class="col-span-1 flex flex-col">
-            <h2 class="text-xl font-semibold text-gray-700 mb-4">Listado</h2>
-            @if (Auth::user()->isCiudadano())
-            <div class="flex space-x-4 mb-4">
-                <!-- Botón para ver todos los reportes -->
-                <a href="{{ route('reportes.list', ['filter' => 'all', 'state' => 'TODOS', 'order' => 'desc']) }}"
-                    class="px-4 py-2 bg-blue-500 text-white font-medium rounded hover:bg-blue-600">
-                    Todos los Reportes
-                </a>
-
-                <!-- Botón para ver los reportes propios -->
-                <a href="{{ route('reportes.list', ['filter' => 'own', 'state' => 'TODOS', 'order' => 'desc']) }}"
-                    class="px-4 py-2 bg-green-500 text-white font-medium rounded hover:bg-green-600">
-                    Mis Reportes
-                </a>
-            </div>
-
-            @endif
-            <div class="bg-gray-200 p-4 rounded-xl h-[600px] overflow-y-auto flex-grow">
+            <h2 class="text-xl font-semibold text-blue-700 mb-4">Listado</h2>
+            <div class="bg-blue-50  p-4 rounded-xl h-[600px] overflow-y-auto flex-grow border-2 border-blue-800 hover:border-blue-800">
                 @foreach ($reportes as $reporte)
                 <x-report-card
                     fecha="{{ $reporte->fecha_reporte }}"
@@ -110,17 +94,17 @@
                     descripcion="{{ $reporte->descripcion }}"
                     estado="{{ $reporte->estado_reporte }}"
                     reporteId="{{ $reporte->id_reporte }}"
-                    class="{{ isset($reporteSeleccionado) && $reporte->id_reporte == $reporteSeleccionado->id_reporte ? 'bg-yellow-100' : '' }}"
-                />
+                    class="{{ isset($reporteSeleccionado) && $reporte->id_reporte == $reporteSeleccionado->id_reporte ? 'bg-blue-200' : '' }} border-2 border-blue-800 hover:border-blue-800"
+                    />
                 @endforeach
             </div>
         </div>
 
         <!--Detalles del Reporte Seleccionado -->
         <div class="col-span-1 md:col-span-2">
-            <h2 class="text-xl font-semibold text-gray-700 mb-4">Detalles
+            <h2 class="text-xl font-semibold text-blue-700 mb-4">Detalles
             </h2>
-            <div class="bg-white p-6 rounded-xl shadow-md">
+            <div class="bg-blue-50 p-6 rounded-xl shadow-md border-2 border-blue-800 hover:border-blue-800 ">
                 @if ($reporteSeleccionado)
                 <h3 class="text-2xl font-semibold text-gray-800 mb-6 flex justify-between">
                     Detalles del Reporte
@@ -157,23 +141,23 @@
                     <div class="col-span-2">
                         <div class="grid gap-4">
                             <div>
-                                <p class="text-gray-600 font-medium">Título:</p>
-                                <p class="text-gray-800">{{ $reporteSeleccionado->titulo }}</p>
+                                <p class="text-black-600 font-medium">Título:</p>
+                                <p class="text-black-800">{{ $reporteSeleccionado->titulo }}</p>
                             </div>
 
                             <div>
-                                <p class="text-gray-600 font-medium">Descripción:</p>
-                                <p class="text-gray-800">{{ $reporteSeleccionado->descripcion }}</p>
+                                <p class="text-black-600 font-medium">Descripción:</p>
+                                <p class="text-black-800">{{ $reporteSeleccionado->descripcion }}</p>
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div>
-                                    <p class="text-gray-600 font-medium">Fecha del Reporte:</p>
-                                    <p class="text-gray-800">{{ $reporteSeleccionado->fecha_reporte }}</p>
+                                    <p class="text-black-600 font-medium">Fecha del Reporte:</p>
+                                    <p class="text-black-800">{{ $reporteSeleccionado->fecha_reporte }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-gray-600 font-medium">Fecha de Actualización:</p>
-                                    <p class="text-gray-800">{{ $reporteSeleccionado->fecha_act }}</p>
+                                    <p class="text-black-600 font-medium">Fecha de Actualización:</p>
+                                    <p class="text-black-800">{{ $reporteSeleccionado->fecha_act }}</p>
                                 </div>
                                 <!-- Estado del Reporte -->
                                 <div>
@@ -204,7 +188,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <!-- Mapa -->
                     <div class="h-full flex flex-col">
-                        <h3 class="text-lg font-semibold text-gray-700 mb-4">Ubicación en el mapa:</h3>
+                        <h3 class="text-lg font-semibold text-black-700 mb-4">Ubicación en el mapa:</h3>
                         <div class="relative w-full h-0 pb-[56.25%]">
                             <div id="map" class="absolute inset-0 w-full h-full rounded-lg"></div>
                         </div>
@@ -296,7 +280,7 @@
                     <div class="flex justify-center items-center">
                         @if($reporteSeleccionado->img_incidente)
                         <div class="w-full">
-                            <h3 class="text-lg font-semibold text-gray-700 mb-4">Imagen del incidente:</h3>
+                            <h3 class="text-lg font-semibold text-black-700 mb-4">Imagen del incidente:</h3>
                             <div class="relative w-full h-0 pb-[56.25%]">
                                 <img src="{{ asset($reporteSeleccionado->img_incidente) }}" alt="Imagen del incidente"
                                     class="absolute inset-0 w-full h-full object-cover rounded-lg shadow-md">
