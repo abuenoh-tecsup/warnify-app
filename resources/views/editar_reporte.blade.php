@@ -3,139 +3,170 @@
 @section('title', 'Nuevo reporte')
 
 @section('content')
-        <div class="container mx-auto px-6">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">Editar Reporte</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!--Información -->
-                <div class="col-span-1">
-                    <h2 class="text-xl font-semibold text-gray-700 mb-4">Información</h2>
-                    <form action="{{ route('reportes.update', $reporte->id_reporte) }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md">
-                        @csrf
-                        @method('PUT')
-                        <!-- Título del incidente -->
-                        <div class="mb-4">
-                            <x-label
-                                for="titulo"
-                                text="Título del incidente"
-                                class="text-gray-600 font-medium"
-                            />
-                            <x-input-field
-                                name="titulo"
-                                placeholder="Ingresar título"
-                                value="{{ old('titulo', $reporte->titulo) }}"
-                                class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2"
-                            />
+<div class="container mx-auto px-6">
+    @if (session('success'))
+        <script>
+            window.onload = function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito!',
+                    text: "{{ session('success') }}",
+                    background: '#d4edda',
+                    confirmButtonColor: '#28a745',
+                    iconColor: '#155724', 
+                });
+            }
+        </script>
+    @endif
+    @if ($errors->any())
+        <script>
+            window.onload = function() {
+                let errors = @json($errors->all());
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Error!',
+                    html: "Errores encontrados: <br>" + errors.join("<br>"),
+                    background: '#f8d7da',
+                    confirmButtonColor: '#dc3545',
+                    iconColor: '#721c24',
+                });
+            }
+        </script>
+    @endif
+</div>
+                <div class="container mx-auto px-6">
+                    <h2 class="text-2xl font-bold text-green-800 mb-6">Editar Reporte</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Información -->
+                        <div class="col-span-1">
+                            <h2 class="text-xl font-semibold text-green-700 mb-4">Información</h2>
+                            <form action="{{ route('reportes.update', $reporte->id_reporte) }}" method="POST" enctype="multipart/form-data" class="bg-green-100 border-2 border-green-500 hover:border-green-500 p-6 rounded-lg shadow-md">
+                                @csrf
+                                @method('PUT')
+                                <!-- Título del incidente -->
+                                <div class="mb-4">
+                                    <x-label
+                                        for="titulo"
+                                        text="Título del incidente"
+                                        class="text-gray-600 font-medium"
+                                    />
+                                    <x-input-field
+                                        name="titulo"
+                                        placeholder="Ingresar título"
+                                        value="{{ old('titulo', $reporte->titulo) }}"
+                                        class="border-gray-300 focus:border-green-500 focus:ring-green-500 rounded-md px-4 py-2"
+                                    />
+                                </div>
+
+                                <!-- Descripción del incidente -->
+                                <div class="mb-4">
+                                    <x-label
+                                        for="descripcion"
+                                        text="Descripción del incidente"
+                                        class="text-gray-600 font-medium"
+                                    />
+                                    <x-textarea-field
+                                        name="descripcion"
+                                        placeholder="Ingresar descripción"
+                                        rows="3"
+                                        value="{{ old('descripcion', $reporte->descripcion) }}"
+                                        class="border-gray-300 focus:border-green-500 focus:ring-green-500 rounded-md px-4 py-2"
+                                    />
+                                </div>
+
+                                <!-- Fecha y hora -->
+                                <div class="mb-4">
+                                    <x-label
+                                        for="fecha_reporte"
+                                        text="Fecha y hora"
+                                        class="text-gray-600 font-medium"
+                                    />
+                                    <x-datepicker
+                                        name="fecha_reporte"
+                                        placeholder="Seleccionar fecha y hora"
+                                        value="{{ old('fecha_reporte', \Carbon\Carbon::parse($reporte->fecha_reporte)->format('M j, Y h:i A')) }}"
+                                        class="border-gray-300 focus:border-green-500 focus:ring-green-500 rounded-md px-4 py-2"
+                                    />
+                                </div>
+
+                                <!-- Ubicación del incidente -->
+                                <div class="mb-4">
+                                    <x-label
+                                        for="ubicacion"
+                                        text="Ubicación del incidente"
+                                        class="text-gray-600 font-medium"
+                                    />
+                                    <x-input-field
+                                        name="ubicacion"
+                                        placeholder="Ubicación detectada"
+                                        value="{{ old('ubicacion', $reporte->ubicacion) }}"
+                                        class="border-gray-300 focus:border-green-500 focus:ring-green-500 rounded-md px-4 py-2"
+                                    />
+                                    <x-input-field
+                                        type="hidden"
+                                        name="latitud"
+                                        value="{{ old('latitud', $reporte->latitud) }}"
+                                    />
+                                    <x-input-field
+                                        type="hidden"
+                                        name="longitud"
+                                        value="{{ old('longitud', $reporte->longitud) }}"
+                                    />
+                                </div>
+
+                                <!-- Imagen del incidente -->
+                                <div class="mb-4">
+                                    <x-label
+                                        for="imagen_incidente"
+                                        text="Imagen"
+                                        class="text-gray-600 font-medium"
+                                    />
+                                    <x-image-upload
+                                        name="img_incidente"
+                                        class="border-gray-300 focus:border-green-500 focus:ring-green-500 rounded-md px-4 py-2"
+                                        value="{{ old('img_incidente', $reporte->img_incidente ? asset($reporte->img_incidente) : '') }}"
+                                    />
+                                </div>
+
+                                <!-- Botón Guardar -->
+                                <x-button
+                                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md"
+                                    type="submit"
+                                    name="save-btn"
+                                >
+                                    Actualizar reporte
+                                </x-button>
+                            </form>
                         </div>
 
-                        <!-- Descripción del incidente -->
-                        <div class="mb-4">
-                            <x-label
-                                for="descripcion"
-                                text="Descripción del incidente"
-                                class="text-gray-600 font-medium"
-                            />
-                            <x-textarea-field
-                                name="descripcion"
-                                placeholder="Ingresar descripción"
-                                rows="3"
-                                value="{{ old('descripcion', $reporte->descripcion) }}"
-                                class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2"
-                            />
+                        <!-- Mapa -->
+                        <div class="col-span-1 md:col-span-2 flex flex-col">
+                            <h2 class="text-xl font-semibold text-green-700 mb-4 flex-shrink-0">Mapa</h2>
+                            <div class="bg-green-100 border-2 border-green-500 hover:border-green-500 p-6 rounded-lg shadow-md flex-grow flex flex-col">
+                                <!-- Campo para ingresar dirección -->
+                                <form id="address-form" class="flex items-center gap-4 mb-4">
+                                    @csrf
+                                    <x-input-field
+                                        name="address"
+                                        placeholder="Ingresar una dirección"
+                                        value=""
+                                        class="border-gray-300 focus:border-green-500 focus:ring-green-500 rounded-md flex-grow px-4 py-2"
+                                    />
+                                    <x-button
+                                        class="bg-green-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md"
+                                        type="button"
+                                        name="search-btn"
+                                    >
+                                        Buscar
+                                    </x-button>
+                                </form>
+                                <ul id="results" class="text-gray-700 mb-4 px-4"></ul>
+                                <!-- Contenedor del mapa -->
+                                <div id="map" class="w-full h-[400px] rounded-lg flex-grow"></div>
+                            </div>
                         </div>
-
-                        <!-- Fecha y hora -->
-                        <div class="mb-4">
-                            <x-label
-                                for="fecha_reporte"
-                                text="Fecha y hora"
-                                class="text-gray-600 font-medium"
-                            />
-                            <x-datepicker
-                                name="fecha_reporte"
-                                placeholder="Seleccionar fecha y hora"
-                                value="{{ old('fecha_reporte', \Carbon\Carbon::parse($reporte->fecha_reporte)->format('M j, Y h:i A')) }}"
-                                class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2"
-                            />
-                        </div>
-
-                        <!-- Ubicación del incidente -->
-                        <div class="mb-4">
-                            <x-label
-                                for="ubicacion"
-                                text="Ubicación del incidente"
-                                class="text-gray-600 font-medium"
-                            />
-                            <x-input-field
-                                name="ubicacion"
-                                placeholder="Ubicación detectada"
-                                value="{{ old('ubicacion', $reporte->ubicacion) }}"
-                                class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2"
-                            />
-                            <x-input-field
-                                type="hidden"
-                                name="latitud"
-                                value="{{ old('latitud', $reporte->latitud) }}"
-                            />
-                            <x-input-field
-                                type="hidden"
-                                name="longitud"
-                                value="{{ old('longitud', $reporte->longitud) }}"
-                            />
-                        </div>
-
-                        <!-- Imagen del incidente -->
-                        <div class="mb-4">
-                            <x-label
-                                for="imagen_incidente"
-                                text="Imagen"
-                                class="text-gray-600 font-medium"
-                            />
-                            <x-image-upload
-                                name="img_incidente"
-                                class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2"
-                                value="{{ old('img_incidente', $reporte->img_incidente ? asset($reporte->img_incidente) : '') }}"
-                            />
-                        </div>
-
-                        <!-- Botón Guardar -->
-                        <x-button
-                            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md"
-                            type="submit"
-                            name="save-btn"
-                        >
-                            Actualizar reporte
-                        </x-button>
-                    </form>
-                </div>
-
-                <!--Mapa -->
-                <div class="col-span-1 md:col-span-2 flex flex-col">
-                    <h2 class="text-xl font-semibold text-gray-700 mb-4 flex-shrink-0">Mapa</h2>
-                    <div class="bg-white p-6 rounded-lg shadow-md flex-grow flex flex-col">
-                        <!-- Campo para ingresar dirección -->
-                        <form id="address-form" class="flex items-center gap-4 mb-4">
-                            @csrf
-                            <x-input-field
-                                name="address"
-                                placeholder="Ingresar una dirección"
-                                value=""
-                                class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md flex-grow px-4 py-2"
-                            />
-                            <x-button
-                                class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md"
-                                type="button"
-                                name="search-btn"
-                            >
-                                Buscar
-                            </x-button>
-                        </form>
-                        <ul id="results" class="text-gray-700 mb-4 px-4"></ul>
-                        <!-- Contenedor del mapa -->
-                        <div id="map" class="w-full h-[400px] rounded-lg flex-grow"></div>
                     </div>
                 </div>
-            </div>
-        </div>
                 <script>
                         $(document).ready(function () {
                             // Inicializar mapa centrado en Perú
@@ -269,6 +300,61 @@
                         });
 
                 </script>
+                <style>
+                    #results li {
+                        padding: 8px;
+                        cursor: pointer;
+                        transition: background-color 0.2s ease-in-out;
+                    }
+
+                    #results li:hover {
+                        background-color: #f0f4ff; 
+                        border-radius: 4px;
+                    }
+                    .leaflet-control-zoom {
+                        background-color: #ffffff;
+                        border-radius: 8px;
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        overflow: hidden;
+                        padding: 4px;
+                        width: 40px;
+                    }
+
+                    .leaflet-control-zoom a {
+                        background-color: #007bff;
+                        color: #ffffff;
+                        border: none;
+                        border-radius: 4px;
+                        width: 32px;
+                        height: 32px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        text-align: center;
+                        font-size: 18px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        margin: 4px 0;
+                        transition: background-color 0.3s;
+                    }
+
+                    .leaflet-control-zoom a:hover {
+                        background-color: #0056b3;
+                    }
+
+                    .leaflet-control-zoom-in {
+                        margin-bottom: 4px;
+                    }
+
+                    .leaflet-control-zoom-out {
+                        margin-top: 4px;
+                    }
+
+                </style>
 
             </div>
         </div>

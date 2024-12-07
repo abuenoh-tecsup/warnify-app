@@ -20,49 +20,58 @@ class ComentarioController extends Controller
      * Almacenar un nuevo comentario enviado por el usuario.
      */
     public function store(Request $request)
-    {        $request->validate([
-            'contenido' => 'required|string|max:500', 
+    {
+        // Validación de los campos
+        $request->validate([
+            'contenido' => 'required|string|max:500', // Validación del contenido
+        ], [
+            'required' => 'Este campo no puede estar estar vacío. Por favor, ingresa un comentario.',  
+            'string' => 'El contenido debe ser un texto válido.',  
+            'max' => 'El contenido no puede tener más de 500 caracteres.',  
         ]);
+    
+        // Obtener el ciudadano actual
         $ciudadano = Ciudadano::where('id_usuario', auth()->id())->first();
-
+    
+        // Si no se encuentra el ciudadano, redirigir con mensaje de error
         if (!$ciudadano) {
             return redirect()->route('comentarios.index')->with('error', 'No se encontró tu perfil como ciudadano.');
         }
-
+    
+        // Crear el comentario
         Comentario::create([
-            'id_ciudadano' => $ciudadano->id_ciudadano, 
+            'id_ciudadano' => $ciudadano->id_ciudadano,
             'contenido' => $request->input('contenido'),
         ]);
-
+    
         return redirect()->route('comentarios.index')->with('success', 'Tu comentario ha sido enviado con éxito.');
-    }
-
-    public function edit($id)
-        {
-            $comentario = Comentario::findOrFail($id);
-            if ($comentario->ciudadano->id_usuario !== auth()->id()) {
-                return redirect()->route('comentarios.index')->with('error', 'No tienes permiso para editar este comentario.');
-            }
-            return view('editar_comentario', compact('comentario'));
-        }
+    }    
 
     
     public function update(Request $request, $id)
-        {
-            $request->validate([
-                'contenido' => 'required|string|max:500',
-            ]);
-
-            $comentario = Comentario::findOrFail($id);
-
-            if ($comentario->ciudadano->id_usuario !== auth()->id()) {
-                return redirect()->route('comentarios.index')->with('error', 'No tienes permiso para actualizar este comentario.');
-            }
-
-            $comentario->update([
-                'contenido' => $request->input('contenido'),
-            ]);
-
-            return redirect()->route('comentarios.index')->with('success', 'Tu comentario ha sido actualizado con éxito.');
+    {
+        // Validación del contenido
+        $request->validate([
+            'contenido' => 'required|string|max:500',
+        ], [
+            'required' => 'Este campo no puede estar estar vacío. Por favor, ingresa un comentario.',
+            'string' => 'El contenido debe ser un texto válido.',
+            'max' => 'El contenido no puede tener más de 500 caracteres.',
+        ]);
+    
+        // Obtener el comentario
+        $comentario = Comentario::findOrFail($id);
+    
+        // Verificar si el usuario es el propietario del comentario
+        if ($comentario->ciudadano->id_usuario !== auth()->id()) {
+            return redirect()->route('comentarios.index')->with('error', 'No tienes permiso para actualizar este comentario.');
         }
+    
+        // Actualizar el comentario
+        $comentario->update([
+            'contenido' => $request->input('contenido'),
+        ]);
+    
+        return redirect()->route('comentarios.index')->with('success', 'Tu comentario ha sido actualizado con éxito.');
+    }    
 }

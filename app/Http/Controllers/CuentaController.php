@@ -70,13 +70,10 @@ class CuentaController extends Controller
                         'tipo_autoridad' => $request->tipo_autoridad,
                     ]);
                 }
-        
-                // Mensaje de éxito
                 session()->flash('success', 'Los cambios se han guardado correctamente.');
                 return redirect()->route('cuenta.index')->withInput();
         
             } catch (\Exception $e) {
-                // Manejo de errores
                 return back()->withErrors(['message' => 'Ocurrió un error al actualizar los datos. Intenta de nuevo.']);
             }
         }        
@@ -85,7 +82,6 @@ class CuentaController extends Controller
         public function changePassword(Request $request)
         {
             try {
-                // Validar las contraseñas
                 $request->validate([
                     'actual' => 'required|string',
                     'nueva' => 'required|string|min:8|confirmed',
@@ -98,12 +94,9 @@ class CuentaController extends Controller
                 $actualIngresada = $request->actual;
                 $actualAlmacenada = $user->password;
 
-                // Verificar si la contraseña actual ingresada coincide con la almacenada
                 if (!Hash::check($actualIngresada, $actualAlmacenada)) {
                     return back()->withErrors(['actual' => 'La contraseña actual no es correcta.']);
                 }
-
-                // Actualizar la contraseña
                 $user->password = Hash::make($request->nueva);
                 $user->save();
 
@@ -111,10 +104,8 @@ class CuentaController extends Controller
                 return redirect()->route('cuenta.index')->with('success', 'Contraseña actualizada correctamente.');
 
             } catch (\Exception $e) {
-                // Registrar el error para depuración
                 \Log::error('Error al cambiar la contraseña del usuario ID ' . Auth::id() . ': ' . $e->getMessage());
 
-                // Devolver un mensaje de error amigable al usuario
                 return back()->withErrors(['message' => 'Ocurrió un error al actualizar la contraseña. Intenta de nuevo.']);
             }
         }

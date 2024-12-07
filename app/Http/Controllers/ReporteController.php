@@ -50,30 +50,51 @@ class ReporteController extends Controller
         }
 
 
-        public function store(Request $request)
+    public function store(Request $request)
         {
-            $data = $request->validate([
+            // Validación de los campos
+            $request->validate([
                 'titulo' => 'required|string|max:100',
                 'descripcion' => 'required|string',
                 'fecha_reporte' => 'required|string',
-                'ubicacion' => 'required|string|max:100',
+                'ubicacion' => 'required|string',
                 'latitud' => 'nullable|numeric',
                 'longitud' => 'nullable|numeric',
-                'img_incidente' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+                'img_incidente' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            ], [
+                'required' => 'El campo :attribute es obligatorio. Por favor, revisa los campos antes de enviar el formulario.',
+                'img_incidente.image' => 'El archivo debe ser una imagen válida (jpeg, png, jpg).',
+                'img_incidente.max' => 'El tamaño máximo permitido para la imagen es de 2MB.',
+                'latitud.numeric' => 'La latitud debe ser un valor numérico.',
+                'longitud.numeric' => 'La longitud debe ser un valor numérico.',
             ]);
-            $data['fecha_reporte'] = Carbon::createFromFormat('M j, Y h:i A', $request->fecha_reporte)->format('Y-m-d H:i:s');
-            $data['estado_reporte'] = 'PENDIENTE';
-            $data['id_autoridad'] = null;
-            $data['fecha_act'] = Carbon::now();
-            $data['id_ciudadano'] = Auth::user()->id_usuario;
-            if ($request->hasFile('img_incidente')) {
-                $nombreArchivo = 'reporte_' . time() . '.' . $request->file('img_incidente')->getClientOriginalExtension();
-                $data['img_incidente'] = $request->file('img_incidente')->storeAs('/reports_images', $nombreArchivo, 'public');
-                $data['img_incidente'] = 'storage/reports_images/' . $nombreArchivo;
+        
+            try {
+                $data = $request->all();
+                
+                // Procesar la fecha
+                $data['fecha_reporte'] = Carbon::createFromFormat('M j, Y h:i A', $request->fecha_reporte)->format('Y-m-d H:i:s');
+                $data['estado_reporte'] = 'PENDIENTE';
+                $data['id_autoridad'] = null;
+                $data['fecha_act'] = Carbon::now();
+                $data['id_ciudadano'] = Auth::user()->id_usuario;
+        
+                // Si se sube una imagen
+                if ($request->hasFile('img_incidente')) {
+                    $nombreArchivo = 'reporte_' . time() . '.' . $request->file('img_incidente')->getClientOriginalExtension();
+                    $data['img_incidente'] = $request->file('img_incidente')->storeAs('/reports_images', $nombreArchivo, 'public');
+                    $data['img_incidente'] = 'storage/reports_images/' . $nombreArchivo;
+                }
+        
+                // Crear el reporte
+                Reporte::create($data);
+        
+                session()->flash('success', 'Reporte guardado con éxito.');
+                return redirect()->route('reportes.inicio');
+            } catch (\Exception $e) {
+                return back()->withErrors(['message' => 'Ocurrió un error al guardar el reporte. Intenta de nuevo.']);
             }
-            Reporte::create($data);
-            return redirect()->route('reportes.inicio')->with('success', 'Reporte guardado con éxito');
-        }
+        }        
 
 
     public function show(string $id){
@@ -113,7 +134,7 @@ class ReporteController extends Controller
         }
 
 
-    public function update(Request $request, string $id)
+        public function update(Request $request, string $id)
         {
             $data = $request->validate([
                 'titulo' => 'required|string|max:100',
@@ -122,24 +143,31 @@ class ReporteController extends Controller
                 'ubicacion' => 'required|string|max:100',
                 'latitud' => 'nullable|numeric',
                 'longitud' => 'nullable|numeric',
-                'img_incidente' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+                'img_incidente' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validación de la imagen
+            ], [
+                'required' => 'El campo :attribute es obligatorio. Por favor, completa este campo.',
+                'string' => 'El campo :attribute debe ser un texto válido.',
+                'max' => 'El campo :attribute no puede exceder los :max caracteres.',
+                'numeric' => 'El campo :attribute debe ser un valor numérico.',
+                'image' => 'El archivo debe ser una imagen válida (jpeg, png, jpg).',
+                'mimes' => 'La imagen debe ser de tipo jpeg, png, o jpg.',
+                'max' => 'El tamaño máximo permitido para la imagen es de 2MB.',
             ]);
-
+        
             $data['fecha_reporte'] = Carbon::createFromFormat('M j, Y h:i A', $request->fecha_reporte)->format('Y-m-d H:i:s');
-            $data['fecha_act'] = Carbon::now();
-
+            $data['fecha_act'] = Carbon::now(); 
+        
             if ($request->hasFile('img_incidente')) {
                 $nombreArchivo = 'reporte_' . time() . '.' . $request->file('img_incidente')->getClientOriginalExtension();
                 $data['img_incidente'] = $request->file('img_incidente')->storeAs('/reports_images', $nombreArchivo, 'public');
-                $data['img_incidente'] = 'storage/reports_images/' . $nombreArchivo;
+                $data['img_incidente'] = 'storage/reports_images/' . $nombreArchivo; // Ruta final de la imagen
             }
-
+        
             $reporte = Reporte::findOrFail($id);
-
+        
             $reporte->update($data);
-
-            return redirect()->route('reportes.inicio');
-        }
+            return redirect()->route('reportes.inicio')->with('success', 'El reporte se ha actualizado con éxito.');
+        }        
 
     public function edit_moderador(string $id)
         {

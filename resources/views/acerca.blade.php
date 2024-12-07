@@ -3,10 +3,37 @@
 @section('title', 'Acerca de Warnify')
 
 @section('content')
-<head>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-</head>
-
+<div class="container mx-auto px-6">
+    @if (session('success'))
+        <script>
+            window.onload = function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito!',
+                    text: "{{ session('success') }}",
+                    background: '#d4edda',
+                    confirmButtonColor: '#28a745',
+                    iconColor: '#155724', 
+                });
+            }
+        </script>
+    @endif
+    @if ($errors->any())
+        <script>
+            window.onload = function() {
+                let errors = @json($errors->all());
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Error!',
+                    html: "Errores encontrados: <br>" + errors.join("<br>"),
+                    background: '#f8d7da',
+                    confirmButtonColor: '#dc3545',
+                    iconColor: '#721c24',
+                });
+            }
+        </script>
+    @endif
+</div>
 <div class="container mx-auto px-6 md:px-12 py-8">
     <h2 class="text-4xl font-extrabold text-gray-800 mb-12 text-center">Acerca de Warnify</h2>
 

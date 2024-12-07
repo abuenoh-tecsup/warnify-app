@@ -3,6 +3,37 @@
 @section('title', 'Nuevo reporte')
 
 @section('content')
+<div class="container mx-auto px-6">
+    @if (session('success'))
+        <script>
+            window.onload = function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito!',
+                    text: "{{ session('success') }}",
+                    background: '#d4edda',
+                    confirmButtonColor: '#28a745',
+                    iconColor: '#155724', 
+                });
+            }
+        </script>
+    @endif
+    @if ($errors->any())
+        <script>
+            window.onload = function() {
+                let errors = @json($errors->all());
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Error!',
+                    html: "Errores encontrados: <br>" + errors.join("<br>"),
+                    background: '#f8d7da',
+                    confirmButtonColor: '#dc3545',
+                    iconColor: '#721c24',
+                });
+            }
+        </script>
+    @endif
+</div>
         <div class="container mx-auto px-6">
             <h2 class="text-2xl font-bold text-blue-800 mb-6">Registrar Incidente</h2>
             <div class=" grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -21,7 +52,7 @@
                             <x-input-field
                                 name="titulo"
                                 placeholder="Ingresar título"
-                                value=""
+                                value="{{ old('titulo') }}" 
                                 class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2"
                             />
                         </div>
@@ -37,7 +68,7 @@
                                 name="descripcion"
                                 placeholder="Ingresar descripción"
                                 rows="3"
-                                value=""
+                                value="{{ old('descripcion') }}"
                                 class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2"
                             />
                         </div>
@@ -52,7 +83,7 @@
                             <x-datepicker
                                 name="fecha_reporte"
                                 placeholder="Seleccionar fecha y hora"
-                                value="{{ old('datetime', '') }}"
+                                value="{{ old('fecha_reporte') ? old('fecha_reporte') : '' }}" 
                                 class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2"
                             />
                         </div>
@@ -67,18 +98,18 @@
                             <x-input-field
                                 name="ubicacion"
                                 placeholder="Ubicación detectada"
-                                value=""
+                                value="{{ old('ubicacion') }}"
                                 class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2"
                             />
                             <x-input-field
                                 type="hidden"
                                 name="latitud"
-                                value=""
+                                value="{{ old('latitud') }}"
                             />
                             <x-input-field
                                 type="hidden"
                                 name="longitud"
-                                value=""
+                                value="{{ old('longitud') }}"
                             />
                         </div>
 
@@ -120,7 +151,7 @@
                                 class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md flex-grow px-4 py-2"
                             />
                             <x-button
-                                class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md"
+                                class="bg-sky-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md"
                                 type="button"
                                 name="search-btn"
                             >
