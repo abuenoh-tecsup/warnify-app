@@ -107,20 +107,23 @@ class ReporteController extends Controller
 
         $query = Reporte::query();
 
-        // Filtrar por usuario
         if ($filter === 'own') {
             $query->where('id_ciudadano', $user->id_usuario);
         }
 
-        // Filtrar por estado
+        if ($user->isCiudadano()) {
+            if ($state === 'PENDIENTE') {
+                $query->where('estado_reporte', 'PENDIENTE')
+                      ->where('id_ciudadano', $user->id_usuario);
+            }
+        }
+
         if ($state !== 'TODOS') {
             $query->where('estado_reporte', $state);
         }
 
-        // Ordenar por fecha
         $query->orderBy('fecha_reporte', $order);
 
-        // Obtener los reportes y reporte seleccionado
         $reportes = $query->get();
         $reporteSeleccionado = $id ? Reporte::find($id) : null;
 

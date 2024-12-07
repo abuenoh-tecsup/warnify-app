@@ -16,11 +16,13 @@
                     {{ request('filter')=='all' ? 'selected' : '' }}>
                     Todos los Reportes
                 </option>
+                @if (Auth::user()->isCiudadano())
                 <option
                     value="{{ route('reportes.list', ['filter' => 'own', 'state' => request('state'), 'order' => request('order')]) }}"
                     {{ request('filter')=='own' ? 'selected' : '' }}>
                     Mis Reportes
                 </option>
+                @endif
             </select>
         </div>
 
