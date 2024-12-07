@@ -3,12 +3,7 @@
 @section('title', 'Página de Inicio')
 
 @section('content')
-<!-- Asegúrate de incluir FontAwesome si no lo has hecho ya -->
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-</head>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Contenedor principal con posición relativa -->
     <div class="container mx-auto p-6 bg-gray-50 shadow-lg rounded-lg relative">
         <!-- Botón de Acción -->
         <button class="absolute top-6 right-6 px-4 py-2 bg-gradient-to-r from-blue-400 via-blue-300 to-sky-400 rounded-lg shadow-md 

@@ -3,9 +3,7 @@
 @section('title', 'Mi cuenta')
 
 @section('content')
-<head>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-</head>
+
 <div class="container mx-auto px-6">
     @if (session('success'))
         <script>
