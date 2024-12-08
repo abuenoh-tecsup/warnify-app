@@ -79,36 +79,44 @@ class CuentaController extends Controller
         }        
 
 
-        public function changePassword(Request $request)
+    public function changePassword(Request $request)
         {
             try {
                 $request->validate([
                     'actual' => 'required|string',
-                    'nueva' => 'required|string|min:8|confirmed',
+                    'nueva' => [
+                        'required',
+                        'string',
+                        'min:8',
+                        'confirmed',
+                        'regex:/[A-Z]/',
+                        'regex:/[a-z]/',
+                        'regex:/[0-9]/',
+                        'regex:/[@$!%*?&]/',
+                    ],
                 ], [
                     'nueva.min' => 'La nueva contraseña debe tener al menos 8 caracteres.',
                     'nueva.confirmed' => 'La confirmación de la nueva contraseña no coincide.',
+                    'nueva.regex' => 'La contraseña debe contener al menos una letra mayúscula, una minúscula, un número y un carácter especial (@$!%*?&).',
+                    'actual.required' => 'La contraseña actual es obligatoria.',
                 ]);
-
                 $user = Auth::user();
-                $actualIngresada = $request->actual;
+                $actualIngresada = $request->input('actual');
                 $actualAlmacenada = $user->password;
-
                 if (!Hash::check($actualIngresada, $actualAlmacenada)) {
-                    return back()->withErrors(['actual' => 'La contraseña actual no es correcta.']);
+                    return back()->withErrors(['actual' => 'La contraseña actual ingresada no es correcta.']);
                 }
-                $user->password = Hash::make($request->nueva);
+                $user->password = Hash::make($request->input('nueva'));
                 $user->save();
-
-                // Redirigir con mensaje de éxito
                 return redirect()->route('cuenta.index')->with('success', 'Contraseña actualizada correctamente.');
-
+        
+            } catch (\Illuminate\Validation\ValidationException $e) {
+                return back()->withErrors($e->validator->errors());
             } catch (\Exception $e) {
                 \Log::error('Error al cambiar la contraseña del usuario ID ' . Auth::id() . ': ' . $e->getMessage());
-
                 return back()->withErrors(['message' => 'Ocurrió un error al actualizar la contraseña. Intenta de nuevo.']);
             }
-        }
+        }          
 
 
 

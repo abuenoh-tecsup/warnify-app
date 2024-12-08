@@ -30,7 +30,6 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        // Validación de los campos de registro
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'apellido' => ['required', 'string', 'max:255'],
@@ -38,13 +37,24 @@ class RegisteredUserController extends Controller
             'telefono' => ['required', 'string', 'max:15'],
             'direccion' => ['required', 'string', 'max:100'],
             'notifi_acti' => ['required', 'boolean'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            // Validación para Documento de Identidad
+            'password' => [
+                'required',
+                'confirmed',
+                'string',
+                'min:8', 
+                'regex:/[A-Z]/',
+                'regex:/[a-z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*?&]/',
+            ],
             'documento_identidad' => ['required', 'string', 'max:8'],
             'ocupacion' => ['required', 'string', 'max:255'],
+        ], [
+            'password.regex' => 'La contraseña debe contener al menos una letra mayúscula, una minúscula, un número y un carácter especial (@$!%*?&).',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'password.confirmed' => 'La confirmación de la nueva contraseña no coincide.',
+            'password.required' => 'La contraseña es obligatoria.',
         ]);
-
-        // Crear el usuario con tipo ciudadano
         $user = Usuario::create([
             'nombre' => $request->name,
             'apellidos' => $request->apellido,
@@ -55,8 +65,6 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'tipo' => 'ciudadano',
         ]);
-
-        // Crear el registro correspondiente en la tabla ciudadano
         Ciudadano::create([
             'id_usuario' => $user->id_usuario,
             'documento_identidad' => $request->documento_identidad,
