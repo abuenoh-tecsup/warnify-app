@@ -90,14 +90,22 @@
             <h2 class="text-xl font-semibold text-blue-700 mb-4">Listado</h2>
             <div class="bg-blue-50  p-4 rounded-xl h-[600px] overflow-y-auto flex-grow border-2 border-blue-800 hover:border-blue-800">
                 @foreach ($reportes as $reporte)
-                <x-report-card
-                    fecha="{{ $reporte->fecha_reporte }}"
-                    titulo="{{ $reporte->titulo }}"
-                    descripcion="{{ $reporte->descripcion }}"
-                    estado="{{ $reporte->estado_reporte }}"
-                    reporteId="{{ $reporte->id_reporte }}"
-                    class="{{ isset($reporteSeleccionado) && $reporte->id_reporte == $reporteSeleccionado->id_reporte ? 'bg-blue-200' : '' }} border-2 border-blue-800 hover:border-blue-800"
-                    />
+                    @if (
+                        !auth()->user()->isCiudadano() ||
+                        (auth()->user()->isCiudadano() && (
+                            ($reporte->estado_reporte !== 'PENDIENTE' && $reporte->estado_reporte !== 'RECHAZADO') ||
+                            $reporte->id_ciudadano == auth()->user()->id_usuario
+                        ))
+                    )
+                        <x-report-card
+                            fecha="{{ $reporte->fecha_reporte }}"
+                            titulo="{{ $reporte->titulo }}"
+                            descripcion="{{ $reporte->descripcion }}"
+                            estado="{{ $reporte->estado_reporte }}"
+                            reporteId="{{ $reporte->id_reporte }}"
+                            class="{{ isset($reporteSeleccionado) && $reporte->id_reporte == $reporteSeleccionado->id_reporte ? 'bg-blue-200' : '' }} border-2 border-blue-800 hover:border-blue-800"
+                        />
+                    @endif
                 @endforeach
             </div>
         </div>
