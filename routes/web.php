@@ -32,13 +32,17 @@ Route::middleware('auth')->group(function () { // Protegemos estas rutas
     // Nuevas rutas para editar y actualizar comentarios
     Route::get('/comentarios/editar/{id}', [ComentarioController::class, 'edit'])->name('comentarios.edit');
     Route::put('/comentarios/actualizar/{id}', [ComentarioController::class, 'update'])->name('comentarios.update');
-});
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    // Ruta para mostrar el formulario de cuenta
+    Route::get('/cuenta', [CuentaController::class, 'show'])->name('cuenta.index');
 
-Route::middleware('auth')->group(function () {
+    // Ruta para actualizar los datos de la cuenta
+    Route::patch('/cuenta', [CuentaController::class, 'update'])->name('cuenta.update');
+
+    // Ruta para cambiar la contraseña de la cuenta
+    Route::patch('/cuenta/change-password', [CuentaController::class, 'changePassword'])->name('cuenta.changePassword');
+    Route::get('/cuenta', [CuentaController::class, 'showestados'])->name('cuenta.index');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -46,14 +50,4 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/geocode', [GeoCodingController::class, 'searchAddress'])->name('geocode');
 
-// Ruta para mostrar el formulario de cuenta
-Route::get('/cuenta', [CuentaController::class, 'show'])->name('cuenta.index');
-
-// Ruta para actualizar los datos de la cuenta
-Route::patch('/cuenta', [CuentaController::class, 'update'])->name('cuenta.update');
-
-// Ruta para cambiar la contraseña de la cuenta
-Route::patch('/cuenta/change-password', [CuentaController::class, 'changePassword'])->name('cuenta.changePassword');
-Route::get('/cuenta', [CuentaController::class, 'showestados'])->name('cuenta.index');
