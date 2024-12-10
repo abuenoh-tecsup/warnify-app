@@ -6,12 +6,14 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <div class="container mx-auto p-6 bg-gray-50 shadow-lg rounded-lg relative">
         <!-- Botón de Acción -->
-        <button class="absolute top-6 right-6 px-4 py-2 bg-gradient-to-r from-blue-400 via-blue-300 to-sky-400 rounded-lg shadow-md 
-                    hover:from-blue-400 hover:to-sky-400 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center space-x-2"
-                    onclick="openCommentModal()">
-            <i class="fas fa-star text-yellow-400"></i>
-            <span>Envíanos tus comentarios</span>
-        </button>
+        @if (Auth::user()->isCiudadano())
+            <button class="absolute top-6 right-6 px-4 py-2 bg-gradient-to-r from-blue-400 via-blue-300 to-sky-400 rounded-lg shadow-md
+                        hover:from-blue-400 hover:to-sky-400 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center space-x-2"
+                        onclick="openCommentModal()">
+                <i class="fas fa-star text-yellow-400"></i>
+                <span>Envíanos tus comentarios</span>
+            </button>
+        @endif
 
         <!-- Código de manejo de errores o éxito -->
         @if (session('success'))
@@ -23,7 +25,7 @@
                         text: "{{ session('success') }}",
                         background: '#d4edda',
                         confirmButtonColor: '#28a745',
-                        iconColor: '#155724', 
+                        iconColor: '#155724',
                     });
                 }
             </script>
@@ -43,7 +45,7 @@
                 }
             </script>
         @endif
-            
+
         @if (Auth::user()->isCiudadano())
         <!-- Formulario de Comentarios -->
         <div id="commentModalContent" style="display: none;">
