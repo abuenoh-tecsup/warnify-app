@@ -19,7 +19,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    
+
 
     <style>
         body {
@@ -167,7 +167,7 @@
         <p class="text-gray-400 text-xs mb-4">
             Si tienes preguntas, inquietudes o sugerencias, contáctanos a través de los siguientes correos:
         </p>
-        <div class="flex justify-center space-x-6 mb-4">
+        <div class="flex flex-col sm:flex-row justify-center sm:space-x-6 space-y-4 sm:space-y-0 mb-4">
             <!-- Correo 1 -->
             <a href="mailto:eduardo.bullon@tecsup.edu.pe"
                 class="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
