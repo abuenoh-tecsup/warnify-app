@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('estado_anterior', 20);
             $table->string('nuevo_estado', 20);
             $table->unsignedBigInteger('cambiado_por_usuario'); // Nuevo nombre
+            $table->text('comentario')->nullable();
             $table->timestamps();
 
             $table->foreign('id_reporte')

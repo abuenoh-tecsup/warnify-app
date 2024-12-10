@@ -48,23 +48,45 @@
 
                 <!-- Imagen del incidente -->
                 <div class="mb-4 hidden">
-                    <x-label for="imagen_incidente" text="Imagen" class="text-gray-600 font-medium" />
+                    <x-label for="img_incidente" text="Imagen" class="text-gray-600 font-medium" />
                     <x-image-upload name="img_incidente"
                         class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2"
                         value="{{ old('img_incidente', $reporte->img_incidente ? asset($reporte->img_incidente) : '') }}" />
                 </div>
 
-                <!-- Botón Validar -->
-                <x-button class="bg-green-500 hover:bg-green-600 text-white text-lg font-semibold py-2 px-4 mx-4 rounded-lg shadow-md"
-                    type="submit" name="estado_reporte" value="VALIDADO">
-                    Validar reporte
-                </x-button>
+                <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-4 sm:space-y-0">
+                    <!-- Contenedor de botones -->
+                    <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
+                        <!-- Botón Validar -->
+                        <x-button class="bg-green-500 hover:bg-green-600 text-white text-lg font-semibold py-2 px-4 rounded-lg shadow-md"
+                            type="submit" name="estado_reporte" value="VALIDADO">
+                            Validar reporte
+                        </x-button>
 
-                <!-- Botón Rechazar -->
-                <x-button class="bg-red-500 hover:bg-red-600 text-white text-lg font-semibold py-2 px-4 mx-4 rounded-lg shadow-md"
-                    type="submit" name="estado_reporte" value="RECHAZADO">
-                    Rechazar reporte
-                </x-button>
+                        <!-- Botón Rechazar -->
+                        <x-button class="bg-red-500 hover:bg-red-600 text-white text-lg font-semibold py-2 px-4 rounded-lg shadow-md"
+                            type="submit" name="estado_reporte" value="RECHAZADO">
+                            Rechazar reporte
+                        </x-button>
+                    </div>
+
+                    <!-- Contenedor de descripción -->
+                    <div class="">
+                        <x-label
+                            for="comentario"
+                            text="Comentario"
+                            class="text-gray-600 font-medium"
+                        />
+                        <x-textarea-field
+                            name="comentario"
+                            placeholder="Ingresar comentario"
+                            rows="3"
+                            value="{{ old('comentario') }}"
+                            class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2 w-full"
+                        />
+                    </div>
+                </div>
+
             </form>
         </div>
     </div>

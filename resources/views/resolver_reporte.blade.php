@@ -54,19 +54,41 @@
                         value="{{ old('img_incidente', $reporte->img_incidente ? asset($reporte->img_incidente) : '') }}" />
                 </div>
 
-                <!-- Botón "En proceso de resolución" -->
-                <x-button 
-                    class="bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white text-lg font-semibold py-2 px-4 mx-4 rounded-lg shadow-md transform transition-transform duration-200 hover:scale-105"
-                    type="submit" name="estado_reporte" value="EN PROCESO">
-                    En proceso
-                </x-button>
+                <!-- Resolver Reporte -->
+                <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-4 sm:space-y-0">
+                    <!-- Contenedor de botones -->
+                    <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
+                        <!-- Botón "En proceso de resolución" -->
+                        <x-button
+                            class="bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white text-lg font-semibold py-2 px-4 rounded-lg shadow-md transform transition-transform duration-200 hover:scale-105"
+                            type="submit" name="estado_reporte" value="EN PROCESO">
+                            En proceso
+                        </x-button>
 
-                <!-- Botón "Resuelto" -->
-                <x-button 
-                    class="bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white text-lg font-semibold py-2 px-4 mx-4 rounded-lg shadow-md transform transition-transform duration-200 hover:scale-105"
-                    type="submit" name="estado_reporte" value="RESUELTO">
-                    Resuelto
-                </x-button>
+                        <!-- Botón "Resuelto" -->
+                        <x-button
+                            class="bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white text-lg font-semibold py-2 px-4 rounded-lg shadow-md transform transition-transform duration-200 hover:scale-105"
+                            type="submit" name="estado_reporte" value="RESUELTO">
+                            Resuelto
+                        </x-button>
+                    </div>
+
+                    <!-- Contenedor de comentario -->
+                    <div class="w-full sm:w-1/2">
+                        <x-label
+                            for="comentario"
+                            text="Comentario"
+                            class="text-gray-600 font-medium"
+                        />
+                        <x-textarea-field
+                            name="comentario"
+                            placeholder="Ingresar comentario"
+                            rows="3"
+                            value="{{ old('comentario') }}"
+                            class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md px-4 py-2 w-full"
+                        />
+                    </div>
+                </div>
 
             </form>
         </div>

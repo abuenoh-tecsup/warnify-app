@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Reporte;
+use App\Models\HistorialEstado;
 use Carbon\Carbon;
 
 class ReporteController extends Controller
@@ -68,33 +69,33 @@ class ReporteController extends Controller
                 'latitud.numeric' => 'La latitud debe ser un valor numérico.',
                 'longitud.numeric' => 'La longitud debe ser un valor numérico.',
             ]);
-        
+
             try {
                 $data = $request->all();
-                
+
                 // Procesar la fecha
                 $data['fecha_reporte'] = Carbon::createFromFormat('M j, Y h:i A', $request->fecha_reporte)->format('Y-m-d H:i:s');
                 $data['estado_reporte'] = 'PENDIENTE';
                 $data['id_autoridad'] = null;
                 $data['fecha_act'] = Carbon::now();
                 $data['id_ciudadano'] = Auth::user()->id_usuario;
-        
+
                 // Si se sube una imagen
                 if ($request->hasFile('img_incidente')) {
                     $nombreArchivo = 'reporte_' . time() . '.' . $request->file('img_incidente')->getClientOriginalExtension();
                     $data['img_incidente'] = $request->file('img_incidente')->storeAs('/reports_images', $nombreArchivo, 'public');
                     $data['img_incidente'] = 'storage/reports_images/' . $nombreArchivo;
                 }
-        
+
                 // Crear el reporte
                 Reporte::create($data);
-        
+
                 session()->flash('success', 'Reporte guardado con éxito.');
                 return redirect()->route('reportes.inicio');
             } catch (\Exception $e) {
                 return back()->withErrors(['message' => 'Ocurrió un error al guardar el reporte. Intenta de nuevo.']);
             }
-        }        
+        }
 
 
     public function show(string $id){
@@ -126,8 +127,9 @@ class ReporteController extends Controller
 
         $reportes = $query->get();
         $reporteSeleccionado = $id ? Reporte::find($id) : null;
+        $ultimoComentario = $id ? HistorialEstado::where('id_reporte', $id)->orderBy('created_at', 'desc')->value('comentario') : null;
 
-        return view('reportes', compact('reportes', 'reporteSeleccionado', 'filter', 'state', 'order'));
+        return view('reportes', compact('reportes', 'reporteSeleccionado', 'ultimoComentario','filter', 'state', 'order'));
     }
 
     public function edit(string $id)
@@ -156,21 +158,21 @@ class ReporteController extends Controller
                 'mimes' => 'La imagen debe ser de tipo jpeg, png, o jpg.',
                 'max' => 'El tamaño máximo permitido para la imagen es de 2MB.',
             ]);
-        
+
             $data['fecha_reporte'] = Carbon::createFromFormat('M j, Y h:i A', $request->fecha_reporte)->format('Y-m-d H:i:s');
-            $data['fecha_act'] = Carbon::now(); 
-        
+            $data['fecha_act'] = Carbon::now();
+
             if ($request->hasFile('img_incidente')) {
                 $nombreArchivo = 'reporte_' . time() . '.' . $request->file('img_incidente')->getClientOriginalExtension();
                 $data['img_incidente'] = $request->file('img_incidente')->storeAs('/reports_images', $nombreArchivo, 'public');
                 $data['img_incidente'] = 'storage/reports_images/' . $nombreArchivo; // Ruta final de la imagen
             }
-        
+
             $reporte = Reporte::findOrFail($id);
-        
+
             $reporte->update($data);
             return redirect()->route('reportes.inicio')->with('success', 'El reporte se ha actualizado con éxito.');
-        }        
+        }
 
     public function edit_moderador(string $id)
         {
@@ -178,17 +180,30 @@ class ReporteController extends Controller
             return view('moderar_reporte', compact('reporte'));
         }
 
-        public function update_moderador(Request $request, string $id)
+    public function update_moderador(Request $request, string $id)
         {
-            // Buscar el reporte
+            $request->validate([
+                'estado_reporte' => 'required|string|max:20',
+                'comentario' => 'nullable|string|max:500',
+            ]);
+
             $reporte = Reporte::findOrFail($id);
 
-            // Modificar el estado del reporte
-            $reporte->estado_reporte = $request->input('estado_reporte');
+            $estadoAnterior = $reporte->estado_reporte;
+            $nuevoEstado = $request->input('estado_reporte');
+
+            $reporte->estado_reporte = $nuevoEstado;
             $reporte->save();
 
-            // Redirigir al listado de todos los reportes
-            return redirect()->route('reportes.list', ['filter' => 'all']);
+            HistorialEstado::create([
+                'id_reporte' => $reporte->id_reporte,
+                'estado_anterior' => $estadoAnterior,
+                'nuevo_estado' => $nuevoEstado,
+                'cambiado_por_usuario' => Auth::user()->id_usuario,
+                'comentario' => $request->input('comentario'),
+            ]);
+
+            return redirect()->route('reportes.list', ['filter' => 'all', 'state' => 'TODOS', 'order' => 'desc']);
         }
 
 
@@ -197,13 +212,33 @@ class ReporteController extends Controller
             $reporte = Reporte::findOrFail($id);
             return view('resolver_reporte', compact('reporte'));
         }
-    public function update_autoridad(Request $request, string $id)
+
+        public function update_autoridad(Request $request, string $id)
         {
+            $request->validate([
+                'estado_reporte' => 'required|string|max:20',
+                'comentario' => 'nullable|string|max:500',
+            ]);
+
             $reporte = Reporte::findOrFail($id);
-            $reporte->estado_reporte = $request->input('estado_reporte');
+
+            $estadoAnterior = $reporte->estado_reporte;
+            $nuevoEstado = $request->input('estado_reporte');
+
+            $reporte->estado_reporte = $nuevoEstado;
             $reporte->save();
-            return redirect()->route('reportes.list', ['filter' => 'all']);
+
+            HistorialEstado::create([
+                'id_reporte' => $reporte->id_reporte,
+                'estado_anterior' => $estadoAnterior,
+                'nuevo_estado' => $nuevoEstado,
+                'cambiado_por_usuario' => Auth::user()->id_usuario,
+                'comentario' => $request->input('comentario'),
+            ]);
+
+            return redirect()->route('reportes.list', ['filter' => 'all', 'state' => 'TODOS', 'order' => 'desc']);
         }
+
 
 
     public function destroy(string $id)

@@ -172,16 +172,34 @@
                                 <!-- Estado del Reporte -->
                                 <div>
                                     <p class="text-gray-600 font-medium">Estado del Reporte:</p>
-                                    <p class="
-                                    @if ($reporteSeleccionado->estado_reporte == 'PENDIENTE') text-yellow-500
-                                    @elseif ($reporteSeleccionado->estado_reporte == 'RESUELTO') text-green-500
-                                    @elseif ($reporteSeleccionado->estado_reporte == 'EN PROCESO') text-blue-500
-                                    @elseif ($reporteSeleccionado->estado_reporte == 'VALIDADO') text-cyan-500
-                                    @else text-gray-800 @endif
-                                    font-bold uppercase">
-                                        {{ $reporteSeleccionado->estado_reporte }}
-                                    </p>
+                                    <div class="flex items-center space-x-2">
+                                        <p class="
+                                            @if ($reporteSeleccionado->estado_reporte == 'PENDIENTE') text-yellow-500
+                                            @elseif ($reporteSeleccionado->estado_reporte == 'RESUELTO') text-green-500
+                                            @elseif ($reporteSeleccionado->estado_reporte == 'EN PROCESO') text-blue-500
+                                            @elseif ($reporteSeleccionado->estado_reporte == 'VALIDADO') text-cyan-500
+                                            @else text-gray-800 @endif
+                                            font-bold uppercase">
+                                            {{ $reporteSeleccionado->estado_reporte }}
+                                        </p>
+                                        @if ($ultimoComentario)
+                                            <!-- Tooltip -->
+                                            <div class="relative group">
+                                                <span
+                                                    class="w-5 h-5 flex items-center justify-center text-white bg-blue-500 rounded-full cursor-pointer text-sm font-bold"
+                                                >
+                                                    ?
+                                                </span>
+                                                <div
+                                                    class="absolute hidden group-hover:block bg-gray-500 text-white text-sm rounded-lg shadow-md p-2 top-1/2 left-full transform -translate-y-1/2 ml-2 w-64"
+                                                >
+                                                    {{ $ultimoComentario }}
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
+
                             </div>
 
                             <div>

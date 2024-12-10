@@ -15,6 +15,7 @@ class HistorialEstado extends Model
         'estado_anterior',
         'nuevo_estado',
         'cambiado_por_usuario',
+        'comentario',
     ];
 
     /**
