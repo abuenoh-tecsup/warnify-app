@@ -5,9 +5,8 @@
 @section('content')
 <div class="container mx-auto px-4">
     <h2 class="text-3xl font-bold text-blue-800 mb-6">Reportes</h2>
-    <div class="flex space-x-4 mb-4">
-        <!-- Menú de selección para filtros de reportes -->
-        <div class="flex flex-col gap-2 w-1/2">
+    <div class="flex flex-col sm:flex-row sm:space-x-4 mb-4">
+        <div class="flex flex-col gap-2 w-full sm:w-1/3">
             <label for="filtroReportes" class="text-sm text-blue-700 font-medium">Filtrar por:</label>
             <select id="filtroReportes" onchange="window.location.href=this.value"
                 class="px-4 py-2 bg-blue-50 text-black font-medium rounded focus:ring-2 focus:ring-[#ebf5fb] border-2 border-blue-800 hover:border-blue-800">
@@ -27,10 +26,10 @@
         </div>
 
         <!-- Menú de selección para ordenar por fecha y estado -->
-        <div class="flex flex-col gap-2 w-1/2">
+        <div class="flex flex-col gap-2 w-full sm:w-1/3">
             <label for="ordenFecha" class="text-sm text-blue-700 font-medium">Ordenar por:</label>
             <select id="ordenFecha" onchange="window.location.href=this.value"
-                class="px-4 py-2 bg-blue-50  text-black font-medium rounded focus:ring-2 focus:ring-[#ebf5fb] border-2 border-blue-800 hover:border-blue-800">
+                class="px-4 py-2 bg-blue-50 text-black font-medium rounded focus:ring-2 focus:ring-[#ebf5fb] border-2 border-blue-800 hover:border-blue-800">
                 <!-- Opción de ordenamiento de fecha -->
                 <option value="#" disabled selected>Fecha</option> <!-- Texto solo visual -->
                 <option
@@ -47,7 +46,7 @@
         </div>
 
         <!-- Menú de selección para filtrar por estado -->
-        <div class="flex flex-col gap-2 w-1/2">
+        <div class="flex flex-col gap-2 w-full sm:w-1/3">
             <label for="estadoReporte" class="text-sm text-blue-700 font-medium">Filtrar por Estado:</label>
             <select id="estadoReporte" onchange="window.location.href=this.value"
                 class="px-4 py-2 bg-blue-50 text-black font-medium rounded focus:ring-2 focus:ring-[#ebf5fb] border-2 border-blue-800 hover:border-blue-800">

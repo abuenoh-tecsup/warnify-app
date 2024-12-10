@@ -7,12 +7,13 @@
     <div class="container mx-auto p-6 bg-gray-50 shadow-lg rounded-lg relative">
         <!-- Botón de Acción -->
         @if (Auth::user()->isCiudadano())
-            <button class="absolute top-6 right-6 px-4 py-2 bg-gradient-to-r from-blue-400 via-blue-300 to-sky-400 rounded-lg shadow-md
-                        hover:from-blue-400 hover:to-sky-400 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center space-x-2"
-                        onclick="openCommentModal()">
-                <i class="fas fa-star text-yellow-400"></i>
-                <span>Envíanos tus comentarios</span>
-            </button>
+        <button
+            class="fixed bottom-6 right-6 px-4 py-2 bg-gradient-to-r from-blue-400 via-blue-300 to-sky-400 rounded-lg shadow-md
+                hover:from-blue-500 hover:to-sky-500 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center space-x-2 z-50
+                text-sm sm:text-base md:text-lg lg:text-xl"onclick="openCommentModal()">
+            <i class="fas fa-star text-yellow-400 text-lg sm:text-xl md:text-2xl"></i>
+            <span class="hidden sm:inline-block">Envíanos tus comentarios</span>
+        </button>
         @endif
 
         <!-- Código de manejo de errores o éxito -->
