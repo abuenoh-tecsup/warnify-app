@@ -1,10 +1,9 @@
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
-
+    <h1>Inicia sesión</h1>
     <form method="POST" action="{{ route('login') }}">
         @csrf
-
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
@@ -31,7 +30,7 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            
+
 
         <x-primary-button class="ms-3">
             {{ __('Ingresar') }}

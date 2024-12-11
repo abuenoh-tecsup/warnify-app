@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Warnify</title> <!-- Título de la página -->
 
     <!-- Favicon -->
@@ -34,7 +34,7 @@
         }
         /* Parte izquierda con título e imagen (fondo azul) */
         .left {
-            flex: 2; /* Aumentamos el flex para que ocupe más espacio */
+            flex: 1; /* Aumentamos el flex para que ocupe más espacio */
             background-color: #001F54; /* Azul */
             display: flex;
             justify-content: center;
@@ -78,7 +78,7 @@
         /* Formulario interno */
         .form-container {
             width: 100%;
-            max-width: 400px; /* Limita el ancho de los campos de texto */
+            max-width: 550px; /* Limita el ancho de los campos de texto */
             padding: 20px;
             background-color: #F1F1F1; /* Fondo gris claro para el formulario interno */
             border-radius: 10px;
@@ -99,14 +99,14 @@
             color: #333;  /* Color de texto oscuro */
         }
         .btn {
-            background-color: #007BFF; 
+            background-color: #007BFF;
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 10px;
             cursor: pointer;
             font-size: 16px;
-            width: 100%; 
+            width: 100%;
         }
         .btn:hover {
             background-color: #0056b3;
@@ -115,24 +115,20 @@
             color: #001F54;
             font-size: 14px;
             text-align: center;
-            margin-top: 15px; 
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
-
-    <div class="container">
         <div class="left">
-            <h1>Warnify</h1> 
-            <img src="Logo Warnify.jpeg" alt="Warnify Eye Logo"> 
+            <h1>Warnify</h1>
+            <img src="Logo Warnify.jpeg" alt="Warnify Eye Logo">
         </div>
 
         <div class="right">
-            <div class="form-container">
+            <div class="form-container bg-white">
                 {{ $slot }}
             </div>
         </div>
-    </div>
-
 </body>
 </html>
